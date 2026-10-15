@@ -1,13 +1,7 @@
 Gambarino — Indian Type Foundry, ITF Free Font License.
 https://fontshare.com/fonts/gambarino
-В файле нет кириллицы.
-
-Figtree — Copyright 2022 The Figtree Project Authors, SIL Open Font License 1.1.
-https://github.com/erikdkennedy/figtree
-В поставке Google Fonts нет кириллицы, в репозитории латинский woff2.
-
-Cormorant Garamond — Copyright 2015 The Cormorant Project Authors, SIL Open Font License 1.1.
-Антиква с кириллицей для имени «Кварта»: Fraunces и Newsreader из плана тоже без кириллицы.
+В файле нет кириллицы — русские буквы уходят на Manrope.
 
 Manrope — Copyright 2018 The Manrope Project Authors, SIL Open Font License 1.1.
-Гротеск с кириллицей для текста. Figtree остаётся в стеке для латиницы, но не подменяет русские буквы.
+Гротеск с кириллицей для текста. Вариативный шрифт, один файл на сабсет
+покрывает веса 200–800 (подтянуто с Google Fonts, Manrope v20).

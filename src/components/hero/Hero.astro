@@ -104,6 +104,7 @@ const { title, lead, text, slogan, meta, links, imageAlt} = Astro.props;
 		font-size: 1.8rem;
 		line-height: 1.5;
 		text-wrap: pretty;
+        color: var(--color-muted);
 	}
 
 	.hero__links {
@@ -193,7 +194,7 @@ const { title, lead, text, slogan, meta, links, imageAlt} = Astro.props;
 	}
 
 	.hero__frame {
-		--hero-scoop: 1.2rem;
+		--hero-scoop: 2rem;
 		position: relative;
 		overflow: hidden;
 		aspect-ratio: 3 / 2;
@@ -216,7 +217,7 @@ const { title, lead, text, slogan, meta, links, imageAlt} = Astro.props;
 		top: 0;
 		right: 0;
 		z-index: 1;
-		padding: 0.8rem 0.8rem 1.4rem 1.4rem;
+		padding: 0.8rem;
 		background-color: var(--color-cream);
 		border-bottom-left-radius: var(--hero-scoop);
 
@@ -249,9 +250,10 @@ const { title, lead, text, slogan, meta, links, imageAlt} = Astro.props;
 		padding: 0.8rem 1.6rem;
 		border: 0;
 		border-radius: 4.8rem;
-		background-color: var(--color-ink);
-		color: var(--color-cream);
-		font-size: 1.8rem;
+        font-family: var(--font-text);
+		color: var(--color-ink);
+        font-weight: 300;
+		font-size: 2rem;
 		line-height: 1.2;
 		white-space: nowrap;
 	}
@@ -360,6 +362,7 @@ const { title, lead, text, slogan, meta, links, imageAlt} = Astro.props;
 	@media (prefers-reduced-motion: reduce) {
 		.hero__intro,
 		.hero__meta,
+		.hero__meta > *,
 		.hero__media {
 			animation: none;
 			transform: none;

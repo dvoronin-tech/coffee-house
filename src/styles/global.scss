@@ -8,10 +8,8 @@
     --color-peach: #e89b6d;
     --color-line: #eadfd5;
     --font-display:
-        'Gambarino', 'Cormorant Garamond', 'Iowan Old Style', Palatino, serif;
-    // Manrope раньше Figtree: у Figtree нет кириллицы, и цифры в русской
-    // фразе не должны выпадать в другой гротеск.
-    --font-text: 'Manrope', 'Figtree', 'Segoe UI', sans-serif;
+        'Gambarino', 'Iowan Old Style', Palatino, serif;
+    --font-text: 'Manrope', 'Segoe UI', sans-serif;
     --page-width: 120rem;
     --page-gutter: 4.8rem;
 }
