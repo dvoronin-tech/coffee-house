@@ -1,4 +1,5 @@
 ---
+import clsx from 'clsx';
 import styles from './Hero.module.scss';
 ---
 
@@ -15,8 +16,18 @@ import styles from './Hero.module.scss';
 					зерно, пока оно свежее.
 				</p>
 				<div class={styles['hero__links']}>
-					<a class={styles['hero__link']} href="#grain">Выбрать зерно</a>
-					<a class={styles['hero__link']} href="#subscribe">Подписка</a>
+					<a
+						class={clsx(styles['hero__link'], styles['hero__link--primary'])}
+						href="#grain"
+					>
+						Выбрать зерно
+					</a>
+					<a
+						class={clsx(styles['hero__link'], styles['hero__link--secondary'])}
+						href="#subscribe"
+					>
+						Подписка
+					</a>
 				</div>
 			</div>
 			<dl class={styles['hero__meta']}>
