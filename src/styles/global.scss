@@ -7,7 +7,7 @@
     --color-muted: #7a6b5d;
     --color-peach: #e89b6d;
     --color-line: #eadfd5;
-    --surface-glass: rgba(255, 250, 245, 0.82);
+    --surface-glass: color-mix(in srgb, var(--color-cream) 30%, transparent);
     --font-display:
         'Gambarino', 'Iowan Old Style', Palatino, serif;
     --font-text: 'Manrope', 'Segoe UI', sans-serif;
