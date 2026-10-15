@@ -1,10 +1,11 @@
 ---
+import { heroData } from '../data';
 import Hero from '../components/hero/Hero.astro';
 import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Кварта — обжарка в Минске">
 	<main>
-		<Hero />
+		<Hero data={heroData} />
 	</main>
 </Layout>
