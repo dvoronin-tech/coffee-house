@@ -1,0 +1,18 @@
+---
+description: Стили лендинга «Кварта» — clsx, SCSS Modules, rem
+globs:
+  - "src/**/*.astro"
+  - "src/**/*.tsx"
+  - "src/**/*.jsx"
+  - "src/**/*.scss"
+alwaysApply: true
+---
+
+# Стили
+
+- Классы в React-компонентах задаются только через `clsx`. В Astro — через объект SCSS-модуля или `class:list`, не строковой склейкой.
+- Стили компонентов — SCSS Modules (`*.module.scss`). Внутри модуля BEM: `block`, `block__element`, `block--modifier`.
+- Единицы — `rem`. У `html` размер шрифта `10px`, поэтому `1rem = 10px`. Пиксели только у этого `font-size` на корне.
+- Цвета и шрифты — общие токены: `--color-cream` `#FFFAF5`, `--color-paper` `#FDF3EA`, `--color-ink` `#2B2118`, `--color-muted` `#7A6B5D`, `--color-peach` `#E89B6D`, `--color-line` `#EADFD5`, `--font-serif`, `--font-sans`.
+- Файлы шрифтов в секциях не подключать. Заголовок берёт стек `--font-serif`, текст — `--font-sans`. Подключение Gambarino и Figtree остаётся за секцией героя.
+- Desktop-first. Мобильные правки не смешивать с первой сборкой секции, пока desktop не принят.
