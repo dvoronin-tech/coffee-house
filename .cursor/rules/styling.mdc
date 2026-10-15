@@ -1,18 +1,26 @@
 ---
-description: Стили лендинга «Кварта» — clsx, SCSS Modules, rem
-globs:
-  - "src/**/*.astro"
-  - "src/**/*.tsx"
-  - "src/**/*.jsx"
-  - "src/**/*.scss"
+description: Стили лендинга «Кварта» — Astro style и React SCSS Modules
 alwaysApply: true
 ---
 
 # Стили
 
-- Классы в React-компонентах задаются только через `clsx`. В Astro — через объект SCSS-модуля или `class:list`, не строковой склейкой.
-- Стили компонентов — SCSS Modules (`*.module.scss`). Внутри модуля BEM: `block`, `block__element`, `block--modifier`.
+## Astro
+
+- В файлах `.astro` стили пишутся только нативно, тегом `<style>` внутри того же файла.
+- Допустим `<style lang="scss">`. Общие переменные и миксины подключаются через `@use` внутри этого тега.
+- SCSS Modules (`*.module.scss`) к `.astro` не применяются. `clsx` в Astro не использовать.
+- Классы в разметке — обычная строка в `class` или `class:list`.
+
+## React
+
+- Стили React-компонентов (`.tsx`) — SCSS Modules (`*.module.scss`).
+- Классы в React задаются только через `clsx`.
+- Внутри модуля BEM: `block`, `block__element`, `block--modifier`.
+
+## Общее
+
 - Единицы — `rem`. У `html` размер шрифта `10px`, поэтому `1rem = 10px`. Пиксели только у этого `font-size` на корне.
-- Цвета и шрифты — общие токены героя: `--color-cream` `#FFFAF5`, `--color-paper` `#FDF3EA`, `--color-ink` `#2B2118`, `--color-muted` `#7A6B5D`, `--color-peach` `#E89B6D`, `--color-line` `#EADFD5`, `--font-display`, `--font-text`, `--page-width`, `--page-gutter`.
+- Цвета и шрифты — общие токены: `--color-cream` `#FFFAF5`, `--color-paper` `#FDF3EA`, `--color-ink` `#2B2118`, `--color-muted` `#7A6B5D`, `--color-peach` `#E89B6D`, `--color-line` `#EADFD5`, `--font-display`, `--font-text`, `--page-width`, `--page-gutter`.
 - Файлы шрифтов в секциях не подключать. Заголовок берёт стек `--font-display`, текст — `--font-text`. Подключение файлов остаётся за секцией героя.
 - Desktop-first. Мобильные правки не смешивать с первой сборкой секции, пока desktop не принят.
