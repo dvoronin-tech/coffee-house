@@ -1,0 +1,31 @@
+---
+// Рабочий заголовок: финальную формулировку Denis обсуждает отдельно.
+import styles from './Freshness.module.scss';
+---
+
+<section class={styles.freshness} aria-labelledby="freshness-title">
+	<div class={styles['freshness__inner']}>
+		<div class={styles['freshness__intro']}>
+			<h2 id="freshness-title" class={styles['freshness__title']}>
+				Зерно у вас на 1–3 день после обжарки
+			</h2>
+			<p class={styles['freshness__lead']}>
+				Зерно не лежит на полке — от обжарки до вашей чашки проходит 1–3
+				дня, вкус и аромат на пике.
+			</p>
+		</div>
+		<ol class={styles['freshness__steps']}>
+			<li class={styles['freshness__step']}>
+				<p class={styles['freshness__step-text']}>Обжарка — сегодня</p>
+			</li>
+			<li class={styles['freshness__step']}>
+				<p class={styles['freshness__step-text']}>
+					Доставка — в течение пары дней
+				</p>
+			</li>
+			<li class={styles['freshness__step']}>
+				<p class={styles['freshness__step-text']}>У вас — на 1–3 день</p>
+			</li>
+		</ol>
+	</div>
+</section>
