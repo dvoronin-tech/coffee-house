@@ -9,10 +9,4 @@ export const headerData: HeaderData = {
 		{ label: 'Подписка', href: '#subscribe' },
 	],
 	cta: { label: 'Заявка', href: '#contact-form' },
-	activeMark: 'dandy',
-	marks: [
-		{ id: 'word', name: 'Слово', note: 'Только антиква' },
-		{ id: 'dandy', name: 'Денди', note: 'К и зёрнышко' },
-		{ id: 'seal', name: 'Печать', note: 'Четверть круга' },
-	],
 };

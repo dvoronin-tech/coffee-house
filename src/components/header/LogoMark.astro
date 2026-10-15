@@ -1,108 +1,51 @@
 ---
-import type { HeaderMarkId } from '../../types/header';
-
 interface Props {
-	id: HeaderMarkId;
 	label: string;
 }
 
-const { id, label } = Astro.props;
+const { label } = Astro.props;
 const tail = label.startsWith('К') ? label.slice(1) : label;
 ---
 
-<span class:list={['mark', `mark--${id}`]} aria-hidden="true">
-	{
-		id === 'word' && (
-			<span class="mark__word">{label}</span>
-		)
-	}
-	{
-		id === 'dandy' && (
-			<>
-				<span class="mark__letter">
-					К
-					<svg class="mark__bean" viewBox="0 0 36 52">
-						<path
-							fill="var(--color-peach)"
-							d="M18 2.5c8.2 1.2 14 9.6 14 23.5S26.4 49.2 18 49.5 4 40.2 4 26 9.8 3.6 18 2.5z"
-						/>
-						<path
-							d="M18.2 9c3.8 5.2 4 28.4.1 34"
-							fill="none"
-							stroke="var(--color-ink)"
-							stroke-width="2"
-							stroke-linecap="round"
-						/>
-					</svg>
-				</span>
-				<span class="mark__tail">{tail}</span>
-			</>
-		)
-	}
-	{
-		id === 'seal' && (
-			<>
-				<svg class="mark__seal" viewBox="0 0 64 64" aria-hidden="true">
-					<circle
-						cx="32"
-						cy="32"
-						r="28"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="1.25"
-					/>
-					<path
-						d="M32 4 A28 28 0 0 1 60 32"
-						fill="none"
-						stroke="var(--color-peach)"
-						stroke-width="2.75"
-						stroke-linecap="round"
-					/>
-					<text
-						x="32"
-						y="34"
-						text-anchor="middle"
-						dominant-baseline="central"
-						font-size="30"
-					>
-						К
-					</text>
-				</svg>
-				<span class="mark__word">{label}</span>
-			</>
-		)
-	}
+<span class="mark" aria-hidden="true">
+	<span class="mark__letter">
+		К
+		<svg class="mark__bean" viewBox="0 0 36 52">
+			<path
+				fill="var(--color-peach)"
+				d="M18 2.5c8.2 1.2 14 9.6 14 23.5S26.4 49.2 18 49.5 4 40.2 4 26 9.8 3.6 18 2.5z"
+			/>
+			<path
+				d="M18.2 9c3.8 5.2 4 28.4.1 34"
+				fill="none"
+				stroke="var(--color-ink)"
+				stroke-width="2"
+				stroke-linecap="round"
+			/>
+		</svg>
+	</span>
+	<span class="mark__tail">{tail}</span>
 </span>
 
 <style lang="scss">
 	.mark {
 		display: inline-flex;
-		align-items: center;
+		align-items: baseline;
 		color: var(--color-ink);
 		line-height: 1;
 	}
 
-	.mark__word,
 	.mark__letter,
 	.mark__tail {
 		font-family: var(--font-display);
+		font-size: 2.8rem;
 		font-weight: 400;
 		letter-spacing: -0.03em;
-	}
-
-	.mark--word .mark__word {
-		font-size: 2.8rem;
-	}
-
-	.mark--dandy {
-		align-items: baseline;
-		gap: 0;
 	}
 
 	.mark__letter {
 		position: relative;
 		display: inline-block;
-		font-size: 2.8rem;
 	}
 
 	.mark__bean {
@@ -116,29 +59,6 @@ const tail = label.startsWith('К') ? label.slice(1) : label;
 	}
 
 	.mark__tail {
-		font-size: 2.8rem;
 		margin-left: -0.04em;
-	}
-
-	.mark--seal {
-		gap: 0.9rem;
-	}
-
-	.mark__seal {
-		display: block;
-		width: 3.6rem;
-		height: 3.6rem;
-		flex: none;
-	}
-
-	.mark__seal text {
-		fill: currentColor;
-		font-family: var(--font-display);
-		font-weight: 400;
-		letter-spacing: -0.03em;
-	}
-
-	.mark--seal .mark__word {
-		font-size: 2.4rem;
 	}
 </style>

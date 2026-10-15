@@ -6,15 +6,14 @@ interface Props {
 	data: HeaderData;
 }
 
-const { logoLabel, logoHref, links, cta, activeMark, marks } = Astro.props.data;
-const active = marks.find((mark) => mark.id === activeMark) ?? marks[0];
+const { logoLabel, logoHref, links, cta } = Astro.props.data;
 ---
 
 <header class="header" id="top">
 	<div class="header__veil" aria-hidden="true"></div>
 	<div class="header__bar">
 		<a class="header__logo" href={logoHref} aria-label={logoLabel}>
-			<LogoMark id={active.id} label={logoLabel} />
+			<LogoMark label={logoLabel} />
 		</a>
 		<nav class="header__nav" aria-label="Разделы">
 			<ul class="header__links">
@@ -31,28 +30,6 @@ const active = marks.find((mark) => mark.id === activeMark) ?? marks[0];
 		</nav>
 		<a class="header__cta" href={cta.href}>{cta.label}</a>
 	</div>
-	<aside class="header__samples" aria-label="Варианты знака">
-		<p class="header__samples-label">Три знака</p>
-		<ul class="header__samples-list">
-			{
-				marks.map((mark) => (
-					<li
-						class:list={[
-							'header__sample',
-							{ 'header__sample--on': mark.id === active.id },
-						]}
-					>
-						<LogoMark id={mark.id} label={logoLabel} />
-						<span class="header__sample-name">{mark.name}</span>
-						<span class="header__sample-note">
-							{mark.note}
-							{mark.id === active.id ? ' · в шапке' : ''}
-						</span>
-					</li>
-				))
-			}
-		</ul>
-	</aside>
 </header>
 
 <style lang="scss">
@@ -147,64 +124,6 @@ const active = marks.find((mark) => mark.id === activeMark) ?? marks[0];
 	.header__cta:focus-visible {
 		outline: 0.2rem solid var(--color-ink);
 		outline-offset: 0.4rem;
-	}
-
-	.header__samples {
-		position: fixed;
-		z-index: 1;
-		bottom: 2.4rem;
-		left: 50%;
-		translate: -50% 0;
-		display: flex;
-		align-items: center;
-		gap: 2.4rem;
-		max-width: calc(100vw - 4.8rem);
-		padding: 1.4rem 1.6rem 1.4rem 2.4rem;
-		background-color: var(--color-paper);
-		border: 0.1rem solid var(--color-line);
-		border-radius: 2.4rem 0 2.4rem 2.4rem;
-	}
-
-	.header__samples-label {
-		margin: 0;
-		color: var(--color-muted);
-		font-size: 1.4rem;
-		line-height: 1.3;
-	}
-
-	.header__samples-list {
-		display: flex;
-		gap: 1.2rem;
-		margin: 0;
-		padding: 0;
-		list-style: none;
-	}
-
-	.header__sample {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.7rem;
-		min-width: 18rem;
-		padding: 1.2rem 1.6rem 1rem;
-		border: 0.1rem solid transparent;
-		border-radius: 1.6rem;
-	}
-
-	.header__sample--on {
-		background-color: var(--color-cream);
-		border-color: var(--color-ink);
-	}
-
-	.header__sample-name {
-		font-size: 1.4rem;
-		line-height: 1.2;
-	}
-
-	.header__sample-note {
-		color: var(--color-muted);
-		font-size: 1.3rem;
-		line-height: 1.2;
 	}
 
 	@supports (animation-timeline: scroll()) {
