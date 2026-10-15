@@ -1,0 +1,22 @@
+---
+description: Ветки и коммиты без трейлера Co-authored-by
+alwaysApply: true
+---
+
+# Git
+
+- Ветки: `feat/`, `fix/`, `update/`, `refactoring/`, `redesign/`. Без префиксов агента.
+- Коммиты по шагам, сообщения на русском.
+- Не использовать `git commit` и `git commit --amend`: Cursor дописывает трейлер `Co-authored-by`.
+
+Как коммитить:
+
+```bash
+git add <файлы>
+TREE=$(git write-tree)
+PARENT=$(git rev-parse HEAD)
+NEW=$(printf '%s\n' 'Сообщение' | git commit-tree "$TREE" -p "$PARENT")
+git update-ref HEAD "$NEW"
+```
+
+В сообщении не должно быть `Co-authored-by`. После коммита проверить `git log -1 --format='%B'`.

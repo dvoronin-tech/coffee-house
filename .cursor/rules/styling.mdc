@@ -1,0 +1,13 @@
+---
+description: Стили — SCSS Modules, clsx в React, единицы rem
+alwaysApply: true
+---
+
+# Стили
+
+- Классы в React-компонентах только через `clsx`. В разметке Astro — классы из SCSS-модуля.
+- Стили компонентов — SCSS Modules (`*.module.scss`). Пакет `sass` установлен.
+- Внутри модуля — BEM: `block__element`, модификатор `block--modifier`.
+- Единицы — `rem`. У `html` задан `font-size: 10px`, поэтому `1rem = 10px`.
+- Палитра страницы: Cream `#FFFAF5`, Paper `#FDF3EA`, Ink `#2B2118`, Muted `#7A6B5D`, Peach `#E89B6D`, Line `#EADFD5`.
+- Desktop-first: базовые стили — широкая ширина, узкие экраны — через `max-width`.
