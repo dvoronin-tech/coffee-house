@@ -2,21 +2,21 @@
 import type { FreshnessData } from '../../types/freshness';
 
 interface Props {
-	data: FreshnessData;
+    data: FreshnessData
 }
 
-const { data } = Astro.props;
+const { title, lead, steps }  = Astro.props.data;
 ---
 
 <section class="freshness" aria-labelledby="freshness-title">
 	<div class="freshness__inner">
 		<div class="freshness__intro">
-			<h2 id="freshness-title" class="freshness__title">{data.title}</h2>
-			<p class="freshness__lead">{data.lead}</p>
+			<h2 id="freshness-title" class="freshness__title">{title}</h2>
+			<p class="freshness__lead">{lead}</p>
 		</div>
 		<ol class="freshness__steps">
 			{
-				data.steps.map((step) => (
+				steps.map((step) => (
 					<li
 						class:list={[
 							'freshness__step',

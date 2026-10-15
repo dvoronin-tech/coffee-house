@@ -10,9 +10,9 @@ export const heroData: HeroData = {
     ],
     meta: [
         { label: 'Город', value: 'Минск' },
-        { label: 'Мастерская', value: 'с\u00A02019' },
-        { label: 'Партии', value: 'по\u00A05\u00A0кг' },
-        { label: 'Обжарка', value: 'по\u00A0четвергам' },
+        { label: 'Мастерская', value: 'с 2019' },
+        { label: 'Партии', value: 'по 5 кг' },
+        { label: 'Обжарка', value: 'по четвергам' },
     ],
     imageAlt: 'Рука держит совок с кофейным зерном',
     slogan: 'Свежая обжарка',
