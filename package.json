@@ -23,6 +23,7 @@
     "devDependencies": {
         "@types/react": "^19.3.0",
         "@types/react-dom": "^19.3.0",
+        "sass": "^1.105.1",
         "vite-plugin-svgr": "^5.2.0"
     }
 }
