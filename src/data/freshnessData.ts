@@ -1,4 +1,4 @@
-import type { FreshnessData } from '../types/freshness';
+import type { FreshnessData } from '#/types/freshness';
 
 export const freshnessData: FreshnessData = {
 	title: 'Зерно у вас на 1–3 день после обжарки',

@@ -1,6 +1,6 @@
-import type { FreshnessData } from './freshness';
-import type { HeaderData } from './header';
-import type { HeroData } from './hero';
+import type { FreshnessData } from '#/types/freshness';
+import type { HeaderData } from '#/types/header';
+import type { HeroData } from '#/types/hero';
 
 export type HomePageData = {
 	headerData: HeaderData;

@@ -5,7 +5,7 @@ interface Props {
 
 const { label } = Astro.props;
 const tail = label.startsWith('К') ? label.slice(1) : label;
-import bean from '../../assets/logo-bean.svg';
+import bean from '#/assets/logo-bean.svg';
 ---
 
 <span class="mark" aria-hidden="true">
