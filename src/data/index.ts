@@ -1,0 +1,1 @@
+export { freshnessData } from './freshnessData';

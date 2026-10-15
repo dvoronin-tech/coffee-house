@@ -1,18 +1,12 @@
 import clsx from 'clsx';
+import type { FreshnessData } from '../../types/freshness';
 import styles from './Freshness.module.scss';
 
-const steps = [
-	{ index: '01', name: 'Обжарка', when: 'сегодня', accent: false },
-	{
-		index: '02',
-		name: 'Доставка',
-		when: 'в течение пары дней',
-		accent: false,
-	},
-	{ index: '03', name: 'У вас', when: 'на 1–3 день', accent: true },
-] as const;
+type Props = {
+	data: FreshnessData;
+};
 
-export default function Freshness() {
+export default function Freshness({ data }: Props) {
 	return (
 		<section
 			className={clsx(styles.freshness)}
@@ -24,15 +18,12 @@ export default function Freshness() {
 						id="freshness-title"
 						className={clsx(styles['freshness__title'])}
 					>
-						Зерно у вас на 1–3 день после обжарки
+						{data.title}
 					</h2>
-					<p className={clsx(styles['freshness__lead'])}>
-						Зерно не лежит на полке — от обжарки до вашей чашки
-						проходит 1–3 дня, вкус и аромат на пике.
-					</p>
+					<p className={clsx(styles['freshness__lead'])}>{data.lead}</p>
 				</div>
 				<ol className={clsx(styles['freshness__steps'])}>
-					{steps.map((step) => (
+					{data.steps.map((step) => (
 						<li
 							key={step.index}
 							className={clsx(
