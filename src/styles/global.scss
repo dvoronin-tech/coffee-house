@@ -1,13 +1,13 @@
 @use 'fonts';
 
 :root {
-    --color-cream: #fffaf5;
-    --color-paper: #fdf3ea;
-    --color-ink: #2b2118;
-    --color-muted: #7a6b5d;
-    --color-peach: #e89b6d;
-    --color-line: #eadfd5;
-    --surface-glass: color-mix(in srgb, var(--color-cream) 30%, transparent);
+    --color-background: #fffaf5;
+    --color-surface: #fdf3ea;
+    --color-text: #2b2118;
+    --color-secondary-text: #7a6b5d;
+    --color-accent: #e89b6d;
+    --color-border: #eadfd5;
+    --color-surface-glass: color-mix(in srgb, var(--color-background) 30%, transparent);
     --font-display:
         'Gambarino', 'Iowan Old Style', Palatino, serif;
     --font-text: 'Manrope', 'Segoe UI', sans-serif;
@@ -17,7 +17,7 @@
 
 html {
     font-size: 10px;
-    background-color: var(--color-cream);
+    background-color: var(--color-background);
     scroll-padding-top: 8rem;
 }
 
@@ -29,8 +29,8 @@ html {
 
 body {
     margin: 0;
-    background-color: var(--color-cream);
-    color: var(--color-ink);
+    background-color: var(--color-background);
+    color: var(--color-text);
     font-family: var(--font-text);
     font-size: 1.8rem;
     font-weight: 400;

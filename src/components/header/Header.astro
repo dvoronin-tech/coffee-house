@@ -40,7 +40,7 @@ const { logoLabel, logoHref, links, cta } = Astro.props.data;
 		left: 0;
 		z-index: 30;
 		background: transparent;
-		color: var(--color-ink);
+		color: var(--color-text);
 	}
 
 	.header__veil {
@@ -48,9 +48,9 @@ const { logoLabel, logoHref, links, cta } = Astro.props.data;
 		inset: 0;
 		opacity: 0;
 		pointer-events: none;
-		background-color: var(--surface-glass);
+		background-color: var(--color-surface-glass);
 		border-bottom: 0.1rem solid
-			color-mix(in srgb, var(--color-ink) 14%, var(--color-line));
+			color-mix(in srgb, var(--color-text) 14%, var(--color-border));
 		backdrop-filter: blur(1.2rem);
 	}
 
@@ -85,14 +85,14 @@ const { logoLabel, logoHref, links, cta } = Astro.props.data;
 	}
 
 	.header__link {
-		color: var(--color-ink);
+		color: var(--color-text);
 		font-size: 1.6rem;
 		line-height: 1.2;
 		text-decoration: none;
 		transition: color 0.2s ease;
 
 		&:hover {
-			color: var(--color-muted);
+			color: var(--color-secondary-text);
 		}
 	}
 
@@ -104,8 +104,8 @@ const { logoLabel, logoHref, links, cta } = Astro.props.data;
 		min-height: 4.4rem;
 		padding: 0.8rem 2.2rem;
 		border-radius: 4.8rem;
-		background-color: var(--color-peach);
-		color: var(--color-cream);
+		background-color: var(--color-accent);
+		color: var(--color-background);
 		font-size: 1.6rem;
 		line-height: 1.2;
 		text-decoration: none;
@@ -114,15 +114,15 @@ const { logoLabel, logoHref, links, cta } = Astro.props.data;
 			color 0.2s ease;
 
 		&:hover {
-			background-color: var(--color-ink);
-			color: var(--color-cream);
+			background-color: var(--color-text);
+			color: var(--color-background);
 		}
 	}
 
 	.header__logo:focus-visible,
 	.header__link:focus-visible,
 	.header__cta:focus-visible {
-		outline: 0.2rem solid var(--color-ink);
+		outline: 0.2rem solid var(--color-text);
 		outline-offset: 0.4rem;
 	}
 

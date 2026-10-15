@@ -23,6 +23,6 @@ alwaysApply: true
 ## Общее
 
 - Единицы — `rem`. У `html` размер шрифта `10px`, поэтому `1rem = 10px`. Пиксели только у этого `font-size` на корне.
-- Цвета и шрифты — общие токены: `--color-cream` `#FFFAF5`, `--color-paper` `#FDF3EA`, `--color-ink` `#2B2118`, `--color-muted` `#7A6B5D`, `--color-peach` `#E89B6D`, `--color-line` `#EADFD5`, `--font-display`, `--font-text`, `--page-width`, `--page-gutter`.
+- Цвета и шрифты — общие токены: `--color-background` `#FFFAF5`, `--color-surface` `#FDF3EA`, `--color-text` `#2B2118`, `--color-secondary-text` `#7A6B5D`, `--color-accent` `#E89B6D`, `--color-border` `#EADFD5`, `--color-surface-glass`, `--font-display`, `--font-text`, `--page-width`, `--page-gutter`.
 - Файлы шрифтов в секциях не подключать. Заголовок берёт стек `--font-display`, текст — `--font-text`. Файлы шрифтов живут в `global.scss`.
 - Desktop-first. Мобильные правки не смешивать с первой сборкой секции, пока desktop не принят.
