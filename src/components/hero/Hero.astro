@@ -2,9 +2,11 @@
 import heroPhoto from '../../assets/hero-scoop.webp';
 import type { HeroData } from '../../types/hero';
 
-interface Props extends HeroData {}
+interface Props {
+	data: HeroData;
+}
 
-const { title, lead, text, slogan, meta, links, imageAlt} = Astro.props;
+const { title, lead, text, slogan, meta, links, imageAlt } = Astro.props.data;
 ---
 
 <section class="hero" aria-labelledby="hero-title">
