@@ -1,0 +1,71 @@
+---
+import FreshnessPreview from '../../layouts/FreshnessPreview.astro';
+---
+
+<FreshnessPreview title="Свежесть — варианты">
+	<section class="menu">
+		<h1>Три варианта секции «Свежесть»</h1>
+		<ul>
+			<li>
+				<a href="/freshness/1">Цифры</a>
+				<span>01 / 02 / 03, без плашек, разделители Line</span>
+			</li>
+			<li>
+				<a href="/freshness/2">Карточки</a>
+				<span>радиус кадра героя, антиква, персик на «У вас»</span>
+			</li>
+			<li>
+				<a href="/freshness/3">Один кадр</a>
+				<span>общая бумага, линии между шагами, без стрелок</span>
+			</li>
+		</ul>
+	</section>
+</FreshnessPreview>
+
+<style>
+	.menu {
+		max-width: var(--page-width);
+		margin: 0 auto;
+		padding: 6.4rem var(--page-gutter) 9.6rem;
+	}
+
+	h1 {
+		margin: 0;
+		font-family: var(--font-display);
+		font-size: 4.8rem;
+		font-weight: 400;
+		line-height: 1.08;
+		letter-spacing: -0.02em;
+	}
+
+	ul {
+		margin: 4.8rem 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	li {
+		display: grid;
+		grid-template-columns: 16rem minmax(0, 1fr);
+		gap: 2.4rem;
+		align-items: baseline;
+		padding: 2rem 0;
+		border-top: 0.1rem solid var(--color-line);
+	}
+
+	li:last-child {
+		border-bottom: 0.1rem solid var(--color-line);
+	}
+
+	a {
+		color: var(--color-ink);
+		font-size: 2rem;
+		text-decoration-color: var(--color-peach);
+		text-underline-offset: 0.4rem;
+	}
+
+	span {
+		color: var(--color-muted);
+		font-size: 1.6rem;
+	}
+</style>

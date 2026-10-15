@@ -1,5 +1,6 @@
-// Общие токены лендинга «Кварта».
-// 1rem = 10px. Имена переменных не менять: их же использует секция героя.
+// Токены демо-страниц секции. Имена совпадают с героем (global.scss),
+// чтобы секция села в общий лейаут без переименования.
+// Файлы шрифтов не подключаем: Gambarino / Manrope подхватит PR героя.
 :root {
 	--color-cream: #fffaf5;
 	--color-paper: #fdf3ea;
@@ -7,12 +8,11 @@
 	--color-muted: #7a6b5d;
 	--color-peach: #e89b6d;
 	--color-line: #eadfd5;
-	--font-serif: Gambarino, 'Iowan Old Style', 'Palatino Linotype', Palatino,
-		'Noto Serif', Georgia, serif;
-	--font-sans: Figtree, 'Segoe UI', Inter, 'Noto Sans', Helvetica, Arial,
-		sans-serif;
-	--content-width: 120rem;
-	--page-padding: 4.8rem;
+	--font-display: 'Gambarino', 'Cormorant Garamond', 'Iowan Old Style',
+		Palatino, 'Noto Serif', Georgia, serif;
+	--font-text: 'Manrope', 'Figtree', 'Segoe UI', 'Noto Sans', sans-serif;
+	--page-width: 120rem;
+	--page-gutter: 4.8rem;
 }
 
 html {
