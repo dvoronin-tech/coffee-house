@@ -10,16 +10,16 @@ alwaysApply: true
 ## Куда что класть
 
 - `src/types/<section>.ts` — тип одной секции. Пример: `FreshnessData` в `src/types/freshness.ts`.
-- `src/types/home.ts` — общий тип страницы `HomePageData`. Каждое поле — данные одной секции: `{ freshnessData: FreshnessData }`.
+- `src/types/home.ts` — общий тип страницы `HomePageData`. Каждое поле — данные одной секции: `{ heroData: HeroData; freshnessData: FreshnessData }`.
 - `src/data/<section>Data.ts` — все тексты секции (заголовки, абзацы, подписи, шаги), с аннотацией типа секции.
 - `src/data/index.ts` — собирает один объект `homeData: HomePageData` из данных секций. Наружу отдаёт только его.
 
 ## Как связывать
 
 1. Сначала тип секции, потом тип страницы, потом данные.
-2. Аннотация явная: `export const freshnessData: FreshnessData = { ... }` и `export const homeData: HomePageData = { freshnessData }`.
+2. Аннотация явная: `export const heroData: HeroData = { ... }` и `export const homeData: HomePageData = { heroData, freshnessData }`. Наружу из `src/data/index.ts` не реэкспортировать данные секций.
 3. Не выводить тип из значения. Не использовать `as const` и `typeof data` как тип секции или страницы.
-4. В `src/pages/index.astro` из `src/data` импортируется только `homeData`. Секция получает своё поле: `<Freshness data={homeData.freshnessData} />`.
+4. В `src/pages/index.astro` из `src/data` импортируется только `homeData`. Секция получает своё поле: `<Hero data={homeData.heroData} />`, `<Freshness data={homeData.freshnessData} />`.
 5. Компонент секции импортирует свой тип из `src/types/<section>` и не хранит тексты у себя.
 
 ## Новая секция

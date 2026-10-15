@@ -8,7 +8,8 @@ alwaysApply: true
 ## Astro
 
 - В файлах `.astro` стили пишутся только нативно, тегом `<style>` внутри того же файла.
-- Допустим `<style lang="scss">`. Общие переменные и миксины подключаются через `@use` внутри этого тега.
+- Допустим `<style lang="scss">`. Локальные миксины секции подключаются через `@use` внутри этого тега.
+- Глобальный `src/styles/global.scss` подключается обычным импортом в `src/layouts/Layout.astro`. Через `<style>` и `@use` в компоненте его не подключать.
 - SCSS Modules (`*.module.scss`) к `.astro` не применяются. `clsx` в Astro не использовать.
 - Классы в разметке — обычная строка в `class` или `class:list`.
 
@@ -22,5 +23,5 @@ alwaysApply: true
 
 - Единицы — `rem`. У `html` размер шрифта `10px`, поэтому `1rem = 10px`. Пиксели только у этого `font-size` на корне.
 - Цвета и шрифты — общие токены: `--color-cream` `#FFFAF5`, `--color-paper` `#FDF3EA`, `--color-ink` `#2B2118`, `--color-muted` `#7A6B5D`, `--color-peach` `#E89B6D`, `--color-line` `#EADFD5`, `--font-display`, `--font-text`, `--page-width`, `--page-gutter`.
-- Файлы шрифтов в секциях не подключать. Заголовок берёт стек `--font-display`, текст — `--font-text`. Подключение файлов остаётся за секцией героя.
+- Файлы шрифтов в секциях не подключать. Заголовок берёт стек `--font-display`, текст — `--font-text`. Файлы шрифтов живут в `global.scss`.
 - Desktop-first. Мобильные правки не смешивать с первой сборкой секции, пока desktop не принят.

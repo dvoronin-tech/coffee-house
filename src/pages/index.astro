@@ -1,11 +1,13 @@
 ---
 import { homeData } from '../data';
 import Freshness from '../components/freshness/Freshness.astro';
+import Hero from '../components/hero/Hero.astro';
 import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Кварта — обжарка в Минске">
 	<main>
+		<Hero data={homeData.heroData} />
 		<Freshness data={homeData.freshnessData} />
 	</main>
 </Layout>

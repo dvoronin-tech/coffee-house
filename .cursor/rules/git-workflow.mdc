@@ -1,24 +1,22 @@
 ---
-description: Коммиты без трейлера Co-authored-by
+description: Ветки и коммиты без трейлера Co-authored-by
 alwaysApply: true
 ---
 
 # Git
 
-Не использовать `git commit` и `git commit --amend`: обёртка Cursor дописывает трейлер `Co-authored-by`.
+- Ветки: `feat/`, `fix/`, `update/`, `refactoring/`, `redesign/`. Без префиксов агента.
+- Коммиты по шагам, сообщения на русском.
+- Не использовать `git commit` и `git commit --amend`: Cursor дописывает трейлер `Co-authored-by`.
 
 Как коммитить:
 
-1. `git add <файлы>` — только файлы задачи. Не использовать `git add -A` и `git add .`.
-2. Собрать коммит через `commit-tree`:
-
 ```bash
+git add <файлы>
 TREE=$(git write-tree)
 PARENT=$(git rev-parse HEAD)
 NEW=$(printf '%s\n' 'Сообщение' | git commit-tree "$TREE" -p "$PARENT")
 git update-ref HEAD "$NEW"
 ```
 
-3. Проверить сообщение: `git log -1 --format='%B'`. Трейлера `Co-authored-by` быть не должно.
-
-Сообщения — на русском, по делу, без пустых коммитов. Ветки: `feat/`, `fix/`, `update/`, `refactoring/`, `redesign/`.
+В сообщении не должно быть `Co-authored-by`. После коммита проверить `git log -1 --format='%B'`.
