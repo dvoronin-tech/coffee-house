@@ -1,0 +1,64 @@
+@use 'fonts';
+
+:root {
+    --color-cream: #fffaf5;
+    --color-paper: #fdf3ea;
+    --color-ink: #2b2118;
+    --color-muted: #7a6b5d;
+    --color-peach: #e89b6d;
+    --color-line: #eadfd5;
+    --font-display:
+        'Gambarino', 'Iowan Old Style', Palatino, serif;
+    --font-text: 'Manrope', 'Segoe UI', sans-serif;
+    --page-width: 120rem;
+    --page-gutter: 4.8rem;
+}
+
+html {
+    font-size: 10px;
+    background-color: var(--color-cream);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-text);
+    font-size: 1.8rem;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+    font-synthesis: none;
+}
+
+dl {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+}
+
+@media (max-width: 1024px) {
+    :root {
+        --page-gutter: 2rem;
+    }
+}
+
+@media (max-width: 640px) {
+    :root {
+        --page-gutter: 1rem;
+    }
+}

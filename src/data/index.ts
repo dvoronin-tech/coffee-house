@@ -1,0 +1,1 @@
+export { heroData } from './heroData';
