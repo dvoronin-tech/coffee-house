@@ -1,13 +1,14 @@
 ---
-description: Стили — SCSS Modules, clsx в React, единицы rem
+description: Стили Astro в style, React через SCSS Modules и clsx, единицы rem
 alwaysApply: true
 ---
 
 # Стили
 
-- Классы в React-компонентах только через `clsx`. В разметке Astro — классы из SCSS-модуля.
-- Стили компонентов — SCSS Modules (`*.module.scss`). Пакет `sass` установлен.
-- Внутри модуля — BEM: `block__element`, модификатор `block--modifier`.
+- В файлах `.astro` стили пишутся только в теге `<style>` того же файла. Допустим `lang="scss"`. Переменные и миксины подключаются через `@use`.
+- SCSS Modules (`*.module.scss`) и `clsx` в Astro не используются.
+- В React-компонентах (`.tsx`) классы только через `clsx`. Стили — SCSS Modules. Внутри модуля — BEM: `block__element`, модификатор `block--modifier`.
+- Пакет `sass` установлен.
 - Единицы — `rem`. У `html` задан `font-size: 10px`, поэтому `1rem = 10px`.
 - Палитра страницы: Cream `#FFFAF5`, Paper `#FDF3EA`, Ink `#2B2118`, Muted `#7A6B5D`, Peach `#E89B6D`, Line `#EADFD5`.
 - Desktop-first: базовые стили — широкая ширина, узкие экраны — через `max-width`.
