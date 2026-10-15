@@ -1,5 +1,6 @@
 ---
 import clsx from 'clsx';
+import heroPhoto from '../../assets/hero-scoop.webp';
 import styles from './Hero.module.scss';
 ---
 
@@ -49,12 +50,15 @@ import styles from './Hero.module.scss';
 				</div>
 			</dl>
 		</div>
-		<!--
-			Заглушка Paper, пока нет кадра. Когда появится фото 3:2,
-			класть его внутрь media: eager, fetchpriority="high".
-		-->
 		<div class={styles['hero__frame']}>
-			<div class={styles['hero__media']} aria-hidden="true"></div>
+			<img
+				class={styles['hero__media']}
+				src={heroPhoto.src}
+				width={heroPhoto.width}
+				height={heroPhoto.height}
+				alt="Рука держит совок с кофейным зерном"
+				fetchpriority="high"
+			/>
 		</div>
 	</div>
 </section>
