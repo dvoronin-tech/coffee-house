@@ -16,8 +16,9 @@ alwaysApply: true
 ## React
 
 - Стили React-компонентов (`.tsx`) — SCSS Modules (`*.module.scss`).
-- Классы в React задаются только через `clsx`.
-- Внутри модуля BEM: `block`, `block__element`, `block--modifier`.
+- Классы в React задаются через `clsx` только если нужен concat двух и более классов.
+- Для условного рендеринга классов использовать `clsx(styles.class, { [isActive]: styles.active) }`
+- Внутри модуля camelCase: `block`, `blockElement`, `blockModifier`.
 
 ## Общее
 
