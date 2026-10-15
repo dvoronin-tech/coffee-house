@@ -15,5 +15,5 @@ export const heroData: HeroData = {
 		{ label: 'Обжарка', value: 'по\u00A0четвергам' },
 	],
 	imageAlt: 'Рука держит совок с кофейным зерном',
-	slogan: 'Свежая обжарка каждую пятницу',
+	slogan: 'Свежая обжарка',
 };
