@@ -2,23 +2,21 @@
 import heroPhoto from '../../assets/hero-scoop.webp';
 import type { HeroData } from '../../types/hero';
 
-interface Props {
-	data: HeroData;
-}
+interface Props extends HeroData {}
 
-const { data } = Astro.props;
+const { title, lead, text, slogan, meta, links, imageAlt} = Astro.props;
 ---
 
 <section class="hero" aria-labelledby="hero-title">
 	<div class="hero__inner">
 		<div class="hero__top">
 			<div class="hero__intro">
-				<h1 id="hero-title" class="hero__title">{data.title}</h1>
-				<p class="hero__lead">{data.lead}</p>
-				<p class="hero__text">{data.text}</p>
+				<h1 id="hero-title" class="hero__title">{title}</h1>
+				<p class="hero__lead">{lead}</p>
+				<p class="hero__text">{text}</p>
 				<div class="hero__links">
 					{
-						data.links.map((link) => (
+						links.map((link) => (
 							<a
 								class:list={['hero__link', `hero__link--${link.tone}`]}
 								href={link.href}
@@ -31,8 +29,8 @@ const { data } = Astro.props;
 			</div>
 			<dl class="hero__meta">
 				{
-					data.meta.map((item) => (
-						<div class="hero__meta-item">
+					meta.map((item, index) => (
+						<div class="hero__meta-item" style=`--i: ${index}`>
 							<dt class="hero__meta-label">{item.label}</dt>
 							<dd class="hero__meta-value">{item.value}</dd>
 						</div>
@@ -46,32 +44,40 @@ const { data } = Astro.props;
 				src={heroPhoto.src}
 				width={heroPhoto.width}
 				height={heroPhoto.height}
-				alt={data.imageAlt}
+				alt={imageAlt}
 				fetchpriority="high"
 			/>
 			<div class="hero__notch">
-				<p class="hero__slogan">{data.slogan}</p>
+				<p class="hero__slogan">{slogan}</p>
 			</div>
 		</div>
 	</div>
 </section>
 
 <style lang="scss">
+    @mixin hero-rise-preset($delay: 0s) {
+        animation: hero-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+        animation-delay: $delay;
+    }
+
 	.hero {
 		background-color: var(--color-cream);
 	}
 
 	.hero__inner {
+        display: flex;
+        flex-direction: column;
+        gap: 7.2rem;
 		width: min(100%, calc(var(--page-width) + var(--page-gutter) * 2));
 		margin-inline: auto;
 		padding: 14rem var(--page-gutter) 8rem;
 	}
 
 	.hero__top {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) 28rem;
-		column-gap: 6.4rem;
-		align-items: stretch;
+		display: flex;
+        justify-content: space-between;
+		align-items: center;
+        gap: 2.8rem;
 	}
 
 	.hero__title {
@@ -154,15 +160,14 @@ const { data } = Astro.props;
 	.hero__meta {
 		display: flex;
 		flex-direction: column;
-		align-self: start;
-		margin: 0.4rem 0 0;
+        max-width: 30rem;
+        width: 100%;
 	}
 
 	.hero__meta-item {
 		display: flex;
-		align-items: baseline;
 		justify-content: space-between;
-		gap: 1.6rem;
+		gap: 3rem;
 		padding-block: 1.6rem;
 
 		& + & {
@@ -192,7 +197,6 @@ const { data } = Astro.props;
 		position: relative;
 		overflow: hidden;
 		aspect-ratio: 3 / 2;
-		margin-top: 7.2rem;
 		border-radius: 4.8rem 0 4.8rem 4.8rem;
 	}
 
@@ -252,10 +256,17 @@ const { data } = Astro.props;
 		white-space: nowrap;
 	}
 
-	.hero__intro,
-	.hero__meta {
-		animation: hero-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
-	}
+    .hero__intro {
+        @include hero-rise-preset();
+    }
+
+    .hero__meta > * {
+        @include hero-rise-preset(calc(0.1s + var(--i, 0) * 0.1s));
+    }
+
+    .hero__frame {
+        @include hero-rise-preset(0.2s);
+    }
 
 	@keyframes hero-rise {
 		from {
@@ -271,11 +282,11 @@ const { data } = Astro.props;
 
 	@keyframes hero-parallax {
 		from {
-			transform: translateY(-4%);
+			transform: translateY(-30%);
 		}
 
 		to {
-			transform: translateY(4%);
+			transform: translateY(30%);
 		}
 	}
 
@@ -307,8 +318,7 @@ const { data } = Astro.props;
 
 	@media (max-width: 800px) {
 		.hero__top {
-			grid-template-columns: 1fr;
-			row-gap: 4.8rem;
+            flex-direction: column;
 		}
 
 		.hero__title {
