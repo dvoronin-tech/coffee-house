@@ -1,37 +1,27 @@
 ---
+import '../styles/tokens.scss';
+
 interface Props {
 	title: string;
+	description?: string;
 }
 
-const { title } = Astro.props;
+const {
+	title,
+	description = 'Мастерская в Минске. Зерно оказывается у вас на 1–3 день после обжарки.',
+} = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="description" content={description} />
 		<title>{title}</title>
 	</head>
 	<body>
 		<slot />
 	</body>
 </html>
-
-<style is:global>
-	html {
-		font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
-		background-color: #f7f7f7;
-	}
-
-	code {
-		font-family: Menlo, Monaco, Lucida Console, monospace;
-	}
-
-	main {
-		margin: auto;
-		max-width: 80ch;
-		padding: 2rem;
-	}
-</style>
