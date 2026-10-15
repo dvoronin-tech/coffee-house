@@ -74,13 +74,29 @@
 	}
 
 	&__steps {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		overflow: hidden;
 		margin: 7.2rem 0 0;
 		padding: 0;
 		list-style: none;
+		background: var(--color-paper, #fdf3ea);
+		border: 0.1rem solid var(--color-line, #eadfd5);
+		border-radius: 4.8rem 0 4.8rem 4.8rem;
 	}
 
 	&__step {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: 4.8rem;
+		min-height: 22rem;
 		margin: 0;
+		padding: 4rem 3.6rem 3.6rem;
+
+		&:not(:last-child) {
+			border-right: 0.1rem solid var(--color-line, #eadfd5);
+		}
 
 		&:nth-child(1) {
 			@include rise(18%, 44%, 0.24s);
@@ -95,138 +111,34 @@
 		}
 	}
 
+	&__index {
+		display: block;
+		font-family: var(--font-display, 'Noto Serif', Georgia, serif);
+		font-size: 2rem;
+		font-weight: 400;
+		line-height: 1;
+		letter-spacing: -0.02em;
+		color: var(--color-muted, #7a6b5d);
+	}
+
 	&__copy {
 		margin: 0;
 	}
 
 	&__name,
-	&__when,
-	&__index {
+	&__when {
 		display: block;
 		font-weight: 400;
 		letter-spacing: -0.02em;
 	}
-}
 
-// 1. Крупные цифры, без плашек. Разделители — линия Line под номером.
-.freshness--numbers {
-	.freshness__steps {
-		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 4.8rem;
-	}
-
-	.freshness__index {
-		margin-bottom: 2.4rem;
-		padding-bottom: 2rem;
-		border-bottom: 0.1rem solid var(--color-line, #eadfd5);
-		font-family: var(--font-display, 'Noto Serif', Georgia, serif);
-		font-size: 9.6rem;
-		line-height: 0.8;
-		letter-spacing: -0.04em;
-		color: var(--color-ink, #2b2118);
-	}
-
-	.freshness__name {
-		font-family: var(--font-text, 'Noto Sans', Helvetica, Arial, sans-serif);
-		font-size: 2.2rem;
-		line-height: 1.25;
-	}
-
-	.freshness__when {
-		margin-top: 0.6rem;
-		font-family: var(--font-text, 'Noto Sans', Helvetica, Arial, sans-serif);
-		font-size: 1.6rem;
-		line-height: 1.4;
-		color: var(--color-muted, #7a6b5d);
-	}
-}
-
-// 2. Карточки с радиусом кадра героя: 4.8rem 0 4.8rem 4.8rem.
-// Персик только у шага «У вас».
-.freshness--cards {
-	.freshness__steps {
-		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 2.4rem;
-		align-items: start;
-	}
-
-	.freshness__step {
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-end;
-		min-height: 24rem;
-		padding: 6.4rem 3.6rem 3.6rem;
-		background: var(--color-paper, #fdf3ea);
-		border: 0.1rem solid var(--color-line, #eadfd5);
-		border-radius: 4.8rem 0 4.8rem 4.8rem;
-
-		&:nth-child(2) {
-			margin-top: 3.2rem;
-		}
-	}
-
-	.freshness__name {
-		font-family: var(--font-display, 'Noto Serif', Georgia, serif);
-		font-size: 4.4rem;
-		line-height: 1;
-	}
-
-	.freshness__when {
-		margin-top: 1.2rem;
-		max-width: 22rem;
-		font-family: var(--font-text, 'Noto Sans', Helvetica, Arial, sans-serif);
-		font-size: 1.8rem;
-		line-height: 1.35;
-		color: var(--color-muted, #7a6b5d);
-	}
-
-	.freshness__step--accent {
-		.freshness__name {
-			color: var(--color-peach, #e89b6d);
-		}
-	}
-}
-
-// 3. Один бумажный кадр на всю ширину, внутри — три колонки и линии.
-.freshness--frame {
-	.freshness__steps {
-		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		overflow: hidden;
-		background: var(--color-paper, #fdf3ea);
-		border: 0.1rem solid var(--color-line, #eadfd5);
-		border-radius: 4.8rem 0 4.8rem 4.8rem;
-	}
-
-	.freshness__step {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		gap: 4.8rem;
-		min-height: 22rem;
-		padding: 4rem 3.6rem 3.6rem;
-
-		&:not(:last-child) {
-			border-right: 0.1rem solid var(--color-line, #eadfd5);
-		}
-	}
-
-	.freshness__index {
-		font-family: var(--font-display, 'Noto Serif', Georgia, serif);
-		font-size: 2rem;
-		line-height: 1;
-		color: var(--color-muted, #7a6b5d);
-	}
-
-	.freshness__name {
+	&__name {
 		font-family: var(--font-display, 'Noto Serif', Georgia, serif);
 		font-size: 4rem;
 		line-height: 1;
 	}
 
-	.freshness__when {
+	&__when {
 		margin-top: 1.2rem;
 		max-width: 24rem;
 		font-family: var(--font-text, 'Noto Sans', Helvetica, Arial, sans-serif);
@@ -235,7 +147,7 @@
 		color: var(--color-muted, #7a6b5d);
 	}
 
-	.freshness__step--accent {
+	&__step--accent {
 		.freshness__name,
 		.freshness__index {
 			color: var(--color-peach, #e89b6d);

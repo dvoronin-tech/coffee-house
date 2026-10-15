@@ -1,8 +1,6 @@
 import clsx from 'clsx';
 import styles from './Freshness.module.scss';
 
-export type FreshnessVariant = 'numbers' | 'cards' | 'frame';
-
 const steps = [
 	{ index: '01', name: 'Обжарка', when: 'сегодня', accent: false },
 	{
@@ -14,22 +12,10 @@ const steps = [
 	{ index: '03', name: 'У вас', when: 'на 1–3 день', accent: true },
 ] as const;
 
-const variantClass: Record<FreshnessVariant, string> = {
-	numbers: styles['freshness--numbers'],
-	cards: styles['freshness--cards'],
-	frame: styles['freshness--frame'],
-};
-
-type Props = {
-	variant?: FreshnessVariant;
-};
-
-export default function Freshness({ variant = 'numbers' }: Props) {
-	const showIndex = variant !== 'cards';
-
+export default function Freshness() {
 	return (
 		<section
-			className={clsx(styles.freshness, variantClass[variant])}
+			className={clsx(styles.freshness)}
 			aria-labelledby="freshness-title"
 		>
 			<div className={clsx(styles['freshness__inner'])}>
@@ -54,14 +40,12 @@ export default function Freshness({ variant = 'numbers' }: Props) {
 								step.accent && styles['freshness__step--accent'],
 							)}
 						>
-							{showIndex ? (
-								<span
-									className={clsx(styles['freshness__index'])}
-									aria-hidden="true"
-								>
-									{step.index}
-								</span>
-							) : null}
+							<span
+								className={clsx(styles['freshness__index'])}
+								aria-hidden="true"
+							>
+								{step.index}
+							</span>
 							<p className={clsx(styles['freshness__copy'])}>
 								<span className={clsx(styles['freshness__name'])}>
 									{step.name}

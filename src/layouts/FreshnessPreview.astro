@@ -3,16 +3,9 @@ import '../styles/tokens.scss';
 
 interface Props {
 	title: string;
-	current?: '1' | '2' | '3';
 }
 
-const { title, current } = Astro.props;
-
-const links = [
-	{ href: '/freshness/1', id: '1', label: 'Цифры' },
-	{ href: '/freshness/2', id: '2', label: 'Карточки' },
-	{ href: '/freshness/3', id: '3', label: 'Один кадр' },
-] as const;
+const { title } = Astro.props;
 ---
 
 <!doctype html>
@@ -24,18 +17,6 @@ const links = [
 		<title>{title}</title>
 	</head>
 	<body>
-		<nav class="switch" aria-label="Варианты секции">
-			{
-				links.map((link) => (
-					<a
-						href={link.href}
-						aria-current={current === link.id ? 'page' : undefined}
-					>
-						{link.label}
-					</a>
-				))
-			}
-		</nav>
 		<main>
 			<slot />
 		</main>
@@ -58,27 +39,5 @@ const links = [
 		font-size: 1.8rem;
 		line-height: 1.5;
 		letter-spacing: -0.02em;
-	}
-
-	.switch {
-		display: flex;
-		gap: 2.4rem;
-		max-width: calc(var(--page-width) + var(--page-gutter) * 2);
-		margin: 0 auto;
-		padding: 2.4rem var(--page-gutter) 0;
-	}
-
-	.switch a {
-		color: var(--color-muted);
-		font-size: 1.4rem;
-		line-height: 1.3;
-		text-decoration-line: underline;
-		text-decoration-color: transparent;
-		text-underline-offset: 0.4rem;
-	}
-
-	.switch a[aria-current='page'] {
-		color: var(--color-ink);
-		text-decoration-color: var(--color-peach);
 	}
 </style>
