@@ -8,31 +8,31 @@ interface Props {
 const { name, city, address, phoneLabel, phoneHref, hours } = Astro.props.data;
 ---
 
-<footer class="footer-masthead">
-	<div class="footer-masthead__inner">
-		<p class="footer-masthead__name">{name}</p>
-		<div class="footer-masthead__meta">
-			<address class="footer-masthead__contacts">
-				<p class="footer-masthead__place">{city}, {address}</p>
-				<a class="footer-masthead__phone" href={phoneHref}>{phoneLabel}</a>
+<footer class="footer">
+	<div class="footer__inner">
+		<p class="footer__name">{name}</p>
+		<div class="footer__meta">
+			<address class="footer__contacts">
+				<p class="footer__place">{city}, {address}</p>
+				<a class="footer__phone" href={phoneHref}>{phoneLabel}</a>
 			</address>
-			<p class="footer-masthead__hours">{hours}</p>
+			<p class="footer__hours">{hours}</p>
 		</div>
 	</div>
 </footer>
 
 <style lang="scss">
-	.footer-masthead {
+	.footer {
 		background-color: var(--color-background);
 	}
 
-	.footer-masthead__inner {
+	.footer__inner {
 		width: min(100%, calc(var(--page-width) + var(--page-gutter) * 2));
 		margin-inline: auto;
 		padding: 9.6rem var(--page-gutter) 6.4rem;
 	}
 
-	.footer-masthead__name {
+	.footer__name {
 		margin: 0;
 		font-family: var(--font-display);
 		font-size: 6.4rem;
@@ -41,7 +41,7 @@ const { name, city, address, phoneLabel, phoneHref, hours } = Astro.props.data;
 		letter-spacing: -0.02em;
 	}
 
-	.footer-masthead__meta {
+	.footer__meta {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
@@ -50,18 +50,18 @@ const { name, city, address, phoneLabel, phoneHref, hours } = Astro.props.data;
 		margin-top: 4.8rem;
 	}
 
-	.footer-masthead__contacts {
+	.footer__contacts {
 		margin: 0;
 		font-style: normal;
 	}
 
-	.footer-masthead__place {
+	.footer__place {
 		margin: 0;
 		font-size: 1.8rem;
 		line-height: 1.5;
 	}
 
-	.footer-masthead__phone {
+	.footer__phone {
 		display: inline-block;
 		margin-top: 1rem;
 		font-size: 1.8rem;
@@ -80,7 +80,7 @@ const { name, city, address, phoneLabel, phoneHref, hours } = Astro.props.data;
 		}
 	}
 
-	.footer-masthead__hours {
+	.footer__hours {
 		margin: 0;
 		font-size: 1.8rem;
 		line-height: 1.5;
