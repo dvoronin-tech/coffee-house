@@ -1,0 +1,87 @@
+---
+import type { FooterData } from '#/types/footer';
+
+interface Props {
+	data: FooterData;
+}
+
+const { name, city, address, phoneLabel, phoneHref, hours } = Astro.props.data;
+---
+
+<footer class="footer-columns">
+	<div class="footer-columns__inner">
+		<div class="footer-columns__grid">
+			<div class="footer-columns__who">
+				<p class="footer-columns__name">{name}</p>
+				<p class="footer-columns__place">{city}, {address}</p>
+			</div>
+			<address class="footer-columns__when">
+				<a class="footer-columns__phone" href={phoneHref}>{phoneLabel}</a>
+				<p class="footer-columns__hours">{hours}</p>
+			</address>
+		</div>
+	</div>
+</footer>
+
+<style lang="scss">
+	.footer-columns {
+		background-color: var(--color-background);
+	}
+
+	.footer-columns__inner {
+		width: min(100%, calc(var(--page-width) + var(--page-gutter) * 2));
+		margin-inline: auto;
+		padding: 6.4rem var(--page-gutter) 5.6rem;
+	}
+
+	.footer-columns__grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		column-gap: 6.4rem;
+		align-items: start;
+	}
+
+	.footer-columns__name {
+		margin: 0;
+		font-family: var(--font-display);
+		font-size: 3.2rem;
+		font-weight: 400;
+		line-height: 1.1;
+		letter-spacing: -0.02em;
+	}
+
+	.footer-columns__place {
+		margin: 1.2rem 0 0;
+		font-size: 1.8rem;
+		line-height: 1.5;
+	}
+
+	.footer-columns__when {
+		margin: 0;
+		font-style: normal;
+	}
+
+	.footer-columns__phone {
+		font-size: 1.8rem;
+		line-height: 1.5;
+		color: var(--color-accent);
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+			text-underline-offset: 0.4rem;
+		}
+
+		&:focus-visible {
+			outline: 0.2rem solid var(--color-text);
+			outline-offset: 0.4rem;
+		}
+	}
+
+	.footer-columns__hours {
+		margin: 0.6rem 0 0;
+		font-size: 1.6rem;
+		line-height: 1.5;
+		color: var(--color-secondary-text);
+	}
+</style>

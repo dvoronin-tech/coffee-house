@@ -2,6 +2,9 @@
 import { homeData } from '#/data';
 import Drips from '#/components/drips/Drips.astro';
 import Freshness from '#/components/freshness/Freshness.astro';
+import FooterColumns from '#/components/footer/FooterColumns.astro';
+import FooterInline from '#/components/footer/FooterInline.astro';
+import FooterMasthead from '#/components/footer/FooterMasthead.astro';
 import Header from '#/components/header/Header.astro';
 import Hero from '#/components/hero/Hero.astro';
 import History from '#/components/history/History.astro';
@@ -18,4 +21,7 @@ import Layout from '#/layouts/Layout.astro';
 		<Frames data={homeData.framesData} />
 		<Drips data={homeData.dripsData} />
 	</main>
+	<FooterInline data={homeData.footerData} />
+	<FooterMasthead data={homeData.footerData} />
+	<FooterColumns data={homeData.footerData} />
 </Layout>
