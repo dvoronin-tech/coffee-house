@@ -122,16 +122,6 @@ const beans = [
 
     @keyframes history-drift-back {
         from {
-            transform: translateY(-2.4rem);
-        }
-
-        to {
-            transform: translateY(2.4rem);
-        }
-    }
-
-    @keyframes history-drift-card {
-        from {
             transform: translateY(-3rem);
         }
 
@@ -140,13 +130,23 @@ const beans = [
         }
     }
 
-    @keyframes history-drift-bean {
+    @keyframes history-drift-card {
         from {
-            transform: translateY(-7rem);
+            transform: translateY(-4rem);
         }
 
         to {
-            transform: translateY(7rem);
+            transform: translateY(4rem);
+        }
+    }
+
+    @keyframes history-drift-bean {
+        from {
+            transform: translateY(-10rem);
+        }
+
+        to {
+            transform: translateY(10rem);
         }
     }
 
