@@ -3,6 +3,7 @@ import { homeData } from '#/data';
 import Freshness from '#/components/freshness/Freshness.astro';
 import Header from '#/components/header/Header.astro';
 import Hero from '#/components/hero/Hero.astro';
+import History from '#/components/history/History.astro';
 import Layout from '#/layouts/Layout.astro';
 ---
 
@@ -11,5 +12,6 @@ import Layout from '#/layouts/Layout.astro';
 	<main>
 		<Hero data={homeData.heroData} />
 		<Freshness data={homeData.freshnessData} />
+		<History data={homeData.historyData} />
 	</main>
 </Layout>
