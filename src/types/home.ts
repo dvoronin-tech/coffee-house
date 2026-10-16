@@ -1,4 +1,5 @@
 import type { DripsData } from '#/types/drips';
+import type { FooterData } from '#/types/footer';
 import type { FreshnessData } from '#/types/freshness';
 import type { FramesData } from '#/types/frames';
 import type { HeaderData } from '#/types/header';
@@ -12,4 +13,5 @@ export type HomePageData = {
 	historyData: HistoryData;
 	framesData: FramesData;
 	dripsData: DripsData;
+	footerData: FooterData;
 };
