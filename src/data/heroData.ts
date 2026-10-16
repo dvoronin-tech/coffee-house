@@ -1,4 +1,4 @@
-import type { HeroData } from '../types/hero';
+import type { HeroData } from '#/types/hero';
 
 export const heroData: HeroData = {
     title: 'Кварта',

@@ -1,4 +1,4 @@
-import type { HeaderData } from '../types/header';
+import type { HeaderData } from '#/types/header';
 
 export const headerData: HeaderData = {
 	logoLabel: 'Кварта',
