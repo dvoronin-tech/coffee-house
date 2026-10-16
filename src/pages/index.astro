@@ -1,5 +1,8 @@
 ---
 import { homeData } from '#/data';
+import ContactVariantA from '#/components/contact/variants/ContactVariantA.astro';
+import ContactVariantB from '#/components/contact/variants/ContactVariantB.astro';
+import ContactVariantC from '#/components/contact/variants/ContactVariantC.astro';
 import Drips from '#/components/drips/Drips.astro';
 import Freshness from '#/components/freshness/Freshness.astro';
 import Header from '#/components/header/Header.astro';
@@ -17,5 +20,8 @@ import Layout from '#/layouts/Layout.astro';
 		<History data={homeData.historyData} />
 		<Frames data={homeData.framesData} />
 		<Drips data={homeData.dripsData} />
+		<ContactVariantA data={homeData.contactData} />
+		<ContactVariantB data={homeData.contactData} />
+		<ContactVariantC data={homeData.contactData} />
 	</main>
 </Layout>
