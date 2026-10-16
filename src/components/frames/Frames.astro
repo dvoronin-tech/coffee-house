@@ -1,15 +1,10 @@
 ---
+import { Picture } from 'astro:assets';
 import type { FramesData } from '#/types/frames';
 
-import grainLarge from '#/assets/frames-grain-1600.webp';
-import grainMedium from '#/assets/frames-grain-800.webp';
-import grainSmall from '#/assets/frames-grain-480.webp';
-import roastLarge from '#/assets/frames-roast-1600.webp';
-import roastMedium from '#/assets/frames-roast-800.webp';
-import roastSmall from '#/assets/frames-roast-480.webp';
-import dripLarge from '#/assets/frames-drip-1600.webp';
-import dripMedium from '#/assets/frames-drip-800.webp';
-import dripSmall from '#/assets/frames-drip-480.webp';
+import grainPhoto from '#/assets/frames-grain.webp';
+import roastPhoto from '#/assets/frames-roast.webp';
+import dripPhoto from '#/assets/frames-drip.webp';
 
 interface Props {
 	data: FramesData;
@@ -17,20 +12,11 @@ interface Props {
 
 const { frames } = Astro.props.data;
 
-const sources = [
-	{
-		src: grainLarge,
-		srcset: `${grainSmall.src} 480w, ${grainMedium.src} 800w, ${grainLarge.src} 1600w`,
-	},
-	{
-		src: roastLarge,
-		srcset: `${roastSmall.src} 480w, ${roastMedium.src} 800w, ${roastLarge.src} 1600w`,
-	},
-	{
-		src: dripLarge,
-		srcset: `${dripSmall.src} 480w, ${dripMedium.src} 800w, ${dripLarge.src} 1600w`,
-	},
-];
+const sources = [grainPhoto, roastPhoto, dripPhoto];
+
+const widths = [480, 800, 1600];
+const sizes =
+	'(min-width: 120rem) 36.8rem, calc((100vw - var(--page-gutter) * 2 - 9.6rem) / 3)';
 ---
 
 <section class="frames" aria-label="Три кадра из мастерской">
@@ -40,13 +26,13 @@ const sources = [
 				frames.map((frame, index) => (
 					<li class:list={['frames__item', `frames__item--${index + 1}`]}>
 						<div class="frames__frame">
-							<img
+							<Picture
 								class="frames__media"
-								src={sources[index].src.src}
-								srcset={sources[index].srcset}
-								sizes="(min-width: 120rem) 36.8rem, calc((100vw - var(--page-gutter) * 2 - 9.6rem) / 3)"
-								width={sources[index].src.width}
-								height={sources[index].src.height}
+								src={sources[index]}
+								formats={['avif', 'webp']}
+								fallbackFormat="webp"
+								widths={widths}
+								sizes={sizes}
 								alt={frame.alt}
 								loading="lazy"
 								decoding="async"
