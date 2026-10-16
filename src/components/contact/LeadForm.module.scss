@@ -21,24 +21,35 @@
 }
 
 .label {
+    color: var(--color-secondary-text);
     font-size: 1.4rem;
     line-height: 1.3;
 }
 
 .input {
     width: 100%;
-    padding: 0;
+    padding: 1.5rem 1.6rem;
     font: inherit;
     font-size: 1.6rem;
     line-height: 1.4;
-    color: inherit;
-    background: none;
-    border: 0.1rem solid transparent;
-    border-radius: 0;
+    color: var(--color-text);
+    background-color: var(--color-background);
+    border: 0.1rem solid var(--color-border);
+    border-radius: 1.2rem;
     outline: none;
-    transition:
-        border-color 0.2s ease,
-        background-color 0.2s ease;
+    transition: border-color 0.2s ease;
+
+    &::placeholder {
+        color: color-mix(
+            in srgb,
+            var(--color-secondary-text) 70%,
+            var(--color-background)
+        );
+    }
+
+    &:focus-visible {
+        border-color: var(--color-text);
+    }
 }
 
 .textarea {
@@ -46,25 +57,34 @@
     resize: vertical;
 }
 
-.input::placeholder {
-    opacity: 1;
-}
-
 .fieldError {
     margin: 0;
+    color: var(--color-danger);
     font-size: 1.3rem;
     line-height: 1.35;
 }
 
 .button {
+    height: 5.2rem;
     font: inherit;
     font-size: 1.6rem;
     line-height: 1.2;
+    color: var(--color-text);
     cursor: pointer;
+    background-color: var(--color-accent);
     border: none;
+    border-radius: 1.2rem;
     transition:
         background-color 0.2s ease,
         opacity 0.2s ease;
+
+    &:hover:not(:disabled) {
+        background-color: color-mix(
+            in srgb,
+            var(--color-accent) 86%,
+            var(--color-text)
+        );
+    }
 
     &:disabled {
         opacity: 0.55;
@@ -76,18 +96,21 @@
     display: grid;
     gap: 0.8rem;
     padding: 2.8rem 3.2rem;
-    border: 0.1rem solid;
+    border: 0.1rem solid
+        color-mix(in srgb, var(--color-success) 42%, var(--color-border));
     border-radius: 1.2rem;
 }
 
 .successTitle {
     margin: 0;
+    color: var(--color-success);
     font-size: 1.8rem;
     line-height: 1.3;
 }
 
 .successText {
     margin: 0;
+    color: var(--color-secondary-text);
     font-size: 1.5rem;
     line-height: 1.5;
 }
@@ -97,6 +120,22 @@
     gap: 0.4rem;
     padding-left: 1.6rem;
     border-left: 0.2rem solid var(--color-border);
+}
+
+.statusError {
+    border-left-color: var(--color-danger);
+
+    .statusTitle {
+        color: var(--color-danger);
+    }
+}
+
+.statusDuplicate {
+    border-left-color: var(--color-success);
+
+    .statusText {
+        color: var(--color-secondary-text);
+    }
 }
 
 .statusTitle {
@@ -112,334 +151,11 @@
 }
 
 .statusPhone {
-    color: inherit;
+    color: var(--color-text);
     text-decoration: underline;
     text-underline-offset: 0.3rem;
 
     &:hover {
         text-decoration: none;
-    }
-}
-
-.card {
-    .label {
-        color: var(--color-secondary-text);
-    }
-
-    .input {
-        padding: 1.5rem 1.6rem;
-        background-color: var(--color-background);
-        border-color: var(--color-border);
-        border-radius: 1.2rem;
-        color: var(--color-text);
-
-        &::placeholder {
-            color: color-mix(
-                in srgb,
-                var(--color-secondary-text) 70%,
-                var(--color-background)
-            );
-        }
-
-        &:focus-visible {
-            border-color: var(--color-text);
-        }
-    }
-
-    .fieldError {
-        color: var(--color-danger);
-    }
-
-    .button {
-        height: 5.2rem;
-        border-radius: 1.2rem;
-        background-color: var(--color-accent);
-        color: var(--color-text);
-
-        &:hover:not(:disabled) {
-            background-color: color-mix(
-                in srgb,
-                var(--color-accent) 86%,
-                var(--color-text)
-            );
-        }
-    }
-
-    .success {
-        border-color: color-mix(
-            in srgb,
-            var(--color-success) 42%,
-            var(--color-border)
-        );
-    }
-
-    .successTitle {
-        color: var(--color-success);
-    }
-
-    .successText {
-        color: var(--color-secondary-text);
-    }
-
-    .statusError {
-        border-left-color: var(--color-danger);
-
-        .statusTitle {
-            color: var(--color-danger);
-        }
-    }
-
-    .statusPhone {
-        color: var(--color-text);
-    }
-}
-
-.editorial {
-    gap: 3.2rem;
-
-    .fields {
-        gap: 2.8rem;
-    }
-
-    .label {
-        font-size: 1.2rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: color-mix(
-            in srgb,
-            var(--color-background) 60%,
-            var(--color-text)
-        );
-    }
-
-    .input {
-        padding: 1rem 0 1.3rem;
-        border-width: 0 0 0.1rem;
-        border-color: color-mix(
-            in srgb,
-            var(--color-background) 28%,
-            var(--color-text)
-        );
-        color: var(--color-background);
-
-        &::placeholder {
-            color: color-mix(
-                in srgb,
-                var(--color-background) 42%,
-                var(--color-text)
-            );
-        }
-
-        &:focus-visible {
-            border-color: var(--color-accent);
-        }
-    }
-
-    .fieldError {
-        color: color-mix(
-            in srgb,
-            var(--color-danger) 58%,
-            var(--color-background)
-        );
-    }
-
-    .button {
-        align-self: flex-start;
-        padding: 1.7rem 4.4rem;
-        border-radius: 99rem;
-        background-color: var(--color-accent);
-        color: var(--color-text);
-
-        &:hover:not(:disabled) {
-            background-color: color-mix(
-                in srgb,
-                var(--color-accent) 86%,
-                var(--color-text)
-            );
-        }
-    }
-
-    .success {
-        padding: 0.4rem 0 0.4rem 1.6rem;
-        border: none;
-        border-left: 0.2rem solid
-            color-mix(
-                in srgb,
-                var(--color-success) 58%,
-                var(--color-background)
-            );
-        border-radius: 0;
-    }
-
-    .successTitle {
-        color: color-mix(
-            in srgb,
-            var(--color-success) 58%,
-            var(--color-background)
-        );
-    }
-
-    .successText,
-    .statusText,
-    .statusDuplicate .statusText {
-        color: color-mix(
-            in srgb,
-            var(--color-background) 76%,
-            var(--color-text)
-        );
-    }
-
-    .statusError {
-        border-left-color: color-mix(
-            in srgb,
-            var(--color-danger) 58%,
-            var(--color-background)
-        );
-
-        .statusTitle {
-            color: color-mix(
-                in srgb,
-                var(--color-danger) 58%,
-                var(--color-background)
-            );
-        }
-    }
-
-    .statusDuplicate {
-        border-left-color: color-mix(
-            in srgb,
-            var(--color-success) 58%,
-            var(--color-background)
-        );
-    }
-
-    .statusPhone {
-        color: var(--color-accent);
-    }
-}
-
-.panel {
-    gap: 2rem;
-
-    .fields {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1.8rem 1.6rem;
-    }
-
-    .label {
-        font-size: 1.3rem;
-        color: color-mix(
-            in srgb,
-            var(--color-background) 62%,
-            var(--color-text)
-        );
-    }
-
-    .input {
-        padding: 1.3rem 1.4rem;
-        background-color: color-mix(
-            in srgb,
-            var(--color-background) 6%,
-            transparent
-        );
-        border-color: color-mix(
-            in srgb,
-            var(--color-background) 26%,
-            transparent
-        );
-        border-radius: 0.8rem;
-        color: var(--color-background);
-
-        &::placeholder {
-            color: color-mix(
-                in srgb,
-                var(--color-background) 40%,
-                var(--color-text)
-            );
-        }
-
-        &:focus-visible {
-            border-color: var(--color-accent);
-        }
-    }
-
-    .textarea {
-        min-height: 6.4rem;
-    }
-
-    .fieldError {
-        color: color-mix(
-            in srgb,
-            var(--color-danger) 58%,
-            var(--color-background)
-        );
-    }
-
-    .button {
-        align-self: flex-start;
-        height: 4.8rem;
-        padding: 0 4.4rem;
-        border-radius: 0.8rem;
-        background-color: var(--color-accent);
-        color: var(--color-text);
-
-        &:hover:not(:disabled) {
-            background-color: color-mix(
-                in srgb,
-                var(--color-accent) 86%,
-                var(--color-text)
-            );
-        }
-    }
-
-    .success {
-        padding: 2.4rem 2.8rem;
-        border-color: color-mix(in srgb, var(--color-success) 45%, transparent);
-    }
-
-    .successTitle {
-        color: color-mix(
-            in srgb,
-            var(--color-success) 58%,
-            var(--color-background)
-        );
-    }
-
-    .successText,
-    .statusText,
-    .statusDuplicate .statusText {
-        color: color-mix(
-            in srgb,
-            var(--color-background) 76%,
-            var(--color-text)
-        );
-    }
-
-    .statusError {
-        border-left-color: color-mix(
-            in srgb,
-            var(--color-danger) 58%,
-            var(--color-background)
-        );
-
-        .statusTitle {
-            color: color-mix(
-                in srgb,
-                var(--color-danger) 58%,
-                var(--color-background)
-            );
-        }
-    }
-
-    .statusDuplicate {
-        border-left-color: color-mix(
-            in srgb,
-            var(--color-success) 58%,
-            var(--color-background)
-        );
-    }
-
-    .statusPhone {
-        color: var(--color-accent);
     }
 }
