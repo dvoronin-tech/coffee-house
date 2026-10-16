@@ -1,3 +1,4 @@
+import type { DripsData } from '#/types/drips';
 import type { FreshnessData } from '#/types/freshness';
 import type { HeaderData } from '#/types/header';
 import type { HeroData } from '#/types/hero';
@@ -8,4 +9,5 @@ export type HomePageData = {
 	heroData: HeroData;
 	freshnessData: FreshnessData;
 	historyData: HistoryData;
+	dripsData: DripsData;
 };

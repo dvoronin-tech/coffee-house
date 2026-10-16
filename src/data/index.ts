@@ -1,4 +1,5 @@
 import type { HomePageData } from '#/types/home';
+import { dripsData } from '#/data/dripsData';
 import { freshnessData } from '#/data/freshnessData';
 import { headerData } from '#/data/headerData';
 import { heroData } from '#/data/heroData';
@@ -9,4 +10,5 @@ export const homeData: HomePageData = {
 	heroData,
 	freshnessData,
 	historyData,
+	dripsData,
 };
