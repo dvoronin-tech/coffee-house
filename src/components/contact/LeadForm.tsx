@@ -5,8 +5,6 @@ import type { ContactData } from '#/types/contact';
 
 import styles from './LeadForm.module.scss';
 
-export type LeadFormVariant = 'card' | 'editorial' | 'panel';
-
 type FieldName = 'name' | 'phone' | 'email' | 'comment';
 
 type LeadValues = Record<FieldName, string>;
@@ -82,10 +80,9 @@ function collectSource(): LeadSource {
 
 interface Props {
     data: ContactData;
-    variant?: LeadFormVariant;
 }
 
-export default function LeadForm({ data, variant = 'card' }: Props) {
+export default function LeadForm({ data }: Props) {
     const [values, setValues] = useState<LeadValues>({
         name: '',
         phone: '',
@@ -142,11 +139,7 @@ export default function LeadForm({ data, variant = 'card' }: Props) {
     const pending = status === 'submitting';
 
     return (
-        <form
-            className={clsx(styles.form, styles[variant])}
-            noValidate
-            onSubmit={handleSubmit}
-        >
+        <form className={styles.form} noValidate onSubmit={handleSubmit}>
             {SOURCE_INPUTS.map((name) => (
                 <input
                     key={name}

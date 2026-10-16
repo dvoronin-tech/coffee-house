@@ -9,10 +9,10 @@ interface Props {
 const { data } = Astro.props;
 ---
 
-<section id="contact-a" class="contact" aria-labelledby="contact-a-title">
+<section class="contact" aria-labelledby="contact-title">
     <div class="contact__inner">
         <div class="contact__intro">
-            <h2 id="contact-a-title" class="contact__title">{data.title}</h2>
+            <h2 id="contact-title" class="contact__title">{data.title}</h2>
             <p class="contact__lead">{data.lead}</p>
             <dl class="contact__list">
                 <div class="contact__item">
@@ -35,13 +35,13 @@ const { data } = Astro.props;
         </div>
         <div class="contact__form" id="contact-form">
             <p class="contact__kicker">{data.formKicker}</p>
-            <LeadForm client:visible variant="card" data={data} />
+            <LeadForm client:visible data={data} />
         </div>
     </div>
 </section>
 
 <style lang="scss">
-    @keyframes contact-a-rise {
+    @keyframes contact-rise {
         from {
             opacity: 0;
             transform: translateY(3rem);
@@ -56,7 +56,7 @@ const { data } = Astro.props;
     @mixin rise($range) {
         @media (prefers-reduced-motion: no-preference) {
             @supports (animation-timeline: view()) {
-                animation: contact-a-rise auto linear both;
+                animation: contact-rise auto linear both;
                 animation-timeline: view();
                 animation-range: #{$range};
             }
