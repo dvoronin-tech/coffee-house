@@ -61,12 +61,29 @@ const { title, price, facts, ctaLabel, ctaHref, note } = Astro.props.data;
     }
 
     .subscription {
-        background-color: var(--color-accent);
+        position: relative;
+        isolation: isolate;
         color: var(--color-text);
 
         @supports (animation-timeline: view()) {
             view-timeline-name: --subscription;
             view-timeline-axis: block;
+        }
+    }
+
+    .subscription::before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        inset: 0;
+        background-color: var(--color-accent);
+
+        @media (prefers-reduced-motion: no-preference) {
+            @supports (animation-timeline: view()) {
+                animation: subscription-card auto linear both;
+                animation-timeline: --subscription;
+                animation-range: cover 55% cover 80%;
+            }
         }
     }
 
@@ -80,6 +97,14 @@ const { title, price, facts, ctaLabel, ctaHref, note } = Astro.props.data;
         width: min(100%, calc(var(--page-width) + var(--page-gutter) * 2));
         margin-inline: auto;
         padding: 14rem var(--page-gutter) 8rem;
+
+        @media (prefers-reduced-motion: no-preference) and (min-width: 1280px) {
+            @supports (animation-timeline: view()) {
+                animation: subscription-inset auto linear both;
+                animation-timeline: --subscription;
+                animation-range: cover 55% cover 80%;
+            }
+        }
     }
 
     .subscription__title {
@@ -223,7 +248,31 @@ const { title, price, facts, ctaLabel, ctaHref, note } = Astro.props.data;
         color: color-mix(in srgb, var(--color-text) 64%, transparent);
     }
 
+    @keyframes subscription-card {
+        to {
+            inset-inline: calc(
+                var(--page-gutter) +
+                    max(
+                        (100% - var(--page-width) - 2 * var(--page-gutter)) / 2,
+                        0rem
+                    )
+            );
+            border-radius: 4.8rem 0 4.8rem 4.8rem;
+        }
+    }
+
+    @keyframes subscription-inset {
+        to {
+            padding-inline: calc(var(--page-gutter) * 2);
+        }
+    }
+
     @media (prefers-reduced-motion: reduce) {
+        .subscription::before,
+        .subscription__band {
+            animation: none;
+        }
+
         .subscription__title,
         .subscription__bottom {
             animation: none;
