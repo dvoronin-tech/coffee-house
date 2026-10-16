@@ -11,13 +11,9 @@ const { title, facts, ctaLabel, ctaHref, note } = Astro.props.data;
 <section id="subscribe" class="subscription" aria-labelledby="subscription-title">
     <div class="subscription__inner">
         <div class="subscription__block">
-            <div class="subscription__intro">
-                <h2 id="subscription-title" class="subscription__title">
-                    {title}
-                </h2>
-                <p class="subscription__note">{note}</p>
-                <a class="subscription__cta" href={ctaHref}>{ctaLabel}</a>
-            </div>
+            <h2 id="subscription-title" class="subscription__title">
+                {title}
+            </h2>
             <ul class="subscription__facts">
                 {
                     facts.map((fact) => (
@@ -32,6 +28,8 @@ const { title, facts, ctaLabel, ctaHref, note } = Astro.props.data;
                     ))
                 }
             </ul>
+            <a class="subscription__cta" href={ctaHref}>{ctaLabel}</a>
+            <p class="subscription__note">{note}</p>
         </div>
     </div>
 </section>
@@ -61,15 +59,15 @@ const { title, facts, ctaLabel, ctaHref, note } = Astro.props.data;
     }
 
     .subscription__block {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-        gap: 6.4rem;
-        align-items: start;
-        width: min(100%, 96rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: min(100%, 80rem);
         margin: 0 auto;
-        padding: 7.2rem 8rem;
+        padding: 8rem 7.2rem;
         background-color: var(--color-accent);
         border-radius: 4.8rem 0 4.8rem 4.8rem;
+        text-align: center;
 
         @media (prefers-reduced-motion: no-preference) {
             @supports (animation-timeline: view()) {
@@ -80,38 +78,21 @@ const { title, facts, ctaLabel, ctaHref, note } = Astro.props.data;
         }
     }
 
-    .subscription__intro {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 2.4rem;
-    }
-
     .subscription__title {
         margin: 0;
         font-family: var(--font-display);
-        font-size: 4.8rem;
+        font-size: 5.2rem;
         font-weight: 400;
         line-height: 1.08;
         letter-spacing: -0.02em;
         text-wrap: balance;
     }
 
-    .subscription__note {
-        margin: 0;
-        max-width: 28rem;
-        font-size: 1.4rem;
-        line-height: 1.4;
-        text-wrap: pretty;
-        color: color-mix(in srgb, var(--color-text) 64%, transparent);
-    }
-
     .subscription__facts {
-        align-self: center;
         display: flex;
         flex-direction: column;
         gap: 1.6rem;
-        margin: 0;
+        margin: 4.8rem 0 0;
         padding: 0;
         list-style: none;
     }
@@ -119,6 +100,7 @@ const { title, facts, ctaLabel, ctaHref, note } = Astro.props.data;
     .subscription__fact {
         display: flex;
         align-items: baseline;
+        justify-content: center;
         gap: 1.2rem;
     }
 
@@ -140,7 +122,7 @@ const { title, facts, ctaLabel, ctaHref, note } = Astro.props.data;
         align-items: center;
         justify-content: center;
         min-height: 4.4rem;
-        margin-top: 1.6rem;
+        margin-top: 4.8rem;
         padding: 0.8rem 2.8rem;
         border-radius: 4.8rem;
         background-color: var(--color-background);
@@ -161,6 +143,15 @@ const { title, facts, ctaLabel, ctaHref, note } = Astro.props.data;
             outline: 0.2rem solid var(--color-text);
             outline-offset: 0.4rem;
         }
+    }
+
+    .subscription__note {
+        margin: 2.4rem 0 0;
+        max-width: 32rem;
+        font-size: 1.4rem;
+        line-height: 1.4;
+        text-wrap: pretty;
+        color: color-mix(in srgb, var(--color-text) 64%, transparent);
     }
 
     @media (prefers-reduced-motion: reduce) {
