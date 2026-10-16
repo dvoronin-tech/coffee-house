@@ -7,9 +7,14 @@
     --color-secondary-text: #7a6b5d;
     --color-accent: #e89b6d;
     --color-border: #eadfd5;
-    --color-surface-glass: color-mix(in srgb, var(--color-background) 30%, transparent);
-    --font-display:
-        'Gambarino', 'Iowan Old Style', Palatino, serif;
+    --color-danger: #b5483d;
+    --color-success: #4a7c59;
+    --color-surface-glass: color-mix(
+        in srgb,
+        var(--color-background) 30%,
+        transparent
+    );
+    --font-display: 'Gambarino', 'Iowan Old Style', Palatino, serif;
     --font-text: 'Manrope', 'Segoe UI', sans-serif;
     --page-width: 120rem;
     --page-gutter: 4.8rem;
