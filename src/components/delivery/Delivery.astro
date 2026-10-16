@@ -10,15 +10,15 @@ const { shipping, pickup } = Astro.props.data;
 
 <section id="delivery" class="delivery" aria-label="Доставка и самовывоз">
 	<div class="delivery__inner">
-		<article class="delivery__column delivery__column--shipping">
-			<p class="delivery__eyebrow">{shipping.eyebrow}</p>
+		<article class="delivery__card">
+			<p class="delivery__badge">{shipping.eyebrow}</p>
 			<h2 class="delivery__title">{shipping.title}</h2>
 			<dl class="delivery__lines">
 				{
 					shipping.facts.map((fact) => (
 						<div class="delivery__line">
 							<dt class="delivery__term">{fact.label}</dt>
-							<dd class="delivery__description">{fact.value}</dd>
+							<dd class="delivery__value">{fact.value}</dd>
 						</div>
 					))
 				}
@@ -26,15 +26,16 @@ const { shipping, pickup } = Astro.props.data;
 			<p class="delivery__note">{shipping.subscriptionNote}</p>
 			<p class="delivery__note delivery__note--muted">{shipping.scopeNote}</p>
 		</article>
-		<article class="delivery__column delivery__column--pickup">
+
+		<article class="delivery__plain">
 			<p class="delivery__eyebrow">{pickup.eyebrow}</p>
-			<h2 class="delivery__title">{pickup.title}</h2>
+			<h2 class="delivery__title delivery__title--plain">{pickup.title}</h2>
 			<dl class="delivery__lines">
 				{
 					pickup.facts.map((fact) => (
 						<div class="delivery__line">
 							<dt class="delivery__term">{fact.label}</dt>
-							<dd class="delivery__description">{fact.value}</dd>
+							<dd class="delivery__value">{fact.value}</dd>
 						</div>
 					))
 				}
@@ -43,12 +44,7 @@ const { shipping, pickup } = Astro.props.data;
 				<a class="delivery__phone" href={pickup.phoneHref}>
 					{pickup.phoneValue}
 				</a>
-				<a
-					class="delivery__map"
-					href={pickup.mapHref}
-					target="_blank"
-					rel="noopener noreferrer"
-				>
+				<a class="delivery__map" href={pickup.mapHref} target="_blank" rel="noopener noreferrer">
 					{pickup.mapLabel}
 				</a>
 			</p>
@@ -87,43 +83,45 @@ const { shipping, pickup } = Astro.props.data;
 
 	.delivery__inner {
 		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+		grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+		gap: 4.8rem;
 		max-width: var(--page-width);
 		margin: 0 auto;
 	}
 
-	.delivery__column {
-		&--shipping {
-			padding-right: 6.4rem;
+	.delivery__card {
+		background-color: var(--color-surface);
+		border: 0.2rem solid var(--color-accent);
+		border-radius: 1.6rem;
+		padding: 4.8rem;
 
-			@include rise('cover 10% cover 30%');
-		}
-
-		&--pickup {
-			padding-left: 6.4rem;
-			border-left: 0.1rem solid var(--color-border);
-
-			@include rise('cover 16% cover 36%');
-		}
+		@include rise('cover 10% cover 30%');
 	}
 
-	.delivery__eyebrow {
+	.delivery__badge {
+		display: inline-block;
 		margin: 0;
-		color: var(--color-secondary-text);
-		font-size: 1.4rem;
-		line-height: 1.2;
+		padding: 0.6rem 1.6rem;
+		border-radius: 99rem;
+		background-color: var(--color-accent);
+		color: var(--color-text);
+		font-size: 1.3rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
 	}
 
 	.delivery__title {
-		display: inline-block;
-		margin: 1.6rem 0 0;
-		padding-bottom: 2.4rem;
-		border-bottom: 0.1rem solid var(--color-border);
+		display: block;
+		margin: 2.4rem 0 0;
 		font-family: var(--font-display);
-		font-size: 4.8rem;
+		font-size: 5.6rem;
 		font-weight: 400;
 		line-height: 1.08;
 		letter-spacing: -0.02em;
+
+		&--plain {
+			font-size: 4rem;
+		}
 	}
 
 	.delivery__lines {
@@ -145,7 +143,7 @@ const { shipping, pickup } = Astro.props.data;
 		line-height: 1.4;
 	}
 
-	.delivery__description {
+	.delivery__value {
 		margin: 0;
 		font-family: var(--font-display);
 		font-size: 2.4rem;
@@ -162,6 +160,20 @@ const { shipping, pickup } = Astro.props.data;
 		&--muted {
 			color: var(--color-secondary-text);
 		}
+	}
+
+	.delivery__plain {
+		padding: 4.8rem 0 4.8rem 4.8rem;
+		border-left: 0.1rem solid var(--color-border);
+
+		@include rise('cover 20% cover 48%');
+	}
+
+	.delivery__eyebrow {
+		margin: 0;
+		color: var(--color-secondary-text);
+		font-size: 1.4rem;
+		line-height: 1.2;
 	}
 
 	.delivery__links {
@@ -207,8 +219,8 @@ const { shipping, pickup } = Astro.props.data;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.delivery__column--shipping,
-		.delivery__column--pickup {
+		.delivery__card,
+		.delivery__plain {
 			animation: none;
 			opacity: 1;
 			transform: none;
