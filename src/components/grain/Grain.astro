@@ -14,37 +14,32 @@ const { title, lead, ctaLabel, ctaHref, lots } = Astro.props.data;
             <h2 id="grain-title" class="grain__title">{title}</h2>
             <p class="grain__lead">{lead}</p>
         </div>
-        <ol class="grain__lots">
+        <ul class="grain__cards">
             {
                 lots.map((lot, index) => (
-                    <li class="grain__lot">
+                    <li class="grain__card">
                         <span class="grain__index" aria-hidden="true">
                             {`0${index + 1}`}
                         </span>
-                        <div class="grain__about">
-                            <h3 class="grain__name">
-                                {lot.country}&nbsp;{lot.variety}
-                            </h3>
-                            <p class="grain__notes">
-                                {lot.notes}
-                                {lot.tag && <span>, {lot.tag}</span>}
-                            </p>
-                        </div>
-                        <div class="grain__order">
-                            <p class="grain__price">
-                                {lot.price}
-                                <span class="grain__unit">
-                                    BYN / {lot.weight}
-                                </span>
-                            </p>
-                            <a class="grain__cta" href={ctaHref}>
-                                {ctaLabel}
-                            </a>
-                        </div>
+                        <p class="grain__price">
+                            {lot.price}
+                            <span class="grain__unit">BYN</span>
+                        </p>
+                        <p class="grain__weight">{lot.weight}</p>
+                        <h3 class="grain__name">
+                            {lot.country}&nbsp;{lot.variety}
+                        </h3>
+                        <p class="grain__notes">
+                            {lot.notes}
+                            {lot.tag && <span>, {lot.tag}</span>}
+                        </p>
+                        <a class="grain__cta" href={ctaHref}>
+                            {ctaLabel}
+                        </a>
                     </li>
                 ))
             }
-        </ol>
+        </ul>
     </div>
 </section>
 
@@ -114,23 +109,23 @@ const { title, lead, ctaLabel, ctaHref, lots } = Astro.props.data;
         @include rise('cover 8% cover 28%');
     }
 
-    .grain__lots {
+    .grain__cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 2.4rem;
         margin: 7.2rem 0 0;
         padding: 0;
         list-style: none;
-        border-bottom: 0.1rem solid var(--color-border);
     }
 
-    .grain__lot {
-        display: grid;
-        grid-template-columns: auto minmax(0, 1fr) auto;
-        column-gap: 4rem;
-        align-items: baseline;
-        padding-block: 4rem;
-
-        &:not(:first-child) {
-            border-top: 0.1rem solid var(--color-border);
-        }
+    .grain__card {
+        display: flex;
+        flex-direction: column;
+        min-height: 32rem;
+        padding: 3.6rem;
+        background-color: var(--color-surface);
+        border: 0.1rem solid var(--color-border);
+        border-radius: 4.8rem 0 4.8rem 4.8rem;
 
         &:nth-child(1) {
             @include rise('cover 10% cover 24%');
@@ -153,50 +148,54 @@ const { title, lead, ctaLabel, ctaHref, lots } = Astro.props.data;
         color: var(--color-secondary-text);
     }
 
-    .grain__about {
+    .grain__price {
         display: flex;
-        flex-direction: column;
-        gap: 0.8rem;
+        align-items: baseline;
+        gap: 1.2rem;
+        margin: 2.4rem 0 0;
+        font-family: var(--font-display);
+        font-size: 6.4rem;
+        font-weight: 400;
+        line-height: 1;
+        letter-spacing: -0.02em;
+    }
+
+    .grain__unit {
+        font-family: var(--font-text);
+        font-size: 1.8rem;
+        letter-spacing: -0.02em;
+        color: var(--color-secondary-text);
+    }
+
+    .grain__weight {
+        margin: 0.8rem 0 0;
+        font-size: 1.6rem;
+        line-height: 1.3;
+        color: var(--color-secondary-text);
     }
 
     .grain__name {
-        margin: 0;
+        margin: 2.8rem 0 0;
         font-family: var(--font-display);
-        font-size: 4rem;
+        font-size: 2.8rem;
         font-weight: 400;
-        line-height: 1.05;
+        line-height: 1.1;
         letter-spacing: -0.02em;
     }
 
     .grain__notes {
-        margin: 0;
-        font-size: 1.8rem;
+        margin: 0.8rem 0 0;
+        max-width: 26rem;
+        font-size: 1.6rem;
         line-height: 1.4;
         color: var(--color-secondary-text);
-    }
-
-    .grain__order {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 1.2rem;
-        text-align: right;
-    }
-
-    .grain__price {
-        margin: 0;
-        font-size: 2.4rem;
-        line-height: 1;
-        font-variant-numeric: tabular-nums;
-    }
-
-    .grain__unit {
-        margin-left: 0.8rem;
-        font-size: 1.4rem;
-        color: var(--color-secondary-text);
+        text-wrap: pretty;
     }
 
     .grain__cta {
+        margin-top: auto;
+        align-self: flex-start;
+        padding-top: 2.8rem;
         font-size: 1.8rem;
         line-height: 1.2;
         color: var(--color-text);
@@ -222,7 +221,7 @@ const { title, lead, ctaLabel, ctaHref, lots } = Astro.props.data;
     @media (prefers-reduced-motion: reduce) {
         .grain__title,
         .grain__lead,
-        .grain__lot {
+        .grain__card {
             animation: none;
             opacity: 1;
             transform: none;
