@@ -9,7 +9,7 @@ interface Props {
 const { data } = Astro.props;
 ---
 
-<section class="contact" aria-labelledby="contact-title">
+<section class="contact" aria-labelledby="contact-title" id="contact-form">
     <div class="contact__inner">
         <div class="contact__intro">
             <h2 id="contact-title" class="contact__title">{data.title}</h2>
@@ -33,7 +33,7 @@ const { data } = Astro.props;
                 </div>
             </dl>
         </div>
-        <div class="contact__form" id="contact-form">
+        <div class="contact__form">
             <p class="contact__kicker">{data.formKicker}</p>
             <LeadForm client:visible data={data} />
         </div>
