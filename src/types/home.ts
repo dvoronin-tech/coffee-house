@@ -1,4 +1,5 @@
 import type { DripsData } from '#/types/drips';
+import type { DeliveryData } from '#/types/delivery';
 import type { FreshnessData } from '#/types/freshness';
 import type { FramesData } from '#/types/frames';
 import type { HeaderData } from '#/types/header';
@@ -16,4 +17,5 @@ export type HomePageData = {
 	framesData: FramesData;
 	dripsData: DripsData;
 	subscriptionData: SubscriptionData;
+	deliveryData: DeliveryData;
 };
