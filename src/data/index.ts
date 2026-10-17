@@ -5,6 +5,7 @@ import { framesData } from '#/data/framesData';
 import { headerData } from '#/data/headerData';
 import { heroData } from '#/data/heroData';
 import { historyData } from '#/data/historyData';
+import { grainData } from '#/data/grainData';
 
 export const homeData: HomePageData = {
 	headerData,
@@ -13,4 +14,5 @@ export const homeData: HomePageData = {
 	historyData,
 	framesData,
 	dripsData,
+	grainData,
 };

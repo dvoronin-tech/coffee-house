@@ -2,6 +2,7 @@
 import { homeData } from '#/data';
 import Drips from '#/components/drips/Drips.astro';
 import Freshness from '#/components/freshness/Freshness.astro';
+import Grain from '#/components/grain/Grain.astro';
 import Header from '#/components/header/Header.astro';
 import Hero from '#/components/hero/Hero.astro';
 import History from '#/components/history/History.astro';
@@ -17,5 +18,6 @@ import Layout from '#/layouts/Layout.astro';
 		<History data={homeData.historyData} />
 		<Frames data={homeData.framesData} />
 		<Drips data={homeData.dripsData} />
+		<Grain data={homeData.grainData} />
 	</main>
 </Layout>

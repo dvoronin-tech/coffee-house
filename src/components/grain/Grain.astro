@@ -1,0 +1,249 @@
+---
+import type { GrainData } from '#/types/grain';
+
+interface Props {
+    data: GrainData;
+}
+
+const { title, lead, ctaLabel, ctaHref, lots } = Astro.props.data;
+---
+
+<section id="grain" class="grain" aria-labelledby="grain-title">
+    <div class="grain__inner">
+        <div class="grain__intro">
+            <h2 id="grain-title" class="grain__title">{title}</h2>
+            <p class="grain__lead">{lead}</p>
+        </div>
+        <ol class="grain__bands">
+            {
+                lots.map((lot, index) => (
+                    <li
+                        class:list={[
+                            'grain__band',
+                            `grain__band--${index + 1}`,
+                        ]}
+                    >
+                        <span class="grain__index" aria-hidden="true">
+                            {`0${index + 1}`}
+                        </span>
+                        <div class="grain__about">
+                            <h3 class="grain__name">
+                                {lot.country}&nbsp;{lot.variety}
+                            </h3>
+                            <p class="grain__notes">
+                                {lot.notes}
+                                {lot.tag && <span>, {lot.tag}</span>}
+                            </p>
+                        </div>
+                        <div class="grain__order">
+                            <p class="grain__price">
+                                {lot.price}
+                                <span class="grain__unit">
+                                    BYN / {lot.weight}
+                                </span>
+                            </p>
+                            <a class="grain__cta" href={ctaHref}>
+                                {ctaLabel}
+                            </a>
+                        </div>
+                    </li>
+                ))
+            }
+        </ol>
+    </div>
+</section>
+
+<style lang="scss">
+    @keyframes rise {
+        from {
+            opacity: 0;
+            transform: translateY(4.8rem);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @mixin rise($range) {
+        @media (prefers-reduced-motion: no-preference) {
+            @supports (animation-timeline: view()) {
+                animation-name: rise;
+                animation-duration: auto;
+                animation-timing-function: linear;
+                animation-fill-mode: both;
+                animation-timeline: view();
+                animation-range: #{$range};
+            }
+        }
+    }
+
+    .grain {
+        padding: 9.6rem var(--page-gutter);
+    }
+
+    .grain__inner {
+        max-width: var(--page-width);
+        margin: 0 auto;
+    }
+
+    .grain__intro {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        column-gap: 6.4rem;
+        align-items: start;
+    }
+
+    .grain__title {
+        margin: 0;
+        max-width: 48rem;
+        font-family: var(--font-display);
+        font-size: 4.8rem;
+        font-weight: 400;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        text-wrap: balance;
+
+        @include rise('cover 1% cover 20%');
+    }
+
+    .grain__lead {
+        margin: 0.6rem 0 0;
+        max-width: 46rem;
+        font-size: 1.8rem;
+        line-height: 1.5;
+        color: var(--color-secondary-text);
+        text-wrap: pretty;
+
+        @include rise('cover 8% cover 28%');
+    }
+
+    .grain__bands {
+        display: flex;
+        flex-direction: column;
+        gap: 1.6rem;
+        margin: 7.2rem 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .grain__band {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        column-gap: 4rem;
+        align-items: center;
+        padding: 3.6rem 4rem;
+        background-color: var(--color-surface);
+        border: 0.1rem solid var(--color-border);
+        border-radius: 4.8rem 0 4.8rem 4.8rem;
+
+        &:nth-child(1) {
+            @include rise('cover 10% cover 20%');
+        }
+
+        &:nth-child(2) {
+            @include rise('cover 13% cover 28%');
+        }
+
+        &:nth-child(3) {
+            @include rise('cover 18% cover 35%');
+        }
+
+        &--2 {
+            margin-left: 6.4rem;
+        }
+
+        &--3 {
+            margin-left: 12.8rem;
+        }
+    }
+
+    .grain__index {
+        font-family: var(--font-display);
+        font-size: 2rem;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        color: var(--color-secondary-text);
+    }
+
+    .grain__about {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+
+    .grain__name {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 4.4rem;
+        font-weight: 400;
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+    }
+
+    .grain__notes {
+        margin: 0;
+        font-size: 1.8rem;
+        line-height: 1.4;
+        color: var(--color-secondary-text);
+    }
+
+    .grain__order {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 1rem;
+        text-align: right;
+    }
+
+    .grain__price {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 4rem;
+        font-weight: 400;
+        line-height: 1;
+        letter-spacing: -0.02em;
+    }
+
+    .grain__unit {
+        margin-left: 0.8rem;
+        font-family: var(--font-text);
+        font-size: 1.4rem;
+        letter-spacing: -0.02em;
+        color: var(--color-secondary-text);
+    }
+
+    .grain__cta {
+        font-size: 1.8rem;
+        line-height: 1.2;
+        color: var(--color-text);
+        text-decoration: underline;
+        text-underline-offset: 0.5rem;
+        text-decoration-thickness: 0.1rem;
+        text-decoration-color: var(--color-border);
+        transition:
+            color 0.2s ease,
+            text-decoration-color 0.2s ease;
+
+        &:hover {
+            color: var(--color-accent);
+            text-decoration-color: var(--color-accent);
+        }
+
+        &:focus-visible {
+            outline: 0.2rem solid var(--color-text);
+            outline-offset: 0.4rem;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .grain__title,
+        .grain__lead,
+        .grain__band {
+            animation: none;
+            opacity: 1;
+            transform: none;
+        }
+    }
+</style>
