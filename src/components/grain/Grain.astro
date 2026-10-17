@@ -1,56 +1,73 @@
 ---
 import type { GrainData } from '#/types/grain';
+import type { DripsData } from '#/types/drips';
 
 interface Props {
-    data: GrainData;
+	grain: GrainData;
+	drips: DripsData;
 }
 
-const { title, lead, ctaLabel, ctaHref, lots } = Astro.props.data;
+const { title, lead, ctaLabel, ctaHref, lots } = Astro.props.grain;
+const {
+	title: dripsTitle,
+	composition,
+	count,
+	price,
+	note,
+	linkLabel,
+	linkHref,
+} = Astro.props.drips;
 ---
 
 <section id="grain" class="grain" aria-labelledby="grain-title">
-    <div class="grain__inner">
-        <div class="grain__intro">
-            <h2 id="grain-title" class="grain__title">{title}</h2>
-            <p class="grain__lead">{lead}</p>
-        </div>
-        <ol class="grain__bands">
-            {
-                lots.map((lot, index) => (
-                    <li
-                        class:list={[
-                            'grain__band',
-                            `grain__band--${index + 1}`,
-                        ]}
-                    >
-                        <span class="grain__index" aria-hidden="true">
-                            {`0${index + 1}`}
-                        </span>
-                        <div class="grain__about">
-                            <h3 class="grain__name">
-                                {lot.country}&nbsp;{lot.variety}
-                            </h3>
-                            <p class="grain__notes">
-                                {lot.notes}
-                                {lot.tag && <span>, {lot.tag}</span>}
-                            </p>
-                        </div>
-                        <div class="grain__order">
-                            <p class="grain__price">
-                                {lot.price}
-                                <span class="grain__unit">
-                                    BYN / {lot.weight}
-                                </span>
-                            </p>
-                            <a class="grain__cta" href={ctaHref}>
-                                {ctaLabel}
-                            </a>
-                        </div>
-                    </li>
-                ))
-            }
-        </ol>
-    </div>
+	<div class="grain__inner">
+		<div class="grain__intro">
+			<h2 id="grain-title" class="grain__title">{title}</h2>
+			<p class="grain__lead">{lead}</p>
+		</div>
+
+		<div class="grain__band">
+			<aside class="grain__drips" aria-label={dripsTitle}>
+				<div class="grain__drips-top">
+					<p class="grain__drips-kicker">{composition} · {count}</p>
+					<h3 class="grain__drips-title">{dripsTitle}</h3>
+					<p class="grain__drips-note">{note}</p>
+				</div>
+				<div class="grain__drips-bottom">
+					<p class="grain__drips-price">{price}</p>
+					<a class="grain__drips-link" href={linkHref}>{linkLabel}</a>
+				</div>
+			</aside>
+
+			<ol class="grain__lots">
+				{
+					lots.map((lot, index) => (
+						<li class="grain__lot">
+							<span class="grain__index" aria-hidden="true">
+								{`0${index + 1}`}
+							</span>
+							<div class="grain__about">
+								<h3 class="grain__name">
+									{lot.country}&nbsp;{lot.variety}
+								</h3>
+								<p class="grain__notes">
+									{lot.notes}
+									{lot.tag && <span>, {lot.tag}</span>}
+								</p>
+							</div>
+							<div class="grain__order">
+								<p class="grain__price">
+									{lot.price}
+									<span class="grain__unit">BYN / {lot.weight}</span>
+								</p>
+								<a class="grain__cta" href={ctaHref}>{ctaLabel}</a>
+							</div>
+						</li>
+					))
+				}
+			</ol>
+		</div>
+	</div>
 </section>
 
 <style lang="scss">
@@ -69,10 +86,7 @@ const { title, lead, ctaLabel, ctaHref, lots } = Astro.props.data;
     @mixin rise($range) {
         @media (prefers-reduced-motion: no-preference) {
             @supports (animation-timeline: view()) {
-                animation-name: rise;
-                animation-duration: auto;
-                animation-timing-function: linear;
-                animation-fill-mode: both;
+                animation: rise auto linear both;
                 animation-timeline: view();
                 animation-range: #{$range};
             }
@@ -119,49 +133,126 @@ const { title, lead, ctaLabel, ctaHref, lots } = Astro.props.data;
         @include rise('cover 8% cover 28%');
     }
 
-    .grain__bands {
+    .grain__band {
+        display: grid;
+        grid-template-columns: minmax(0, 36rem) minmax(0, 1fr);
+        column-gap: 6.4rem;
+        align-items: stretch;
+        margin: 7.2rem 0 0;
+    }
+
+    .grain__drips {
         display: flex;
         flex-direction: column;
-        gap: 1.6rem;
-        margin: 7.2rem 0 0;
+        gap: 4rem;
+        padding: 3.6rem;
+        background-color: var(--color-accent);
+        border-radius: 4.8rem 0 4.8rem 4.8rem;
+
+        @include rise('cover 12% cover 30%');
+    }
+
+    .grain__drips-top {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .grain__drips-bottom {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2.4rem;
+        margin-top: auto;
+    }
+
+    .grain__drips-kicker {
+        margin: 0;
+        font-size: 1.4rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        opacity: 0.75;
+    }
+
+    .grain__drips-title {
+        margin: 1rem 0 0;
+        font-family: var(--font-display);
+        font-size: 3.2rem;
+        font-weight: 400;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+    }
+
+    .grain__drips-note {
+        margin: 1.2rem 0 0;
+        font-size: 1.6rem;
+        line-height: 1.45;
+    }
+
+    .grain__drips-price {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 6rem;
+        line-height: 1;
+        letter-spacing: -0.02em;
+    }
+
+    .grain__drips-link {
+        padding: 1.4rem 3.2rem;
+        background-color: var(--color-text);
+        border-radius: 999px;
+        color: var(--color-background);
+        font-size: 1.8rem;
+        line-height: 1.2;
+        text-decoration: none;
+        transition:
+            background-color 0.2s ease,
+            color 0.2s ease;
+
+        &:hover {
+            background-color: var(--color-background);
+            color: var(--color-text);
+        }
+
+        &:focus-visible {
+            outline: 0.2rem solid var(--color-text);
+            outline-offset: 0.4rem;
+        }
+    }
+
+    .grain__lots {
+        margin: 0;
         padding: 0;
         list-style: none;
     }
 
-    .grain__band {
+    .grain__lot {
         display: grid;
-        grid-template-columns: auto minmax(0, 1fr) auto;
-        column-gap: 4rem;
+        grid-template-columns: 4rem minmax(0, 1fr) auto;
+        column-gap: 2.4rem;
         align-items: center;
-        padding: 3.6rem 4rem;
-        background-color: var(--color-surface);
-        border: 0.1rem solid var(--color-border);
-        border-radius: 4.8rem 0 4.8rem 4.8rem;
+        padding: 3.2rem 0;
+        border-top: 0.1rem solid var(--color-border);
+
+        &:last-child {
+            border-bottom: 0.1rem solid var(--color-border);
+        }
 
         &:nth-child(1) {
-            @include rise('cover 10% cover 20%');
+            @include rise('cover 10% cover 25%');
         }
 
         &:nth-child(2) {
-            @include rise('cover 13% cover 28%');
+            @include rise('cover 14% cover 30%');
         }
 
         &:nth-child(3) {
             @include rise('cover 18% cover 35%');
         }
-
-        &--2 {
-            margin-left: 6.4rem;
-        }
-
-        &--3 {
-            margin-left: 12.8rem;
-        }
     }
 
     .grain__index {
         font-family: var(--font-display);
-        font-size: 2rem;
+        font-size: 1.6rem;
         line-height: 1;
         letter-spacing: -0.02em;
         color: var(--color-secondary-text);
@@ -176,16 +267,21 @@ const { title, lead, ctaLabel, ctaHref, lots } = Astro.props.data;
     .grain__name {
         margin: 0;
         font-family: var(--font-display);
-        font-size: 4.4rem;
+        font-size: 3.6rem;
         font-weight: 400;
         line-height: 1.05;
         letter-spacing: -0.02em;
+        transition: color 0.2s ease;
+    }
+
+    .grain__lot:hover .grain__name {
+        color: var(--color-accent);
     }
 
     .grain__notes {
         margin: 0;
-        font-size: 1.8rem;
-        line-height: 1.4;
+        font-size: 1.6rem;
+        line-height: 1.45;
         color: var(--color-secondary-text);
     }
 
@@ -200,16 +296,16 @@ const { title, lead, ctaLabel, ctaHref, lots } = Astro.props.data;
     .grain__price {
         margin: 0;
         font-family: var(--font-display);
-        font-size: 4rem;
-        font-weight: 400;
+        font-size: 3.2rem;
         line-height: 1;
         letter-spacing: -0.02em;
+        white-space: nowrap;
     }
 
     .grain__unit {
         margin-left: 0.8rem;
         font-family: var(--font-text);
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         letter-spacing: -0.02em;
         color: var(--color-secondary-text);
     }
@@ -240,7 +336,8 @@ const { title, lead, ctaLabel, ctaHref, lots } = Astro.props.data;
     @media (prefers-reduced-motion: reduce) {
         .grain__title,
         .grain__lead,
-        .grain__band {
+        .grain__drips,
+        .grain__lot {
             animation: none;
             opacity: 1;
             transform: none;
