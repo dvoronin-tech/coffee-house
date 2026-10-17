@@ -442,4 +442,206 @@ const beans = [
             transform: none;
         }
     }
+
+    @media (max-width: 1024px) {
+        .history {
+            padding-block: 6.4rem;
+        }
+
+        .history__intro {
+            column-gap: 3.2rem;
+        }
+
+        .history__stage {
+            margin-top: 4.8rem;
+        }
+
+        .history__pair {
+            width: 34%;
+        }
+
+        .history__card-slot {
+            width: 36%;
+        }
+
+        .history__card-face {
+            padding-inline: 2.4rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .history {
+            padding-block: 4.8rem;
+        }
+
+        .history__intro {
+            grid-template-columns: minmax(0, 1fr);
+            row-gap: 1.6rem;
+            column-gap: 0;
+        }
+
+        .history__title {
+            max-width: none;
+            font-size: 3.6rem;
+        }
+
+        .history__lead {
+            max-width: none;
+            margin-top: 0;
+            font-size: 1.6rem;
+        }
+
+        .history__stage {
+            position: static;
+            display: flex;
+            flex-direction: column;
+            gap: 2.4rem;
+            width: 100%;
+            height: auto;
+            margin-top: 3.2rem;
+            overflow: visible;
+        }
+
+        .history__back {
+            position: relative;
+            inset: auto;
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            border-radius: 2.4rem 0 2.4rem 2.4rem;
+
+            &::after {
+                background: linear-gradient(
+                    to bottom,
+                    var(--color-background) 0%,
+                    color-mix(in srgb, var(--color-background) 20%, transparent)
+                        18%,
+                    transparent 40%,
+                    transparent 72%,
+                    var(--color-background) 100%
+                );
+            }
+        }
+
+        .history__back-media {
+            position: static;
+            top: auto;
+            left: auto;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            aspect-ratio: 3 / 2;
+            object-fit: cover;
+        }
+
+        .history__pair {
+            position: static;
+            bottom: auto;
+            left: auto;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .history__pair-glow {
+            display: none;
+        }
+
+        .history__pair-photo {
+            max-width: 100%;
+        }
+
+        .history__card-slot {
+            position: static;
+            top: auto;
+            right: auto;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .history__card-face {
+            padding: 2.4rem 2.4rem 2rem;
+            border-radius: 2.4rem 0 2.4rem 2.4rem;
+            rotate: 0deg;
+            box-shadow: 0 1.6rem 3.2rem
+                color-mix(in srgb, var(--color-text) 7%, transparent);
+        }
+
+        .history__card-name {
+            font-size: 2.8rem;
+        }
+
+        .history__beans {
+            position: static;
+            inset: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .history__bean {
+            position: static;
+            top: auto;
+            right: auto;
+            bottom: auto;
+            left: auto;
+            width: 18%;
+            min-width: 0;
+        }
+
+        .history__bean-photo {
+            max-width: 100%;
+        }
+
+        .history__title,
+        .history__lead,
+        .history__back,
+        .history__pair,
+        .history__card-slot,
+        .history__bean,
+        .history__back-media,
+        .history__card,
+        .history__bean-photo {
+            animation: none;
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .history {
+            padding-block: 4.8rem;
+        }
+
+        .history__title {
+            font-size: 3.2rem;
+        }
+
+        .history__stage {
+            gap: 2rem;
+            margin-top: 2.4rem;
+        }
+
+        .history__back {
+            border-radius: 1.6rem 0 1.6rem 1.6rem;
+        }
+
+        .history__back-media {
+            aspect-ratio: 4 / 3;
+        }
+
+        .history__card-name {
+            font-size: 2.6rem;
+        }
+
+        .history__card-face {
+            padding: 2rem 2rem 1.6rem;
+            border-radius: 1.6rem 0 1.6rem 1.6rem;
+        }
+
+        .history__fact {
+            gap: 1.6rem;
+        }
+    }
 </style>

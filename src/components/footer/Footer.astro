@@ -234,4 +234,123 @@ const {
         font-size: 1.4rem;
         color: color-mix(in srgb, var(--color-text) 64%, transparent);
     }
+
+    @media (max-width: 1024px) {
+        .footer__inner {
+            padding: 5.6rem var(--page-gutter) 3.2rem;
+        }
+
+        .footer__top {
+            gap: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        .footer__grid {
+            gap: 3.2rem;
+            padding-top: 4rem;
+        }
+
+        .footer__note {
+            margin-top: 4rem;
+            padding-top: 2.4rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .footer__inner {
+            padding: 4.8rem var(--page-gutter) 2.4rem;
+        }
+
+        .footer__top {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 3.2rem;
+            padding-bottom: 3.2rem;
+        }
+
+        .footer__brand,
+        .footer__cta-wrap,
+        .footer__nav,
+        .footer__facts {
+            min-width: 0;
+            max-width: 100%;
+        }
+
+        .footer__cta-wrap {
+            align-items: flex-start;
+        }
+
+        .footer__cta {
+            max-width: 100%;
+        }
+
+        .footer__cta-note {
+            max-width: 100%;
+            text-align: left;
+        }
+
+        .footer__grid {
+            grid-template-columns: 1fr;
+            gap: 3.2rem;
+            padding-top: 3.2rem;
+        }
+
+        .footer__links {
+            gap: 0;
+        }
+
+        .footer__link {
+            display: flex;
+            align-items: center;
+            min-height: 4.4rem;
+        }
+
+        .footer__fact-link {
+            display: inline-flex;
+            align-items: center;
+            min-height: 4.4rem;
+        }
+
+        .footer__tagline,
+        .footer__cta-note,
+        .footer__fact-value,
+        .footer__fact-link,
+        .footer__note {
+            overflow-wrap: anywhere;
+        }
+
+        .footer__note {
+            margin-top: 3.2rem;
+            padding-top: 2.4rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .footer__inner {
+            padding: 3.2rem var(--page-gutter) 2rem;
+        }
+
+        .footer__top {
+            gap: 2.4rem;
+            padding-bottom: 2.4rem;
+        }
+
+        .footer__brand {
+            gap: 1.6rem;
+        }
+
+        .footer__grid {
+            gap: 2.4rem;
+            padding-top: 2.4rem;
+        }
+
+        .footer__facts {
+            gap: 2rem;
+        }
+
+        .footer__note {
+            margin-top: 2.4rem;
+            padding-top: 1.6rem;
+        }
+    }
 </style>

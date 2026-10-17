@@ -182,4 +182,93 @@ const { data } = Astro.props;
             transform: none;
         }
     }
+
+    @media (max-width: 1024px) {
+        .contact {
+            padding-block: 6.4rem;
+        }
+
+        .contact__inner {
+            column-gap: 3.2rem;
+        }
+
+        .contact__intro,
+        .contact__form {
+            min-width: 0;
+        }
+
+        .contact__title {
+            font-size: 4rem;
+        }
+
+        .contact__form {
+            padding: 3.2rem;
+            border-radius: 3.2rem 0 3.2rem 3.2rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .contact {
+            padding-block: 4.8rem;
+        }
+
+        .contact__inner {
+            grid-template-columns: minmax(0, 1fr);
+            row-gap: 3.2rem;
+        }
+
+        .contact__title {
+            font-size: 3.6rem;
+        }
+
+        .contact__lead {
+            max-width: none;
+        }
+
+        .contact__lead,
+        .contact__value {
+            overflow-wrap: break-word;
+        }
+
+        .contact__list {
+            margin-top: 3.2rem;
+        }
+
+        .contact__form {
+            padding: 2.4rem;
+            border-radius: 2.4rem 0 2.4rem 2.4rem;
+        }
+
+        .contact__kicker {
+            margin-bottom: 2rem;
+        }
+
+        .contact__title,
+        .contact__lead,
+        .contact__item,
+        .contact__form {
+            animation: none;
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .contact {
+            padding-block: 4.8rem;
+        }
+
+        .contact__title {
+            font-size: 3.2rem;
+        }
+
+        .contact__item {
+            padding-block: 1.6rem;
+        }
+
+        .contact__form {
+            padding: 2rem;
+            border-radius: 2rem 0 2rem 2rem;
+        }
+    }
 </style>

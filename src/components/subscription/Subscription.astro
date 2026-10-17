@@ -98,7 +98,7 @@ const { title, price, facts, ctaLabel, ctaHref, note } = Astro.props.data;
         margin-inline: auto;
         padding: 14rem var(--page-gutter) 8rem;
 
-        @media (prefers-reduced-motion: no-preference) and (min-width: 1280px) {
+        @media (prefers-reduced-motion: no-preference) and (min-width: 1025px) {
             @supports (animation-timeline: view()) {
                 animation: subscription-inset auto linear both;
                 animation-timeline: --subscription;
@@ -282,6 +282,130 @@ const { title, price, facts, ctaLabel, ctaHref, note } = Astro.props.data;
 
         .subscription__cta {
             transition: none;
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .subscription__band {
+            gap: 4.8rem;
+            padding-block: calc(var(--header-height) + 2.4rem) 4.8rem;
+        }
+
+        .subscription__title {
+            max-width: 100%;
+            font-size: 8rem;
+        }
+
+        .subscription__bottom {
+            gap: 3.2rem;
+        }
+
+        .subscription__price-amount {
+            font-size: 12rem;
+        }
+
+        .subscription__price-side {
+            gap: 0.8rem;
+            padding-top: 1.6rem;
+        }
+
+        .subscription__price-currency {
+            font-size: 2.4rem;
+        }
+
+        .subscription__price-period {
+            font-size: 1.6rem;
+        }
+
+        .subscription__fact-value {
+            font-size: 2.4rem;
+        }
+
+        .subscription__fact-detail {
+            font-size: 1.6rem;
+        }
+
+        .subscription__note {
+            max-width: 22rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .subscription::before,
+        .subscription__title,
+        .subscription__bottom {
+            animation: none;
+            opacity: 1;
+            transform: none;
+        }
+
+        .subscription__band {
+            gap: 4rem;
+            padding-block: calc(var(--header-height) + 1.6rem) 4rem;
+        }
+
+        .subscription__title {
+            font-size: 6.4rem;
+        }
+
+        .subscription__bottom {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 3.2rem;
+        }
+
+        .subscription__actions {
+            align-items: stretch;
+            width: 100%;
+        }
+
+        .subscription__cta {
+            width: 100%;
+            min-height: 4.4rem;
+        }
+
+        .subscription__note {
+            max-width: none;
+            text-align: left;
+        }
+
+        .subscription__price-amount {
+            font-size: 10rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .subscription__band {
+            gap: 3.2rem;
+            padding-block: calc(var(--header-height) + 1.2rem) 7.2rem;
+        }
+
+        .subscription__title {
+            font-size: 4.8rem;
+        }
+
+        .subscription__price {
+            gap: 1.2rem;
+        }
+
+        .subscription__price-amount {
+            font-size: 8rem;
+        }
+
+        .subscription__price-side {
+            padding-top: 1.2rem;
+        }
+
+        .subscription__price-currency {
+            font-size: 2.2rem;
+        }
+
+        .subscription__fact {
+            flex-wrap: wrap;
+        }
+
+        .subscription__fact-value {
+            font-size: 2.2rem;
         }
     }
 </style>

@@ -28,6 +28,22 @@ const { logoLabel, logoHref, links, cta } = Astro.props.data;
 				}
 			</ul>
 		</nav>
+		<details class="header__menu">
+			<summary class="header__summary">Меню</summary>
+			<nav class="header__panel" aria-label="Разделы">
+				<ul class="header__links">
+					{
+						links.map((link) => (
+							<li>
+								<a class="header__link" href={link.href}>
+									{link.label}
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</nav>
+		</details>
 		<a class="header__cta" href={cta.href}>{cta.label}</a>
 	</div>
 </header>
@@ -76,6 +92,10 @@ const { logoLabel, logoHref, links, cta } = Astro.props.data;
 		justify-self: center;
 	}
 
+	.header__menu {
+		display: none;
+	}
+
 	.header__links {
 		display: flex;
 		gap: 3.6rem;
@@ -121,7 +141,8 @@ const { logoLabel, logoHref, links, cta } = Astro.props.data;
 
 	.header__logo:focus-visible,
 	.header__link:focus-visible,
-	.header__cta:focus-visible {
+	.header__cta:focus-visible,
+	.header__summary:focus-visible {
 		outline: 0.2rem solid var(--color-text);
 		outline-offset: 0.4rem;
 	}
@@ -153,8 +174,111 @@ const { logoLabel, logoHref, links, cta } = Astro.props.data;
 		}
 
 		.header__link,
-		.header__cta {
+		.header__cta,
+		.header__summary {
 			transition: none;
+		}
+	}
+
+	@media (max-width: 1024px) {
+		.header__links {
+			gap: 2.4rem;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.header__bar {
+			grid-template-columns: 1fr auto auto;
+			column-gap: 1.2rem;
+		}
+
+		.header__nav {
+			display: none;
+		}
+
+		.header__menu {
+			display: block;
+			justify-self: end;
+		}
+
+		.header__summary {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			min-height: 4.4rem;
+			padding: 0.8rem 1.6rem;
+			border: 0.1rem solid var(--color-border);
+			border-radius: 4.8rem;
+			background-color: var(--color-surface);
+			color: var(--color-text);
+			font-family: var(--font-text);
+			font-size: 1.6rem;
+			line-height: 1.2;
+			white-space: nowrap;
+			list-style: none;
+			cursor: pointer;
+			transition:
+				color 0.2s ease,
+				border-color 0.2s ease;
+
+			&::-webkit-details-marker {
+				display: none;
+			}
+
+			&::marker {
+				content: '';
+			}
+
+			&:hover {
+				color: var(--color-secondary-text);
+			}
+		}
+
+		.header__menu[open] .header__summary {
+			border-color: var(--color-accent);
+		}
+
+		.header__panel {
+			position: absolute;
+			top: 100%;
+			right: 0;
+			left: 0;
+			z-index: 2;
+			padding: 0.8rem var(--page-gutter) 1.6rem;
+			background-color: var(--color-surface);
+			border-bottom: 0.1rem solid var(--color-border);
+		}
+
+		.header__panel .header__links {
+			flex-direction: column;
+			align-items: stretch;
+			gap: 0;
+		}
+
+		.header__panel .header__link {
+			display: flex;
+			align-items: center;
+			min-height: 4.4rem;
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			.header__summary {
+				transition: none;
+			}
+		}
+	}
+
+	@media (max-width: 480px) {
+		.header__bar {
+			column-gap: 0.8rem;
+		}
+
+		.header__summary {
+			padding-inline: 1.2rem;
+		}
+
+		.header__cta {
+			padding-inline: 1.6rem;
 		}
 	}
 </style>
