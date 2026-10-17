@@ -1,9 +1,12 @@
 ---
 import { homeData } from '#/data';
+import Drips from '#/components/drips/Drips.astro';
 import Freshness from '#/components/freshness/Freshness.astro';
+import Grain from '#/components/grain/Grain.astro';
 import Header from '#/components/header/Header.astro';
 import Hero from '#/components/hero/Hero.astro';
 import History from '#/components/history/History.astro';
+import Frames from '#/components/frames/Frames.astro';
 import Subscription from '#/components/subscription/Subscription.astro';
 import Layout from '#/layouts/Layout.astro';
 ---
@@ -14,6 +17,9 @@ import Layout from '#/layouts/Layout.astro';
 		<Hero data={homeData.heroData} />
 		<Freshness data={homeData.freshnessData} />
 		<History data={homeData.historyData} />
+		<Frames data={homeData.framesData} />
+		<Drips data={homeData.dripsData} />
+		<Grain data={homeData.grainData} />
 		<Subscription data={homeData.subscriptionData} />
 	</main>
 </Layout>
