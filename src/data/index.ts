@@ -20,9 +20,5 @@ export const homeData: HomePageData = {
     grainData,
     subscriptionData,
     deliveryData,
-    headerData,
-    heroData,
-    freshnessData,
-    historyData,
     contactData,
 };

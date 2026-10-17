@@ -10,18 +10,14 @@ import type { GrainData } from '#/types/grain';
 import type { SubscriptionData } from '#/types/subscription';
 
 export type HomePageData = {
-	headerData: HeaderData;
-	heroData: HeroData;
-	freshnessData: FreshnessData;
-	historyData: HistoryData;
-	grainData: GrainData;
-	framesData: FramesData;
-	dripsData: DripsData;
-	subscriptionData: SubscriptionData;
-	deliveryData: DeliveryData;
     headerData: HeaderData;
     heroData: HeroData;
     freshnessData: FreshnessData;
     historyData: HistoryData;
+    grainData: GrainData;
+    framesData: FramesData;
+    dripsData: DripsData;
+    subscriptionData: SubscriptionData;
+    deliveryData: DeliveryData;
     contactData: ContactData;
 };
