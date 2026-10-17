@@ -10,6 +10,7 @@ import Hero from '#/components/hero/Hero.astro';
 import History from '#/components/history/History.astro';
 import Frames from '#/components/frames/Frames.astro';
 import Subscription from '#/components/subscription/Subscription.astro';
+import Footer from '#/components/footer/Footer.astro';
 import Layout from '#/layouts/Layout.astro';
 ---
 
@@ -26,4 +27,5 @@ import Layout from '#/layouts/Layout.astro';
 		<Delivery data={homeData.deliveryData} />
 		<ContactSection data={homeData.contactData} />
 	</main>
+	<Footer data={homeData.footerData} />
 </Layout>
