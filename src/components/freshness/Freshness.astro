@@ -195,5 +195,104 @@ const { title, lead, steps }  = Astro.props.data;
 				transform: none;
 			}
 		}
+
+		@media (max-width: 1024px) {
+			padding: 6.4rem var(--page-gutter, 4.8rem);
+
+			&__intro {
+				column-gap: 4rem;
+			}
+
+			&__title {
+				max-width: none;
+				font-size: 4rem;
+			}
+
+			&__lead {
+				max-width: none;
+			}
+
+			&__steps {
+				margin-top: 4.8rem;
+			}
+
+			&__step {
+				min-height: 20rem;
+				padding: 3.2rem 2.4rem 2.8rem;
+			}
+
+			&__name {
+				font-size: 3.2rem;
+			}
+		}
+
+		@media (max-width: 768px) {
+			padding: 4.8rem var(--page-gutter, 4.8rem);
+
+			&__intro {
+				grid-template-columns: minmax(0, 1fr);
+				row-gap: 1.6rem;
+			}
+
+			&__title {
+				font-size: 3.6rem;
+			}
+
+			&__lead {
+				margin-top: 0;
+			}
+
+			&__steps {
+				grid-template-columns: minmax(0, 1fr);
+				margin-top: 3.2rem;
+			}
+
+			&__step {
+				gap: 2rem;
+				min-height: 0;
+				padding: 2.8rem 2.4rem 2.4rem;
+
+				&:not(:last-child) {
+					border-right: 0;
+					border-bottom: 0.1rem solid var(--color-border, #eadfd5);
+				}
+			}
+
+			&__name {
+				font-size: 3.2rem;
+			}
+
+			&__title,
+			&__lead,
+			&__step:nth-child(1),
+			&__step:nth-child(2),
+			&__step:nth-child(3) {
+				animation: none;
+				opacity: 1;
+				transform: none;
+			}
+		}
+
+		@media (max-width: 480px) {
+			padding: 4.8rem var(--page-gutter, 4.8rem);
+
+			&__title {
+				font-size: 3.2rem;
+				text-wrap: wrap;
+				text-wrap: pretty;
+			}
+
+			&__steps {
+				border-radius: 2.4rem 0 2.4rem 2.4rem;
+			}
+
+			&__step {
+				padding: 2.4rem 2rem 2rem;
+			}
+
+			&__name {
+				font-size: 2.8rem;
+			}
+		}
 	}
 </style>
