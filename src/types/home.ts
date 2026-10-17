@@ -5,6 +5,7 @@ import type { HeaderData } from '#/types/header';
 import type { HeroData } from '#/types/hero';
 import type { HistoryData } from '#/types/history';
 import type { GrainData } from '#/types/grain';
+import type { SubscriptionData } from '#/types/subscription';
 
 export type HomePageData = {
 	headerData: HeaderData;
@@ -14,4 +15,5 @@ export type HomePageData = {
 	grainData: GrainData;
 	framesData: FramesData;
 	dripsData: DripsData;
+	subscriptionData: SubscriptionData;
 };

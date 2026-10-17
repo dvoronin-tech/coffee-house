@@ -7,6 +7,7 @@ import Header from '#/components/header/Header.astro';
 import Hero from '#/components/hero/Hero.astro';
 import History from '#/components/history/History.astro';
 import Frames from '#/components/frames/Frames.astro';
+import Subscription from '#/components/subscription/Subscription.astro';
 import Layout from '#/layouts/Layout.astro';
 ---
 
@@ -19,5 +20,6 @@ import Layout from '#/layouts/Layout.astro';
 		<Frames data={homeData.framesData} />
 		<Drips data={homeData.dripsData} />
 		<Grain data={homeData.grainData} />
+		<Subscription data={homeData.subscriptionData} />
 	</main>
 </Layout>
