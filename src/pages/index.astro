@@ -2,6 +2,7 @@
 import { homeData } from '#/data';
 import Drips from '#/components/drips/Drips.astro';
 import Delivery from '#/components/delivery/Delivery.astro';
+import ContactSection from '#/components/contact/ContactSection.astro';
 import Freshness from '#/components/freshness/Freshness.astro';
 import Grain from '#/components/grain/Grain.astro';
 import Header from '#/components/header/Header.astro';
@@ -23,5 +24,6 @@ import Layout from '#/layouts/Layout.astro';
 		<Drips data={homeData.dripsData} />
 		<Subscription data={homeData.subscriptionData} />
 		<Delivery data={homeData.deliveryData} />
+		<ContactSection data={homeData.contactData} />
 	</main>
 </Layout>
