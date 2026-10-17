@@ -1,5 +1,6 @@
 ---
 import { homeData } from '#/data';
+import DeliveryVariantB from '#/components/delivery/DeliveryVariantB.astro';
 import Drips from '#/components/drips/Drips.astro';
 import Freshness from '#/components/freshness/Freshness.astro';
 import Header from '#/components/header/Header.astro';
@@ -17,5 +18,6 @@ import Layout from '#/layouts/Layout.astro';
 		<History data={homeData.historyData} />
 		<Frames data={homeData.framesData} />
 		<Drips data={homeData.dripsData} />
+		<DeliveryVariantB data={homeData.deliveryData} />
 	</main>
 </Layout>
