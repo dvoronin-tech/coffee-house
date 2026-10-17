@@ -2,6 +2,7 @@ import type { HomePageData } from '#/types/home';
 import { dripsData } from '#/data/dripsData';
 import { deliveryData } from '#/data/deliveryData';
 import { contactData } from '#/data/contactData';
+import { footerData } from '#/data/footerData';
 import { freshnessData } from '#/data/freshnessData';
 import { framesData } from '#/data/framesData';
 import { headerData } from '#/data/headerData';
@@ -21,4 +22,5 @@ export const homeData: HomePageData = {
     subscriptionData,
     deliveryData,
     contactData,
+    footerData,
 };
