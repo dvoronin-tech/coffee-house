@@ -5,7 +5,11 @@ import { cors } from 'hono/cors';
 import { db } from './db';
 import { env } from './env';
 import { records } from './schema';
-import { sendOrderBody, sendOrderRejectionCode } from './send-order';
+import {
+    sendOrderBody,
+    sendOrderRejectionCode,
+    storedAnalytics,
+} from './send-order';
 
 export const app = new Hono()
     .use(
@@ -27,6 +31,7 @@ export const app = new Hono()
         }),
         async (c) => {
             const body = c.req.valid('json');
+            const analytics = storedAnalytics(body.analytics);
             try {
                 const [saved] = await db
                     .insert(records)
@@ -35,6 +40,7 @@ export const app = new Hono()
                         name: body.name,
                         phone: body.phone,
                         note: body.note,
+                        analytics,
                     })
                     .onConflictDoUpdate({
                         target: records.id,
@@ -42,6 +48,10 @@ export const app = new Hono()
                             name: sql`excluded.name`,
                             phone: sql`excluded.phone`,
                             note: sql`excluded.note`,
+                            analytics: sql`case
+                                when records.analytics is null then excluded.analytics
+                                else records.analytics
+                            end`,
                             updatedAt: sql`now()`,
                         },
                     })
