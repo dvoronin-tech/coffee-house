@@ -6,7 +6,7 @@ const envSchema = z.object({
     DATABASE_URL: z.string().min(1),
     WEB_ORIGIN: z.string().default('http://localhost:4321'),
     TELEGRAM_BOT_TOKEN: z.string().min(1),
-    TELEGRAM_CHAT_ID: z.string().min(1),
+    TELEGRAM_WEBHOOK_SECRET: z.string().min(1),
 });
 
 export const env = envSchema.parse(process.env);

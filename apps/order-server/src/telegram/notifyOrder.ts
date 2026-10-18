@@ -1,6 +1,6 @@
-import { env } from '../utils/env';
-
-const TELEGRAM_TIMEOUT_MS = 5000;
+import { db } from '../db';
+import { telegramSubscribers } from '../db/schema';
+import { callTelegram } from './botApi';
 
 export type OrderNotification = {
     id: string;
@@ -20,47 +20,20 @@ function orderMessage(order: OrderNotification): string {
     return lines.join('\n');
 }
 
-function withoutToken(text: string): string {
-    return text.replaceAll(env.TELEGRAM_BOT_TOKEN, '[redacted]');
-}
-
 export async function notifyOrder(order: OrderNotification): Promise<void> {
-    const url = `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`;
-    let response: Response;
-    try {
-        response = await fetch(url, {
-            method: 'POST',
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({
-                chat_id: env.TELEGRAM_CHAT_ID,
-                text: orderMessage(order),
-            }),
-            signal: AbortSignal.timeout(TELEGRAM_TIMEOUT_MS),
-        });
-    } catch (error) {
-        const name = error instanceof Error ? error.name : 'Error';
-        throw new Error(`Telegram sendMessage failed: ${name}`);
-    }
+    const subscribers = await db
+        .select({ chatId: telegramSubscribers.chatId })
+        .from(telegramSubscribers);
+    const text = orderMessage(order);
 
-    const raw = await response.text();
-    let accepted = response.ok;
-    let description = raw;
-    try {
-        const payload = JSON.parse(raw) as {
-            ok?: boolean;
-            description?: string;
-        };
-        if (payload.ok === false) accepted = false;
-        if (typeof payload.description === 'string') {
-            description = payload.description;
+    for (const subscriber of subscribers) {
+        try {
+            await callTelegram('sendMessage', {
+                chat_id: subscriber.chatId,
+                text,
+            });
+        } catch (error) {
+            console.error(error);
         }
-    } catch {
-        accepted = false;
-    }
-
-    if (!accepted) {
-        throw new Error(
-            `Telegram sendMessage failed: ${response.status} ${withoutToken(description)}`,
-        );
     }
 }
