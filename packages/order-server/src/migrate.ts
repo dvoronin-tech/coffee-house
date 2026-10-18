@@ -2,14 +2,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
-import { Pool } from 'pg';
+import { createPool, requireDatabaseUrl } from './pool';
 
-const databaseUrl = process.env.DATABASE_URL;
-if (!databaseUrl) {
-    throw new Error('DATABASE_URL is required');
-}
-
-const pool = new Pool({ connectionString: databaseUrl });
+const pool = createPool(requireDatabaseUrl());
 const db = drizzle(pool);
 const migrationsFolder = path.join(
     path.dirname(fileURLToPath(import.meta.url)),

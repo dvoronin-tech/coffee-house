@@ -1,10 +1,6 @@
 import { serve } from '@hono/node-server';
 import { app } from './app';
 
-if (!process.env.DATABASE_URL) {
-    throw new Error('DATABASE_URL is required');
-}
-
 if (!process.env.WEB_ORIGIN) {
     throw new Error('WEB_ORIGIN is required');
 }
