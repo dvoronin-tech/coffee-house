@@ -88,7 +88,7 @@ app.onError((error, c) => {
         return c.newResponse(response.body, response);
     }
     console.error(error);
-    return c.text('Internal Server Error', 500);
+    return c.json({ code: 'INTERNAL_SERVER_ERROR' as const }, 500);
 });
 
 function isMalformedJson(error: Error): boolean {
