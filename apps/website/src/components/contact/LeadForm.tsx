@@ -1,81 +1,81 @@
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import type { FormEvent } from 'react';
 import clsx from 'clsx';
-import type { ContactData } from '#/types/contact';
+import toast, { Toaster } from 'react-hot-toast';
+import type {
+    ContactData,
+    ContactMessages,
+    LeadInterest,
+} from '#/types/contact';
+import { sendOrder } from '#/sendOrder';
+import {
+    formatRemaining,
+    loadLead,
+    saveLead,
+    type StoredLead,
+} from './leadRecord';
 
 import styles from './LeadForm.module.scss';
 
-type FieldName = 'name' | 'phone' | 'email' | 'comment';
-
-type LeadValues = Record<FieldName, string>;
-
-type LeadErrors = Partial<Record<FieldName, boolean>>;
-
-type LeadStatus = 'idle' | 'submitting' | 'success' | 'error' | 'duplicate';
-
-type LeadSource = {
-    utm_source: string;
-    utm_medium: string;
-    utm_campaign: string;
-    utm_content: string;
-    page: string;
-    referrer: string;
+type LeadValues = {
+    name: string;
+    phone: string;
+    interest: '' | LeadInterest;
+    comment: string;
 };
 
-const EMPTY_SOURCE: LeadSource = {
-    utm_source: '',
-    utm_medium: '',
-    utm_campaign: '',
-    utm_content: '',
-    page: '',
-    referrer: '',
+const toastStyle = {
+    background: 'var(--color-surface)',
+    color: 'var(--color-text)',
+    fontFamily: 'var(--font-text)',
+    fontSize: '1.5rem',
+    lineHeight: 1.4,
+    border: '0.1rem solid var(--color-border)',
+    borderRadius: '1.2rem',
+    padding: '1.2rem 1.6rem',
+    maxWidth: '42rem',
 };
 
-const PHONE_DIGITS = 9;
-const EMAIL_PATTERN = /^\S+@\S+\.\S+$/;
-const SOURCE_INPUTS = Object.keys(EMPTY_SOURCE) as (keyof LeadSource)[];
+function orderServerUrl(): string | null {
+    const base = import.meta.env.PUBLIC_ORDER_SERVER_URL;
+    if (typeof base !== 'string') return null;
+    const url = base.trim();
+    return url === '' ? null : url;
+}
 
-// Телефон нормализуем до +375 и ровно 9 цифр, например «+375 29 123 45 67».
-function formatPhone(raw: string): string {
-    let digits = raw.replace(/\D/g, '');
-    if (digits.startsWith('375')) {
-        digits = digits.slice(3);
-    } else if (digits.startsWith('80') && digits.length > PHONE_DIGITS) {
-        digits = digits.slice(2);
+function refusalMessage(
+    code: string | null,
+    messages: ContactMessages,
+): string {
+    switch (code) {
+        case 'INVALID_INTEREST':
+            return messages.emptyInterest;
+        case 'INVALID_NAME':
+            return messages.invalidName;
+        case 'INVALID_PHONE_NUMBER':
+            return messages.invalidPhone;
+        case 'INVALID_NOTE':
+            return messages.invalidNote;
+        default:
+            return messages.failed;
     }
-    digits = digits.slice(0, PHONE_DIGITS);
-    if (digits === '') return '';
-    const groups = [
-        digits.slice(0, 2),
-        digits.slice(2, 5),
-        digits.slice(5, 7),
-        digits.slice(7, 9),
-    ];
-    return ['+375', ...groups.filter(Boolean)].join(' ');
 }
 
-function isPhoneValid(value: string): boolean {
-    return formatPhone(value).replace(/\D/g, '').length === 3 + PHONE_DIGITS;
-}
-
-function validate(values: LeadValues): LeadErrors {
-    return {
-        name: values.name.trim() === '',
-        phone: !isPhoneValid(values.phone),
-        email: !EMAIL_PATTERN.test(values.email.trim()),
-    };
-}
-
-function collectSource(): LeadSource {
-    const params = new URLSearchParams(window.location.search);
-    return {
-        utm_source: params.get('utm_source') ?? '',
-        utm_medium: params.get('utm_medium') ?? '',
-        utm_campaign: params.get('utm_campaign') ?? '',
-        utm_content: params.get('utm_content') ?? '',
-        page: window.location.href,
-        referrer: document.referrer,
-    };
+async function responseCode(response: Response): Promise<string | null> {
+    try {
+        const body: unknown = await response.json();
+        if (
+            body !== null &&
+            typeof body === 'object' &&
+            'code' in body &&
+            typeof body.code === 'string'
+        ) {
+            return body.code;
+        }
+    } catch {
+        return null;
+    }
+    return null;
 }
 
 interface Props {
@@ -86,246 +86,260 @@ export default function LeadForm({ data }: Props) {
     const [values, setValues] = useState<LeadValues>({
         name: '',
         phone: '',
-        email: '',
+        interest: '',
         comment: '',
     });
-    const [errors, setErrors] = useState<LeadErrors>({});
-    const [status, setStatus] = useState<LeadStatus>('idle');
-    const [source, setSource] = useState<LeadSource>(EMPTY_SOURCE);
+    const [record, setRecord] = useState<StoredLead | null>(null);
+    const [clock, setClock] = useState<string | null>(null);
+    const [formError, setFormError] = useState<string | null>(null);
+    const [pending, setPending] = useState(false);
 
-    useEffect(() => {
-        setSource(collectSource());
+    useLayoutEffect(() => {
+        setRecord(loadLead(Date.now()));
     }, []);
 
-    const setValue = (field: FieldName, value: string) => {
-        setValues((prev) => ({ ...prev, [field]: value }));
-        setErrors((prev) =>
-            prev[field] ? { ...prev, [field]: undefined } : prev,
-        );
+    useLayoutEffect(() => {
+        if (!record?.known || record.expired) {
+            setClock(null);
+            return;
+        }
+        const id = record.id;
+        const tick = () => {
+            const label = formatRemaining(id, Date.now());
+            if (!label) {
+                setClock(null);
+                setRecord((current) => {
+                    if (!current || current.id !== id || current.expired) {
+                        return current;
+                    }
+                    return saveLead({ ...current, expired: true });
+                });
+                return;
+            }
+            setClock(label);
+        };
+        tick();
+        const timer = window.setInterval(tick, 1000);
+        return () => window.clearInterval(timer);
+    }, [record?.id, record?.known, record?.expired]);
+
+    const report = (message: string) => {
+        setFormError(message);
+        toast(message);
     };
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const changeField = <Key extends keyof LeadValues>(
+        field: Key,
+        value: LeadValues[Key],
+    ) => {
+        setValues((current) => ({ ...current, [field]: value }));
+        setFormError(null);
+    };
+
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (status === 'submitting') return;
+        if (pending) return;
+        setFormError(null);
 
-        const nextErrors = validate(values);
-        setErrors(nextErrors);
-
-        const firstInvalid = (Object.keys(nextErrors) as FieldName[]).find(
-            (field) => nextErrors[field],
-        );
-        if (firstInvalid) {
-            document.getElementById(`lead-${firstInvalid}`)?.focus();
+        if (values.name.trim() === '') {
+            report(data.messages.emptyName);
+            return;
+        }
+        if (values.phone.trim() === '') {
+            report(data.messages.emptyPhone);
+            return;
+        }
+        if (values.interest === '') {
+            report(data.messages.emptyInterest);
             return;
         }
 
-        setStatus('submitting');
-        // Этап макета: отправки на сервер нет. Состояния рисуются локально;
-        // ?mock=error и ?mock=duplicate показывают ответ сервера.
-        window.setTimeout(() => {
-            console.info('[lead] payload (макет, без отправки)', {
-                ...values,
-                ...source,
+        const base = orderServerUrl();
+        if (!base) {
+            report(data.messages.failed);
+            return;
+        }
+
+        const current = record ?? loadLead(Date.now());
+        const lead = current.expired
+            ? saveLead({
+                  id: String(Date.now()),
+                  expired: false,
+                  known: false,
+              })
+            : current;
+        if (lead !== record) setRecord(lead);
+
+        const interest = values.interest;
+        const note = values.comment.trim();
+        setPending(true);
+        try {
+            const response = await sendOrder(base, {
+                id: lead.id,
+                name: values.name,
+                phone: values.phone,
+                interest,
+                ...(note ? { note } : {}),
             });
-            const mock = new URLSearchParams(window.location.search).get(
-                'mock',
-            );
-            if (mock === 'error') setStatus('error');
-            else if (mock === 'duplicate') setStatus('duplicate');
-            else setStatus('success');
-        }, 900);
+            const code = await responseCode(response);
+            if (response.ok && (code === 'CREATED' || code === 'UPDATED')) {
+                setRecord(saveLead({ ...lead, known: true }));
+                setFormError(null);
+                toast(
+                    code === 'CREATED'
+                        ? data.messages.created
+                        : data.messages.updated,
+                );
+                return;
+            }
+            report(refusalMessage(code, data.messages));
+        } catch {
+            report(data.messages.network);
+        } finally {
+            setPending(false);
+        }
     };
 
-    const pending = status === 'submitting';
+    const buttonLabel = pending
+        ? data.submittingLabel
+        : record?.known && !record.expired
+          ? data.updateLabel
+          : data.createLabel;
+    const countdown =
+        clock && record?.known && !record.expired
+            ? data.countdown.replace('{time}', clock)
+            : null;
+    const describedBy =
+        [
+            formError ? 'lead-form-error' : '',
+            countdown ? 'lead-form-countdown' : '',
+        ]
+            .filter(Boolean)
+            .join(' ') || undefined;
 
     return (
         <form className={styles.form} noValidate onSubmit={handleSubmit}>
-            {SOURCE_INPUTS.map((name) => (
-                <input
-                    key={name}
-                    type='hidden'
-                    name={name}
-                    value={source[name]}
-                />
-            ))}
-
-            {status === 'success' ? (
-                <div className={styles.success} role='status'>
-                    <p className={styles.successTitle}>{data.successTitle}</p>
-                    <p className={styles.successText}>{data.successText}</p>
-                </div>
-            ) : (
-                <>
-                    <div className={styles.fields}>
-                        <div className={styles.field}>
-                            <label className={styles.label} htmlFor='lead-name'>
-                                {data.fields.name.label}
-                            </label>
-                            <input
-                                id='lead-name'
-                                name='name'
-                                type='text'
-                                className={styles.input}
-                                autoComplete='name'
-                                placeholder={data.fields.name.placeholder}
-                                value={values.name}
-                                onChange={(event) =>
-                                    setValue('name', event.target.value)
-                                }
-                                aria-invalid={errors.name || undefined}
-                                aria-describedby={
-                                    errors.name ? 'lead-name-error' : undefined
-                                }
-                            />
-                            {errors.name && (
-                                <p
-                                    className={styles.fieldError}
-                                    id='lead-name-error'
-                                >
-                                    {data.fields.name.error}
-                                </p>
-                            )}
-                        </div>
-
-                        <div className={styles.field}>
-                            <label
-                                className={styles.label}
-                                htmlFor='lead-phone'
-                            >
-                                {data.fields.phone.label}
-                            </label>
-                            <input
-                                id='lead-phone'
-                                name='phone'
-                                type='tel'
-                                className={styles.input}
-                                autoComplete='tel'
-                                inputMode='tel'
-                                placeholder={data.fields.phone.placeholder}
-                                maxLength={17}
-                                value={values.phone}
-                                onChange={(event) =>
-                                    setValue(
-                                        'phone',
-                                        formatPhone(event.target.value),
-                                    )
-                                }
-                                aria-invalid={errors.phone || undefined}
-                                aria-describedby={
-                                    errors.phone
-                                        ? 'lead-phone-error'
-                                        : undefined
-                                }
-                            />
-                            {errors.phone && (
-                                <p
-                                    className={styles.fieldError}
-                                    id='lead-phone-error'
-                                >
-                                    {data.fields.phone.error}
-                                </p>
-                            )}
-                        </div>
-
-                        <div className={clsx(styles.field, styles.fieldWide)}>
-                            <label
-                                className={styles.label}
-                                htmlFor='lead-email'
-                            >
-                                {data.fields.email.label}
-                            </label>
-                            <input
-                                id='lead-email'
-                                name='email'
-                                type='email'
-                                className={styles.input}
-                                autoComplete='email'
-                                placeholder={data.fields.email.placeholder}
-                                value={values.email}
-                                onChange={(event) =>
-                                    setValue('email', event.target.value)
-                                }
-                                aria-invalid={errors.email || undefined}
-                                aria-describedby={
-                                    errors.email
-                                        ? 'lead-email-error'
-                                        : undefined
-                                }
-                            />
-                            {errors.email && (
-                                <p
-                                    className={styles.fieldError}
-                                    id='lead-email-error'
-                                >
-                                    {data.fields.email.error}
-                                </p>
-                            )}
-                        </div>
-
-                        <div className={clsx(styles.field, styles.fieldWide)}>
-                            <label
-                                className={styles.label}
-                                htmlFor='lead-comment'
-                            >
-                                {data.fields.comment.label}
-                            </label>
-                            <textarea
-                                id='lead-comment'
-                                name='comment'
-                                rows={3}
-                                className={clsx(styles.input, styles.textarea)}
-                                placeholder={data.fields.comment.placeholder}
-                                value={values.comment}
-                                onChange={(event) =>
-                                    setValue('comment', event.target.value)
-                                }
-                            />
-                        </div>
-                    </div>
-
-                    <button
-                        className={styles.button}
-                        type='submit'
+            <Toaster
+                position='top-center'
+                containerStyle={{ top: '1.6rem' }}
+                toastOptions={{ style: toastStyle }}
+            />
+            <div className={styles.fields}>
+                <div className={styles.field}>
+                    <label className={styles.label} htmlFor='lead-name'>
+                        {data.fields.name.label}
+                    </label>
+                    <input
+                        id='lead-name'
+                        name='name'
+                        type='text'
+                        className={styles.input}
+                        autoComplete='name'
+                        placeholder={data.fields.name.placeholder}
+                        value={values.name}
                         disabled={pending}
+                        onChange={(event) =>
+                            changeField('name', event.target.value)
+                        }
+                    />
+                </div>
+
+                <div className={styles.field}>
+                    <label className={styles.label} htmlFor='lead-phone'>
+                        {data.fields.phone.label}
+                    </label>
+                    <input
+                        id='lead-phone'
+                        name='phone'
+                        type='tel'
+                        className={styles.input}
+                        autoComplete='tel'
+                        inputMode='tel'
+                        placeholder={data.fields.phone.placeholder}
+                        value={values.phone}
+                        disabled={pending}
+                        onChange={(event) =>
+                            changeField('phone', event.target.value)
+                        }
+                    />
+                </div>
+
+                <div className={styles.field}>
+                    <label
+                        className={clsx(styles.label, styles.srOnly)}
+                        htmlFor='lead-interest'
                     >
-                        {pending ? data.submittingLabel : data.submitLabel}
-                    </button>
+                        {data.fields.interest.label}
+                    </label>
+                    <select
+                        id='lead-interest'
+                        name='interest'
+                        className={clsx(styles.input, styles.select, {
+                            [styles.selectPlaceholder]: values.interest === '',
+                        })}
+                        value={values.interest}
+                        disabled={pending}
+                        onChange={(event) =>
+                            changeField(
+                                'interest',
+                                event.target.value as LeadValues['interest'],
+                            )
+                        }
+                    >
+                        <option value=''>
+                            {data.fields.interest.placeholder}
+                        </option>
+                        {data.fields.interest.options.map((option) => (
+                            <option key={option.value} value={option.value}>
+                                {option.label}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
-                    {status === 'error' && (
-                        <div
-                            className={clsx(styles.status, styles.statusError)}
-                            role='alert'
-                        >
-                            <p className={styles.statusTitle}>
-                                {data.errorTitle}
-                            </p>
-                            <p className={styles.statusText}>
-                                {data.errorText}{' '}
-                                <a
-                                    className={styles.statusPhone}
-                                    href={data.phoneHref}
-                                >
-                                    {data.phone}
-                                </a>
-                            </p>
-                        </div>
-                    )}
+                <div className={styles.field}>
+                    <label className={styles.label} htmlFor='lead-comment'>
+                        {data.fields.comment.label}
+                    </label>
+                    <textarea
+                        id='lead-comment'
+                        name='comment'
+                        rows={3}
+                        className={clsx(styles.input, styles.textarea)}
+                        placeholder={data.fields.comment.placeholder}
+                        value={values.comment}
+                        disabled={pending}
+                        onChange={(event) =>
+                            changeField('comment', event.target.value)
+                        }
+                    />
+                </div>
+            </div>
 
-                    {status === 'duplicate' && (
-                        <div
-                            className={clsx(
-                                styles.status,
-                                styles.statusDuplicate,
-                            )}
-                            role='status'
-                        >
-                            <p className={styles.statusText}>
-                                {data.duplicateText}
-                            </p>
-                        </div>
-                    )}
-                </>
-            )}
+            <div className={styles.actions}>
+                <button
+                    className={styles.button}
+                    type='submit'
+                    disabled={pending}
+                    aria-describedby={describedBy}
+                >
+                    {buttonLabel}
+                </button>
+                {formError && (
+                    <p
+                        className={styles.formError}
+                        id='lead-form-error'
+                        role='alert'
+                    >
+                        {formError}
+                    </p>
+                )}
+                {countdown && (
+                    <p className={styles.countdown} id='lead-form-countdown'>
+                        {countdown}
+                    </p>
+                )}
+            </div>
         </form>
     );
 }
