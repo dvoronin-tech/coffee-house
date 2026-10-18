@@ -1,4 +1,5 @@
 ---
+import { Image, Picture } from 'astro:assets';
 import pairPhoto from '#/assets/history-pair.png';
 import roasterPhoto from '#/assets/history-roaster.webp';
 import beanOne from '#/assets/history-bean-1.webp';
@@ -18,6 +19,13 @@ const beans = [
     { src: beanOne, depth: 'mid' },
     { src: beanThree, depth: 'near' },
 ];
+
+const backWidths = [640, 960, 1280, 1600];
+const backSizes = `(min-width: 120rem) var(--page-width), calc(100vw - var(--page-gutter) * 2)`;
+const pairWidths = [320, 480, 720];
+const pairSizes = `(min-width: 76.8rem) 45rem, 86vw`;
+const beanWidths = [160, 320];
+const beanSizes = `(max-width: 76.8rem) 18vw, 15rem`;
 ---
 
 <section id='workshop' class='history' aria-labelledby='history-title'>
@@ -30,32 +38,38 @@ const beans = [
         </div>
         <div class='history__stage'>
             <div class='history__back'>
-                <img
+                <Picture
                     class='history__back-media'
-                    src={roasterPhoto.src}
-                    width={roasterPhoto.width}
-                    height={roasterPhoto.height}
+                    src={roasterPhoto}
+                    formats={['avif', 'webp']}
+                    fallbackFormat='webp'
+                    widths={backWidths}
+                    sizes={backSizes}
                     alt={backgroundAlt}
                     loading='lazy'
                     decoding='async'
                 />
             </div>
             <div class='history__pair'>
-                <img
+                <Picture
                     class='history__pair-glow'
-                    src={pairPhoto.src}
-                    width={pairPhoto.width}
-                    height={pairPhoto.height}
+                    src={pairPhoto}
+                    formats={['avif', 'webp']}
+                    fallbackFormat='webp'
+                    widths={pairWidths}
+                    sizes={pairSizes}
                     alt=''
                     aria-hidden='true'
                     loading='lazy'
                     decoding='async'
                 />
-                <img
+                <Picture
                     class='history__pair-photo'
-                    src={pairPhoto.src}
-                    width={pairPhoto.width}
-                    height={pairPhoto.height}
+                    src={pairPhoto}
+                    formats={['avif', 'webp']}
+                    fallbackFormat='webp'
+                    widths={pairWidths}
+                    sizes={pairSizes}
                     alt={imageAlt}
                     loading='lazy'
                     decoding='async'
@@ -91,11 +105,11 @@ const beans = [
                             `history__bean--${bean.depth}`,
                         ]}
                     >
-                        <img
+                        <Image
                             class='history__bean-photo'
-                            src={bean.src.src}
-                            width={bean.src.width}
-                            height={bean.src.height}
+                            src={bean.src}
+                            widths={beanWidths}
+                            sizes={beanSizes}
                             alt=''
                             loading='lazy'
                             decoding='async'
@@ -217,6 +231,12 @@ const beans = [
         position: absolute;
         inset: 0;
         overflow: hidden;
+
+        picture {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
         border-radius: 4.8rem 0 4.8rem 4.8rem;
 
         @include rise('cover 10% cover 30%');
@@ -259,6 +279,10 @@ const beans = [
         bottom: 0;
         left: 28%;
         width: 45rem;
+
+        picture {
+            display: block;
+        }
 
         @include rise('cover 12% cover 32%');
     }
