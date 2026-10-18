@@ -59,6 +59,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      order-server:
+        specifier: workspace:*
+        version: link:../order-server
       prettier:
         specifier: ^3.9.10
         version: 3.9.10
