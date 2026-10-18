@@ -2,50 +2,59 @@
 import '#/styles/global.scss';
 
 interface Props {
-	title: string;
-	description?: string;
+    title: string;
+    description?: string;
 }
 
 const {
-	title,
-	description = 'Мастерская в Минске. Зерно оказывается у вас на 1–3 день после обжарки.',
+    title,
+    description = 'Мастерская в Минске. Зерно оказывается у вас на 1–3 день после обжарки.',
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="ru">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" href="/favicon.ico" sizes="any" />
-		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-		<link
-			rel="preload"
-			href="/fonts/gambarino.woff2"
-			as="font"
-			type="font/woff2"
-			crossorigin
-		/>
-		<link
-			rel="preload"
-			href="/fonts/manrope-cyrillic.woff2"
-			as="font"
-			type="font/woff2"
-			crossorigin
-		/>
-		<link
-			rel="preload"
-			href="/fonts/manrope-latin.woff2"
-			as="font"
-			type="font/woff2"
-			crossorigin
-		/>
-		<meta name="description" content={description} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang='ru'>
+    <head>
+        <meta charset='UTF-8' />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+        <link rel='icon' href='/favicon.ico' sizes='any' />
+        <link
+            rel='icon'
+            type='image/png'
+            sizes='32x32'
+            href='/favicon-32.png'
+        />
+        <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+        <link
+            rel='apple-touch-icon'
+            sizes='180x180'
+            href='/apple-touch-icon.png'
+        />
+        <link
+            rel='preload'
+            href='/fonts/gambarino.woff2'
+            as='font'
+            type='font/woff2'
+            crossorigin
+        />
+        <link
+            rel='preload'
+            href='/fonts/manrope-cyrillic.woff2'
+            as='font'
+            type='font/woff2'
+            crossorigin
+        />
+        <link
+            rel='preload'
+            href='/fonts/manrope-latin.woff2'
+            as='font'
+            type='font/woff2'
+            crossorigin
+        />
+        <meta name='description' content={description} />
+        <title>{title}</title>
+    </head>
+    <body>
+        <slot />
+    </body>
 </html>

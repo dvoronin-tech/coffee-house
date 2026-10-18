@@ -159,3 +159,29 @@
         text-decoration: none;
     }
 }
+
+@media (max-width: 480px) {
+    .label,
+    .fieldError,
+    .button {
+        width: 100%;
+    }
+
+    .input,
+    .button {
+        min-height: 4.4rem;
+    }
+
+    .textarea {
+        min-height: 7.2rem;
+    }
+
+    .label,
+    .fieldError,
+    .successTitle,
+    .successText,
+    .statusTitle,
+    .statusText {
+        overflow-wrap: break-word;
+    }
+}

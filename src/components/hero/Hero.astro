@@ -3,262 +3,263 @@ import heroPhoto from '#/assets/hero-scoop.webp';
 import type { HeroData } from '#/types/hero';
 
 interface Props {
-	data: HeroData;
+    data: HeroData;
 }
 
 const { title, lead, text, slogan, meta, links, imageAlt } = Astro.props.data;
 ---
 
-<section class="hero" aria-labelledby="hero-title">
-	<div class="hero__inner">
-		<div class="hero__top">
-			<div class="hero__intro">
-				<h1 id="hero-title" class="hero__title">{title}</h1>
-				<p class="hero__lead">{lead}</p>
-				<p class="hero__text">{text}</p>
-				<div class="hero__links">
-					{
-						links.map((link) => (
-							<a
-								class:list={['hero__link', `hero__link--${link.tone}`]}
-								href={link.href}
-							>
-								{link.label}
-							</a>
-						))
-					}
-				</div>
-			</div>
-			<dl class="hero__meta">
-				{
-					meta.map((item, index) => (
-						<div class="hero__meta-item" style=`--i: ${index}`>
-							<dt class="hero__meta-label">{item.label}</dt>
-							<dd class="hero__meta-value">{item.value}</dd>
-						</div>
-					))
-				}
-			</dl>
-		</div>
-		<div class="hero__frame">
-			<img
-				class="hero__media"
-				src={heroPhoto.src}
-				width={heroPhoto.width}
-				height={heroPhoto.height}
-				alt={imageAlt}
-				fetchpriority="high"
-			/>
-			<div class="hero__notch">
-				<p class="hero__slogan">{slogan}</p>
-			</div>
-		</div>
-	</div>
+<section class='hero' aria-labelledby='hero-title'>
+    <div class='hero__inner'>
+        <div class='hero__top'>
+            <div class='hero__intro'>
+                <h1 id='hero-title' class='hero__title'>
+                    {title}
+                </h1>
+                <p class='hero__lead'>{lead}</p>
+                <p class='hero__text'>{text}</p>
+                <div class='hero__links'>
+                    {links.map((link) => (
+                        <a
+                            class:list={[
+                                'hero__link',
+                                `hero__link--${link.tone}`,
+                            ]}
+                            href={link.href}
+                        >
+                            {link.label}
+                        </a>
+                    ))}
+                </div>
+            </div>
+            <dl class='hero__meta'>
+                {meta.map((item, index) => (
+                    <div class='hero__meta-item' style=`--i: ${index}`>
+                        <dt class='hero__meta-label'>{item.label}</dt>
+                        <dd class='hero__meta-value'>{item.value}</dd>
+                    </div>
+                ))}
+            </dl>
+        </div>
+        <div class='hero__frame'>
+            <img
+                class='hero__media'
+                src={heroPhoto.src}
+                width={heroPhoto.width}
+                height={heroPhoto.height}
+                alt={imageAlt}
+                fetchpriority='high'
+            />
+            <div class='hero__notch'>
+                <p class='hero__slogan'>{slogan}</p>
+            </div>
+        </div>
+    </div>
 </section>
 
-<style lang="scss">
+<style lang='scss'>
     @mixin hero-rise-preset($delay: 0s) {
         animation: hero-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
         animation-delay: $delay;
     }
 
-	.hero {
-		background-color: var(--color-background);
-	}
+    .hero {
+        background-color: var(--color-background);
+    }
 
-	.hero__inner {
+    .hero__inner {
         display: flex;
         flex-direction: column;
         gap: 7.2rem;
-		width: min(100%, calc(var(--page-width) + var(--page-gutter) * 2));
-		margin-inline: auto;
-		padding: 14rem var(--page-gutter) 8rem;
-	}
+        width: min(100%, calc(var(--page-width) + var(--page-gutter) * 2));
+        margin-inline: auto;
+        padding: 14rem var(--page-gutter) 8rem;
+    }
 
-	.hero__top {
-		display: flex;
+    .hero__top {
+        display: flex;
         justify-content: space-between;
-		align-items: center;
+        align-items: center;
         gap: 2.8rem;
-	}
+    }
 
-	.hero__title {
-		margin: 0;
-		font-family: var(--font-display);
-		font-size: 14rem;
-		font-weight: 500;
-		line-height: 1;
-		letter-spacing: -0.02em;
-	}
+    .hero__title {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 14rem;
+        font-weight: 500;
+        line-height: 1;
+        letter-spacing: -0.02em;
+    }
 
-	.hero__lead {
-		max-width: 52rem;
-		margin: 2.8rem 0 0;
-		font-size: 2.4rem;
-		font-weight: 400;
-		line-height: 1.35;
-		text-wrap: balance;
-	}
+    .hero__lead {
+        max-width: 52rem;
+        margin: 2.8rem 0 0;
+        font-size: 2.4rem;
+        font-weight: 400;
+        line-height: 1.35;
+        text-wrap: balance;
+    }
 
-	.hero__text {
-		max-width: 48rem;
-		margin: 1.6rem 0 0;
-		font-size: 1.8rem;
-		line-height: 1.5;
-		text-wrap: pretty;
+    .hero__text {
+        max-width: 48rem;
+        margin: 1.6rem 0 0;
+        font-size: 1.8rem;
+        line-height: 1.5;
+        text-wrap: pretty;
         color: var(--color-secondary-text);
-	}
+    }
 
-	.hero__links {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 1.2rem 1.6rem;
-		margin-top: 3.2rem;
-	}
+    .hero__links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.2rem 1.6rem;
+        margin-top: 3.2rem;
+    }
 
-	.hero__link {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		min-height: 4.4rem;
-		padding: 0.8rem 2.4rem;
-		border: 0.1rem solid transparent;
-		border-radius: 4.8rem;
-		font-size: 1.8rem;
-		line-height: 1.2;
-		text-decoration: none;
-		transition:
-			background-color 0.2s ease,
-			border-color 0.2s ease,
-			color 0.2s ease;
+    .hero__link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 4.4rem;
+        padding: 0.8rem 2.4rem;
+        border: 0.1rem solid transparent;
+        border-radius: 4.8rem;
+        font-size: 1.8rem;
+        line-height: 1.2;
+        text-decoration: none;
+        transition:
+            background-color 0.2s ease,
+            border-color 0.2s ease,
+            color 0.2s ease;
 
-		&:focus-visible {
-			outline: 0.2rem solid var(--color-text);
-			outline-offset: 0.4rem;
-		}
-	}
+        &:focus-visible {
+            outline: 0.2rem solid var(--color-text);
+            outline-offset: 0.4rem;
+        }
+    }
 
-	.hero__link--primary {
-		background-color: var(--color-accent);
-		border-color: var(--color-accent);
-		color: var(--color-background);
+    .hero__link--primary {
+        background-color: var(--color-accent);
+        border-color: var(--color-accent);
+        color: var(--color-background);
 
-		&:hover {
-			background-color: var(--color-text);
-			border-color: var(--color-text);
-			color: var(--color-background);
-		}
-	}
+        &:hover {
+            background-color: var(--color-text);
+            border-color: var(--color-text);
+            color: var(--color-background);
+        }
+    }
 
-	.hero__link--secondary {
-		background-color: transparent;
-		border-color: var(--color-text);
-		color: var(--color-text);
+    .hero__link--secondary {
+        background-color: transparent;
+        border-color: var(--color-text);
+        color: var(--color-text);
 
-		&:hover {
-			background-color: var(--color-surface);
-		}
-	}
+        &:hover {
+            background-color: var(--color-surface);
+        }
+    }
 
-	.hero__meta {
-		display: flex;
-		flex-direction: column;
+    .hero__meta {
+        display: flex;
+        flex-direction: column;
         max-width: 30rem;
         width: 100%;
-	}
+    }
 
-	.hero__meta-item {
-		display: flex;
-		justify-content: space-between;
-		gap: 3rem;
-		padding-block: 1.6rem;
+    .hero__meta-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 3rem;
+        padding-block: 1.6rem;
 
-		& + & {
-			border-top: 0.1rem solid var(--color-border);
-		}
-	}
+        & + & {
+            border-top: 0.1rem solid var(--color-border);
+        }
+    }
 
-	.hero__meta-label {
-		margin: 0;
-		color: var(--color-secondary-text);
-		font-size: 1.4rem;
-		line-height: 1.3;
-		white-space: nowrap;
-	}
+    .hero__meta-label {
+        margin: 0;
+        color: var(--color-secondary-text);
+        font-size: 1.4rem;
+        line-height: 1.3;
+        white-space: nowrap;
+    }
 
-	.hero__meta-value {
-		margin: 0;
-		color: var(--color-text);
-		font-size: 1.8rem;
-		line-height: 1.3;
-		text-align: right;
-		white-space: nowrap;
-	}
+    .hero__meta-value {
+        margin: 0;
+        color: var(--color-text);
+        font-size: 1.8rem;
+        line-height: 1.3;
+        text-align: right;
+        white-space: nowrap;
+    }
 
-	.hero__frame {
-		--hero-scoop: 2rem;
-		position: relative;
-		overflow: hidden;
-		aspect-ratio: 3 / 2;
-		border-radius: 4.8rem 0 4.8rem 4.8rem;
-	}
+    .hero__frame {
+        --hero-scoop: 2rem;
+        position: relative;
+        overflow: hidden;
+        aspect-ratio: 3 / 2;
+        border-radius: 4.8rem 0 4.8rem 4.8rem;
+    }
 
-	.hero__media {
-		position: absolute;
-		top: -12%;
-		left: 0;
-		width: 100%;
-		height: 124%;
-		max-width: none;
-		object-fit: cover;
-		object-position: center;
-	}
+    .hero__media {
+        position: absolute;
+        top: -12%;
+        left: 0;
+        width: 100%;
+        height: 124%;
+        max-width: none;
+        object-fit: cover;
+        object-position: center;
+    }
 
-	.hero__notch {
-		position: absolute;
-		top: 0;
-		right: 0;
-		z-index: 1;
-		padding: 0.8rem;
-		background-color: var(--color-background);
-		border-bottom-left-radius: var(--hero-scoop);
+    .hero__notch {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 1;
+        padding: 0.8rem;
+        background-color: var(--color-background);
+        border-bottom-left-radius: var(--hero-scoop);
 
-		&::before,
-		&::after {
-			content: '';
-			position: absolute;
-			width: var(--hero-scoop);
-			height: var(--hero-scoop);
-			background: radial-gradient(
-				circle at 0 100%,
-				transparent var(--hero-scoop),
-				var(--color-background) var(--hero-scoop)
-			);
-		}
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            width: var(--hero-scoop);
+            height: var(--hero-scoop);
+            background: radial-gradient(
+                circle at 0 100%,
+                transparent var(--hero-scoop),
+                var(--color-background) var(--hero-scoop)
+            );
+        }
 
-		&::before {
-			top: 0;
-			left: calc(var(--hero-scoop) * -1);
-		}
+        &::before {
+            top: 0;
+            left: calc(var(--hero-scoop) * -1);
+        }
 
-		&::after {
-			right: 0;
-			bottom: calc(var(--hero-scoop) * -1);
-		}
-	}
+        &::after {
+            right: 0;
+            bottom: calc(var(--hero-scoop) * -1);
+        }
+    }
 
-	.hero__slogan {
-		margin: 0;
-		padding: 0.8rem 1.6rem;
-		border: 0;
-		border-radius: 4.8rem;
+    .hero__slogan {
+        margin: 0;
+        padding: 0.8rem 1.6rem;
+        border: 0;
+        border-radius: 4.8rem;
         font-family: var(--font-text);
-		color: var(--color-text);
+        color: var(--color-text);
         font-weight: 300;
-		font-size: 2rem;
-		line-height: 1.2;
-		white-space: nowrap;
-	}
+        font-size: 2rem;
+        line-height: 1.2;
+        white-space: nowrap;
+    }
 
     .hero__intro {
         @include hero-rise-preset();
@@ -272,106 +273,116 @@ const { title, lead, text, slogan, meta, links, imageAlt } = Astro.props.data;
         @include hero-rise-preset(0.2s);
     }
 
-	@keyframes hero-rise {
-		from {
-			opacity: 0;
-			transform: translateY(3rem);
-		}
+    @keyframes hero-rise {
+        from {
+            opacity: 0;
+            transform: translateY(3rem);
+        }
 
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 
-	@keyframes hero-parallax {
-		from {
-			transform: translateY(-30%);
-		}
+    @keyframes hero-parallax {
+        from {
+            transform: translateY(-30%);
+        }
 
-		to {
-			transform: translateY(30%);
-		}
-	}
+        to {
+            transform: translateY(30%);
+        }
+    }
 
-	@supports (animation-timeline: view()) {
-		.hero__frame {
-			view-timeline-name: --hero-frame;
-			view-timeline-axis: block;
-		}
+    @supports (animation-timeline: view()) {
+        .hero__frame {
+            view-timeline-name: --hero-frame;
+            view-timeline-axis: block;
+        }
 
-		.hero__media {
-			animation-name: hero-parallax;
-			animation-duration: auto;
-			animation-timing-function: linear;
-			animation-fill-mode: both;
-			animation-timeline: --hero-frame;
-			animation-range: cover 0% cover 100%;
-		}
-	}
+        .hero__media {
+            animation-name: hero-parallax;
+            animation-duration: auto;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
+            animation-timeline: --hero-frame;
+            animation-range: cover 0% cover 100%;
+        }
+    }
 
-	@media (max-width: 1280px) {
-		.hero__inner {
-			padding-top: 12rem;
-		}
+    @media (max-width: 1024px) {
+        .hero__inner {
+            padding-top: 12rem;
+        }
 
-		.hero__title {
-			font-size: 11.2rem;
-		}
-	}
+        .hero__title {
+            font-size: 11.2rem;
+        }
+    }
 
-	@media (max-width: 800px) {
-		.hero__top {
+    @media (max-width: 768px) {
+        .hero__top {
             flex-direction: column;
-		}
+            align-items: stretch;
+        }
 
-		.hero__title {
-			font-size: 7.2rem;
-		}
+        .hero__title {
+            font-size: 7.2rem;
+        }
 
-		.hero__frame {
-			--hero-scoop: 0.8rem;
-			max-height: 32rem;
-			border-radius: 2.4rem 0 2.4rem 2.4rem;
-		}
+        .hero__meta {
+            max-width: none;
+        }
 
-		.hero__notch {
-			padding: 0.6rem 0.6rem 1rem 1rem;
-		}
+        .hero__frame {
+            --hero-scoop: 0.8rem;
+            max-height: 32rem;
+            border-radius: 2.4rem 0 2.4rem 2.4rem;
+        }
 
-		.hero__slogan {
-			padding: 0.6rem 1.4rem;
-			font-size: 1.6rem;
-		}
-	}
+        .hero__media {
+            animation: none;
+            transform: none;
+        }
 
-	@media (max-width: 640px) {
-		.hero__inner {
-			padding-top: 8rem;
-			padding-bottom: 4.8rem;
-		}
+        .hero__notch {
+            padding: 0.6rem 0.6rem 1rem 1rem;
+        }
 
-		.hero__lead {
-			font-size: 2rem;
-		}
+        .hero__slogan {
+            padding: 0.6rem 1.4rem;
+            font-size: 1.6rem;
+        }
+    }
 
-		.hero__text,
-		.hero__link {
-			font-size: 1.6rem;
-		}
-	}
+    @media (max-width: 480px) {
+        .hero__inner {
+            padding-top: 9.6rem;
+            padding-bottom: 4.8rem;
+        }
 
-	@media (prefers-reduced-motion: reduce) {
-		.hero__intro,
-		.hero__meta,
-		.hero__meta > *,
-		.hero__media {
-			animation: none;
-			transform: none;
-		}
+        .hero__lead {
+            font-size: 2rem;
+        }
 
-		.hero__link {
-			transition: none;
-		}
-	}
+        .hero__text,
+        .hero__link {
+            font-size: 1.6rem;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .hero__intro,
+        .hero__meta,
+        .hero__meta > *,
+        .hero__media {
+            animation: none;
+            transform: none;
+        }
+
+        .hero__link {
+            transition: none;
+        }
+    }
 </style>
