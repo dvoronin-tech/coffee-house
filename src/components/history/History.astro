@@ -65,19 +65,21 @@ const beans = [
                 <div class='history__card'>
                     <div class='history__card-face'>
                         <h3 class='history__card-name'>{cardName}</h3>
-                        <p class='history__card-text'>{cardText}</p>
-                        <dl class='history__facts'>
-                            {facts.map((fact) => (
-                                <div class='history__fact'>
-                                    <dt class='history__fact-label'>
-                                        {fact.label}
-                                    </dt>
-                                    <dd class='history__fact-value'>
-                                        {fact.value}
-                                    </dd>
-                                </div>
-                            ))}
-                        </dl>
+                        <div class='history__card-body'>
+                            <p class='history__card-text'>{cardText}</p>
+                            <dl class='history__facts'>
+                                {facts.map((fact) => (
+                                    <div class='history__fact'>
+                                        <dt class='history__fact-label'>
+                                            {fact.label}
+                                        </dt>
+                                        <dd class='history__fact-value'>
+                                            {fact.value}
+                                        </dd>
+                                    </div>
+                                ))}
+                            </dl>
+                        </div>
                     </div>
                 </div>
             </aside>
@@ -320,6 +322,10 @@ const beans = [
         letter-spacing: -0.02em;
     }
 
+    .history__card-body {
+        display: contents;
+    }
+
     .history__card-text {
         margin: 1.2rem 0 0;
         font-size: 1.6rem;
@@ -467,7 +473,9 @@ const beans = [
 
     @media (max-width: 768px) {
         .history {
-            padding-block: 4.8rem;
+            padding-top: calc(var(--header-height) + 2.4rem);
+            padding-bottom: 4.8rem;
+            scroll-margin-top: var(--header-height);
         }
 
         .history__intro {
@@ -488,10 +496,10 @@ const beans = [
         }
 
         .history__stage {
-            position: static;
+            position: relative;
             display: flex;
             flex-direction: column;
-            gap: 2.4rem;
+            gap: 0;
             width: 100%;
             height: auto;
             margin-top: 3.2rem;
@@ -500,6 +508,7 @@ const beans = [
 
         .history__back {
             position: relative;
+            z-index: 0;
             inset: auto;
             width: 100%;
             height: auto;
@@ -510,11 +519,9 @@ const beans = [
                 background: linear-gradient(
                     to bottom,
                     var(--color-background) 0%,
-                    color-mix(in srgb, var(--color-background) 20%, transparent)
-                        18%,
-                    transparent 40%,
-                    transparent 72%,
-                    var(--color-background) 100%
+                    color-mix(in srgb, var(--color-background) 28%, transparent)
+                        14%,
+                    transparent 32%
                 );
             }
         }
@@ -526,16 +533,20 @@ const beans = [
             width: 100%;
             height: auto;
             max-width: 100%;
-            aspect-ratio: 3 / 2;
+            aspect-ratio: 4 / 3;
             object-fit: cover;
+            object-position: 50% 62%;
         }
 
         .history__pair {
-            position: static;
+            position: relative;
+            z-index: 1;
             bottom: auto;
             left: auto;
-            width: 100%;
-            max-width: 100%;
+            width: 86%;
+            max-width: none;
+            margin-top: -46%;
+            margin-inline: auto;
         }
 
         .history__pair-glow {
@@ -547,23 +558,50 @@ const beans = [
         }
 
         .history__card-slot {
-            position: static;
+            position: relative;
+            z-index: 2;
             top: auto;
             right: auto;
             width: 100%;
             max-width: 100%;
+            margin-top: -62%;
         }
 
         .history__card-face {
-            padding: 2.4rem 2.4rem 2rem;
-            border-radius: 2.4rem 0 2.4rem 2.4rem;
+            padding: 0;
+            background: transparent;
+            border: none;
+            border-radius: 0;
             rotate: 0deg;
+            box-shadow: none;
+        }
+
+        .history__card-name {
+            width: fit-content;
+            max-width: calc(100% - 8%);
+            margin-left: 8%;
+            padding: 1.2rem 2rem 1rem;
+            font-size: 2.8rem;
+            background-color: var(--color-surface);
+            border: 0.1rem solid var(--color-border);
+            border-radius: 2.4rem 0 2.4rem 2.4rem;
             box-shadow: 0 1.6rem 3.2rem
                 color-mix(in srgb, var(--color-text) 7%, transparent);
         }
 
-        .history__card-name {
-            font-size: 2.8rem;
+        .history__card-body {
+            display: block;
+            margin-top: calc(62% - 5.2rem);
+            padding: 2rem 2rem 1.6rem;
+            background-color: var(--color-surface);
+            border: 0.1rem solid var(--color-border);
+            border-radius: 2.4rem 0 2.4rem 2.4rem;
+            box-shadow: 0 1.6rem 3.2rem
+                color-mix(in srgb, var(--color-text) 7%, transparent);
+        }
+
+        .history__card-text {
+            margin-top: 0;
         }
 
         .history__beans {
@@ -574,6 +612,7 @@ const beans = [
             align-items: flex-end;
             width: 100%;
             max-width: 100%;
+            margin-top: 2.4rem;
         }
 
         .history__bean {
@@ -607,33 +646,38 @@ const beans = [
 
     @media (max-width: 480px) {
         .history {
-            padding-block: 4.8rem;
+            padding-top: calc(var(--header-height) + 3.2rem);
+            padding-bottom: 4.8rem;
         }
 
         .history__title {
             font-size: 3.2rem;
         }
 
+        .history__intro {
+            row-gap: 2rem;
+        }
+
         .history__stage {
-            gap: 2rem;
-            margin-top: 2.4rem;
+            margin-top: 4.8rem;
         }
 
-        .history__back {
+        .history__back,
+        .history__card-name,
+        .history__card-body {
             border-radius: 1.6rem 0 1.6rem 1.6rem;
-        }
-
-        .history__back-media {
-            aspect-ratio: 4 / 3;
         }
 
         .history__card-name {
+            max-width: calc(100% - 6%);
+            margin-left: 6%;
+            padding: 1rem 1.6rem 0.8rem;
             font-size: 2.6rem;
         }
 
-        .history__card-face {
-            padding: 2rem 2rem 1.6rem;
-            border-radius: 1.6rem 0 1.6rem 1.6rem;
+        .history__card-body {
+            margin-top: calc(62% - 4.6rem);
+            padding: 1.6rem 1.6rem 1.2rem;
         }
 
         .history__fact {
