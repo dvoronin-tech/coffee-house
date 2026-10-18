@@ -2,6 +2,7 @@ import { zValidator } from '@hono/zod-validator';
 import { sql } from 'drizzle-orm';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
+import { HTTPException } from 'hono/http-exception';
 import { db } from './db';
 import { records } from './schema';
 import {
@@ -77,5 +78,25 @@ export const app = new Hono()
             }
         },
     );
+
+app.onError((error, c) => {
+    if (isMalformedJson(error)) {
+        return c.json({ code: 'INVALID_ID' as const }, 400);
+    }
+    if (error instanceof HTTPException) {
+        const response = error.getResponse();
+        return c.newResponse(response.body, response);
+    }
+    console.error(error);
+    return c.text('Internal Server Error', 500);
+});
+
+function isMalformedJson(error: Error): boolean {
+    return (
+        error instanceof HTTPException &&
+        error.status === 400 &&
+        error.message === 'Malformed JSON in request body'
+    );
+}
 
 export type AppType = typeof app;
