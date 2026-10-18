@@ -12,5 +12,9 @@
     "build": "pnpm --filter website build",
     "preview": "pnpm --filter website preview",
     "astro": "pnpm --filter website exec astro"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.1"
   }
 }
