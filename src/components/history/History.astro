@@ -473,7 +473,9 @@ const beans = [
 
     @media (max-width: 768px) {
         .history {
-            padding-block: 4.8rem;
+            padding-top: calc(var(--header-height) + 2.4rem);
+            padding-bottom: 4.8rem;
+            scroll-margin-top: var(--header-height);
         }
 
         .history__intro {
@@ -562,7 +564,7 @@ const beans = [
             right: auto;
             width: 100%;
             max-width: 100%;
-            margin-top: -46%;
+            margin-top: -62%;
         }
 
         .history__card-face {
@@ -589,7 +591,7 @@ const beans = [
 
         .history__card-body {
             display: block;
-            margin-top: calc(46% - 5.2rem);
+            margin-top: calc(62% - 5.2rem);
             padding: 2rem 2rem 1.6rem;
             background-color: var(--color-surface);
             border: 0.1rem solid var(--color-border);
@@ -644,15 +646,20 @@ const beans = [
 
     @media (max-width: 480px) {
         .history {
-            padding-block: 4.8rem;
+            padding-top: calc(var(--header-height) + 3.2rem);
+            padding-bottom: 4.8rem;
         }
 
         .history__title {
             font-size: 3.2rem;
         }
 
+        .history__intro {
+            row-gap: 2rem;
+        }
+
         .history__stage {
-            margin-top: 2.4rem;
+            margin-top: 4.8rem;
         }
 
         .history__back,
@@ -669,7 +676,7 @@ const beans = [
         }
 
         .history__card-body {
-            margin-top: calc(46% - 4.6rem);
+            margin-top: calc(62% - 4.6rem);
             padding: 1.6rem 1.6rem 1.2rem;
         }
 
