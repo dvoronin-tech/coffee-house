@@ -3,7 +3,6 @@ import { sql } from 'drizzle-orm';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { db } from './db';
-import { env } from './env';
 import { records } from './schema';
 import {
     sendOrderBody,
@@ -16,7 +15,7 @@ export const app = new Hono()
         '*',
         cors({
             origin: (origin) => {
-                const allowed = env('WEB_ORIGIN');
+                const allowed = process.env.WEB_ORIGIN;
                 if (allowed && origin === allowed) return allowed;
                 return undefined;
             },

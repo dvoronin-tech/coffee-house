@@ -1,16 +1,15 @@
 import { serve } from '@hono/node-server';
 import { app } from './app';
-import { env } from './env';
 
-if (!env('DATABASE_URL')) {
+if (!process.env.DATABASE_URL) {
     throw new Error('DATABASE_URL is required');
 }
 
-if (!env('WEB_ORIGIN')) {
+if (!process.env.WEB_ORIGIN) {
     throw new Error('WEB_ORIGIN is required');
 }
 
-const port = listenPort(env('PORT'));
+const port = listenPort(process.env.PORT);
 
 serve({ fetch: app.fetch, port }, (info) => {
     console.log(`listening on ${info.port}`);
