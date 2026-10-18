@@ -2,28 +2,26 @@ import { Buffer } from 'node:buffer';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { z } from 'zod';
 
-const id = z.string().transform((value, ctx) => {
-    if (value.length < 1 || value.length > 128) {
-        ctx.addIssue({
-            code: 'custom',
-            message: 'id',
-        });
-        return z.NEVER;
-    }
-    return value;
-});
+function boundedString(
+    field: 'id' | 'name',
+    maxLength: number,
+    options?: { trim?: boolean },
+) {
+    return z.string().transform((value, ctx) => {
+        const text = options?.trim ? value.trim() : value;
+        if (text.length < 1 || text.length > maxLength) {
+            ctx.addIssue({
+                code: 'custom',
+                message: field,
+            });
+            return z.NEVER;
+        }
+        return text;
+    });
+}
 
-const name = z.string().transform((value, ctx) => {
-    const trimmed = value.trim();
-    if (trimmed.length < 1 || trimmed.length > 200) {
-        ctx.addIssue({
-            code: 'custom',
-            message: 'name',
-        });
-        return z.NEVER;
-    }
-    return trimmed;
-});
+const id = boundedString('id', 128);
+const name = boundedString('name', 200, { trim: true });
 
 const phone = z.string().transform((value, ctx) => {
     const parsed = parsePhoneNumberFromString(value, 'BY');
