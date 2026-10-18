@@ -78,8 +78,8 @@ const beanSizes = `(max-width: 76.8rem) 18vw, 15rem`;
             <aside class='history__card-slot'>
                 <div class='history__card'>
                     <div class='history__card-face'>
-                        <h3 class='history__card-name'>{cardName}</h3>
                         <div class='history__card-body'>
+                            <h3 class='history__card-name'>{cardName}</h3>
                             <p class='history__card-text'>{cardText}</p>
                             <dl class='history__facts'>
                                 {facts.map((fact) => (
@@ -228,31 +228,28 @@ const beanSizes = `(max-width: 76.8rem) 18vw, 15rem`;
     }
 
     .history__back {
+        --history-back-mask: linear-gradient(
+            to bottom,
+            transparent 0%,
+            rgb(0 0 0 / 26%) 30%,
+            rgb(0 0 0 / 26%) 70%,
+            transparent 100%
+        );
+
         position: absolute;
         inset: 0;
         overflow: hidden;
+        border-radius: 4.8rem 0 4.8rem 4.8rem;
+        -webkit-mask-image: var(--history-back-mask);
+        mask-image: var(--history-back-mask);
 
         picture {
             display: block;
             width: 100%;
             height: 100%;
         }
-        border-radius: 4.8rem 0 4.8rem 4.8rem;
 
         @include rise('cover 10% cover 30%');
-
-        &::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                to bottom,
-                var(--color-background) 0%,
-                color-mix(in srgb, var(--color-background) 74%, transparent) 30%,
-                color-mix(in srgb, var(--color-background) 74%, transparent) 70%,
-                var(--color-background) 100%
-            );
-        }
     }
 
     .history__back-media {
@@ -277,7 +274,7 @@ const beanSizes = `(max-width: 76.8rem) 18vw, 15rem`;
     .history__pair {
         position: absolute;
         bottom: 0;
-        left: 28%;
+        left: 20%;
         width: 45rem;
 
         picture {
@@ -344,10 +341,6 @@ const beanSizes = `(max-width: 76.8rem) 18vw, 15rem`;
         font-weight: 400;
         line-height: 1.1;
         letter-spacing: -0.02em;
-    }
-
-    .history__card-body {
-        display: contents;
     }
 
     .history__card-text {
@@ -483,7 +476,7 @@ const beanSizes = `(max-width: 76.8rem) 18vw, 15rem`;
         }
 
         .history__pair {
-            width: 34%;
+            left: 10%;
         }
 
         .history__card-slot {
@@ -520,137 +513,59 @@ const beanSizes = `(max-width: 76.8rem) 18vw, 15rem`;
         }
 
         .history__stage {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-            width: 100%;
-            height: auto;
+            height: 58rem;
             margin-top: 3.2rem;
-            overflow: visible;
         }
 
         .history__back {
-            position: relative;
-            z-index: 0;
-            inset: auto;
-            width: 100%;
-            height: auto;
-            overflow: hidden;
-            border-radius: 2.4rem 0 2.4rem 2.4rem;
-
-            &::after {
-                background: linear-gradient(
-                    to bottom,
-                    var(--color-background) 0%,
-                    color-mix(in srgb, var(--color-background) 28%, transparent)
-                        14%,
-                    transparent 32%
-                );
-            }
-        }
-
-        .history__back-media {
-            position: static;
-            top: auto;
-            left: auto;
-            width: 100%;
-            height: auto;
-            max-width: 100%;
-            aspect-ratio: 4 / 3;
-            object-fit: cover;
-            object-position: 50% 62%;
+            border-radius: 3.2rem 0 3.2rem 3.2rem;
         }
 
         .history__pair {
-            position: relative;
-            z-index: 1;
-            bottom: auto;
-            left: auto;
-            width: 86%;
-            max-width: none;
-            margin-top: -46%;
-            margin-inline: auto;
-        }
-
-        .history__pair-glow {
-            display: none;
-        }
-
-        .history__pair-photo {
-            max-width: 100%;
+            right: auto;
+            bottom: 6rem;
+            left: 0;
+            width: min(50rem, 100%);
+            margin-inline: 0;
         }
 
         .history__card-slot {
-            position: relative;
-            z-index: 2;
             top: auto;
-            right: auto;
-            width: 100%;
-            max-width: 100%;
-            margin-top: -62%;
+            right: 0;
+            bottom: 0;
+            left: auto;
+            width: min(32rem, 74%);
         }
 
         .history__card-face {
-            padding: 0;
-            background: transparent;
-            border: none;
-            border-radius: 0;
+            padding: 2.4rem 2rem 2rem;
+            border-radius: 2.4rem 0 2.4rem 2.4rem;
             rotate: 0deg;
-            box-shadow: none;
+            box-shadow: none !important;
         }
 
         .history__card-name {
-            width: fit-content;
-            max-width: calc(100% - 8%);
-            margin-left: 8%;
-            padding: 1.2rem 2rem 1rem;
             font-size: 2.8rem;
-            background-color: var(--color-surface);
-            border: 0.1rem solid var(--color-border);
-            border-radius: 2.4rem 0 2.4rem 2.4rem;
-            box-shadow: 0 1.6rem 3.2rem
-                color-mix(in srgb, var(--color-text) 7%, transparent);
         }
 
-        .history__card-body {
-            display: block;
-            margin-top: calc(62% - 5.2rem);
-            padding: 2rem 2rem 1.6rem;
-            background-color: var(--color-surface);
-            border: 0.1rem solid var(--color-border);
-            border-radius: 2.4rem 0 2.4rem 2.4rem;
-            box-shadow: 0 1.6rem 3.2rem
-                color-mix(in srgb, var(--color-text) 7%, transparent);
+        .history__bean--far {
+            top: 5%;
+            left: 3%;
+            width: 7.2rem;
         }
 
-        .history__card-text {
-            margin-top: 0;
-        }
-
-        .history__beans {
-            position: static;
-            inset: auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            width: 100%;
-            max-width: 100%;
-            margin-top: 2.4rem;
-        }
-
-        .history__bean {
-            position: static;
-            top: auto;
-            right: auto;
-            bottom: auto;
+        .history__bean--mid {
+            top: 1.2rem;
+            right: 6%;
             left: auto;
-            width: 18%;
-            min-width: 0;
+            width: 6rem;
         }
 
-        .history__bean-photo {
-            max-width: 100%;
+        .history__bean--near {
+            top: auto;
+            bottom: 8%;
+            left: 0;
+            width: 11rem;
         }
 
         .history__title,
@@ -683,25 +598,39 @@ const beanSizes = `(max-width: 76.8rem) 18vw, 15rem`;
         }
 
         .history__stage {
+            height: 58rem;
             margin-top: 4.8rem;
         }
 
-        .history__back,
-        .history__card-name,
-        .history__card-body {
+        .history__pair {
+            right: auto;
+            bottom: 12rem;
+            left: 50%;
+            width: max(100%, 42rem);
+            margin-inline: 0;
+            translate: -50% 0;
+        }
+
+        .history__card-slot {
+            width: min(28rem, 76%);
+        }
+
+        .history__card-face,
+        .history__back {
             border-radius: 1.6rem 0 1.6rem 1.6rem;
         }
 
+        .history__card-face {
+            padding: 2rem 1.6rem 1.6rem;
+        }
+
         .history__card-name {
-            max-width: calc(100% - 6%);
-            margin-left: 6%;
-            padding: 1rem 1.6rem 0.8rem;
             font-size: 2.6rem;
         }
 
-        .history__card-body {
-            margin-top: calc(62% - 4.6rem);
-            padding: 1.6rem 1.6rem 1.2rem;
+        .history__bean--near {
+            bottom: 12%;
+            width: 9rem;
         }
 
         .history__fact {
