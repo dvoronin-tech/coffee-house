@@ -5,6 +5,7 @@ import { cors } from 'hono/cors';
 import { HTTPException } from 'hono/http-exception';
 import { db } from './db';
 import { records } from './schema';
+import { env } from './utils/constants';
 import {
     sendOrderBody,
     sendOrderRejectionCode,
@@ -16,7 +17,7 @@ export const app = new Hono()
         '*',
         cors({
             origin: (origin) => {
-                const allowed = process.env.WEB_ORIGIN;
+                const allowed = env.WEB_ORIGIN;
                 if (allowed && origin === allowed) return allowed;
                 return undefined;
             },

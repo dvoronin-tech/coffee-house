@@ -1,12 +1,11 @@
 import { defineConfig } from 'drizzle-kit';
+import { env } from './src/utils/constants';
 
 export default defineConfig({
     dialect: 'postgresql',
     schema: './src/schema.ts',
     out: './drizzle',
     dbCredentials: {
-        url:
-            process.env.DATABASE_URL ??
-            'postgresql://kvarta:kvarta@localhost:5432/kvarta',
+        url: env.DATABASE_URL,
     },
 });

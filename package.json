@@ -12,5 +12,8 @@
         "build": "pnpm --filter website build",
         "preview": "pnpm --filter website preview",
         "astro": "pnpm --filter website exec astro"
+    },
+    "dependencies": {
+        "dotenv": "^18.0.8"
     }
 }
