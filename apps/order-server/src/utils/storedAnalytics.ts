@@ -1,5 +1,5 @@
 import { Buffer } from 'node:buffer';
-import { isNonEmptyObject } from './is-non-empty-object';
+import { isNonEmptyObject } from './isNonEmptyObject';
 
 const analyticsMaxUtf8Bytes = 8192;
 

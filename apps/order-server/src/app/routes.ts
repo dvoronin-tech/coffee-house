@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import sendOrder from './send-order/send-order.route';
+import sendOrder from './sendOrder/sendOrder.route';
 
 const routes = new Hono().route('/send-order', sendOrder);
 
