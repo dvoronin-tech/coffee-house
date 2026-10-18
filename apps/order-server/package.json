@@ -1,5 +1,5 @@
 {
-    "name": "order-server",
+    "name": "@coffee-house/order-server",
     "private": true,
     "type": "module",
     "version": "0.0.1",
@@ -7,7 +7,7 @@
         ".": "./src/app.ts"
     },
     "scripts": {
-        "start": "tsx src/serve.ts",
+        "dev": "tsx src/serve.ts",
         "db:generate": "drizzle-kit generate",
         "db:migrate": "tsx src/db/migrate.ts"
     },

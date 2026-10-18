@@ -1,5 +1,5 @@
 {
-    "name": "website",
+    "name": "@coffee-house/website",
     "private": true,
     "type": "module",
     "version": "0.0.1",

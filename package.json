@@ -8,7 +8,7 @@
         "node": ">=22.12.0"
     },
     "scripts": {
-        "dev": "pnpm --filter website dev",
+        "dev": "pnpm -r --parallel --filter @coffee-house/website --filter @coffee-house/order-server run dev",
         "build": "pnpm --filter website build",
         "preview": "pnpm --filter website preview",
         "astro": "pnpm --filter website exec astro"
