@@ -3,7 +3,8 @@ import type { FooterData } from '#/types/footer';
 export const footerData: FooterData = {
     logoLabel: 'Кварта',
     logoHref: '#top',
-    tagline: 'Мастерская в Минске. Зерно оказывается у вас на 1–3 день после обжарки.',
+    tagline:
+        'Мастерская в Минске. Зерно оказывается у вас на 1–3 день после обжарки.',
     title: 'Оставьте контакты — перезвоним и всё расскажем',
     links: [
         { label: 'Зерно', href: '#grain' },

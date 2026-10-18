@@ -9,38 +9,40 @@ interface Props {
 const { data } = Astro.props;
 ---
 
-<section class="contact" aria-labelledby="contact-title" id="contact-form">
-    <div class="contact__inner">
-        <div class="contact__intro">
-            <h2 id="contact-title" class="contact__title">{data.title}</h2>
-            <p class="contact__lead">{data.lead}</p>
-            <dl class="contact__list">
-                <div class="contact__item" style="--i: 0">
-                    <dt class="contact__label">{data.addressLabel}</dt>
-                    <dd class="contact__value">{data.address}</dd>
+<section class='contact' aria-labelledby='contact-title' id='contact-form'>
+    <div class='contact__inner'>
+        <div class='contact__intro'>
+            <h2 id='contact-title' class='contact__title'>
+                {data.title}
+            </h2>
+            <p class='contact__lead'>{data.lead}</p>
+            <dl class='contact__list'>
+                <div class='contact__item' style='--i: 0'>
+                    <dt class='contact__label'>{data.addressLabel}</dt>
+                    <dd class='contact__value'>{data.address}</dd>
                 </div>
-                <div class="contact__item" style="--i: 1">
-                    <dt class="contact__label">{data.hoursLabel}</dt>
-                    <dd class="contact__value">{data.hours}</dd>
+                <div class='contact__item' style='--i: 1'>
+                    <dt class='contact__label'>{data.hoursLabel}</dt>
+                    <dd class='contact__value'>{data.hours}</dd>
                 </div>
-                <div class="contact__item" style="--i: 2">
-                    <dt class="contact__label">{data.phoneLabel}</dt>
-                    <dd class="contact__value">
-                        <a class="contact__phone" href={data.phoneHref}>
+                <div class='contact__item' style='--i: 2'>
+                    <dt class='contact__label'>{data.phoneLabel}</dt>
+                    <dd class='contact__value'>
+                        <a class='contact__phone' href={data.phoneHref}>
                             {data.phone}
                         </a>
                     </dd>
                 </div>
             </dl>
         </div>
-        <div class="contact__form">
-            <p class="contact__kicker">{data.formKicker}</p>
+        <div class='contact__form'>
+            <p class='contact__kicker'>{data.formKicker}</p>
             <LeadForm client:visible data={data} />
         </div>
     </div>
 </section>
 
-<style lang="scss">
+<style lang='scss'>
     @keyframes contact-rise {
         from {
             opacity: 0;
@@ -58,10 +60,8 @@ const { data } = Astro.props;
             @supports (animation-timeline: view()) {
                 animation: contact-rise auto linear both;
                 animation-timeline: view();
-                animation-range: cover
-                    calc(#{$start} + var(--i, 0) * #{$step})
-                    cover
-                    calc(#{$end} + var(--i, 0) * #{$step});
+                animation-range: cover calc(#{$start} + var(--i, 0) * #{$step})
+                    cover calc(#{$end} + var(--i, 0) * #{$step});
             }
         }
     }

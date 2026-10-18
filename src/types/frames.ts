@@ -1,7 +1,7 @@
 export type FramesFrame = {
-	alt: string;
+    alt: string;
 };
 
 export type FramesData = {
-	frames: readonly FramesFrame[];
+    frames: readonly FramesFrame[];
 };

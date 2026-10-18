@@ -20,94 +20,92 @@ const beans = [
 ];
 ---
 
-<section id="workshop" class="history" aria-labelledby="history-title">
-    <div class="history__inner">
-        <div class="history__intro">
-            <h2 id="history-title" class="history__title">{title}</h2>
-            <p class="history__lead">{lead}</p>
+<section id='workshop' class='history' aria-labelledby='history-title'>
+    <div class='history__inner'>
+        <div class='history__intro'>
+            <h2 id='history-title' class='history__title'>
+                {title}
+            </h2>
+            <p class='history__lead'>{lead}</p>
         </div>
-        <div class="history__stage">
-            <div class="history__back">
+        <div class='history__stage'>
+            <div class='history__back'>
                 <img
-                    class="history__back-media"
+                    class='history__back-media'
                     src={roasterPhoto.src}
                     width={roasterPhoto.width}
                     height={roasterPhoto.height}
                     alt={backgroundAlt}
-                    loading="lazy"
-                    decoding="async"
+                    loading='lazy'
+                    decoding='async'
                 />
             </div>
-            <div class="history__pair">
+            <div class='history__pair'>
                 <img
-                    class="history__pair-glow"
+                    class='history__pair-glow'
                     src={pairPhoto.src}
                     width={pairPhoto.width}
                     height={pairPhoto.height}
-                    alt=""
-                    aria-hidden="true"
-                    loading="lazy"
-                    decoding="async"
+                    alt=''
+                    aria-hidden='true'
+                    loading='lazy'
+                    decoding='async'
                 />
                 <img
-                    class="history__pair-photo"
+                    class='history__pair-photo'
                     src={pairPhoto.src}
                     width={pairPhoto.width}
                     height={pairPhoto.height}
                     alt={imageAlt}
-                    loading="lazy"
-                    decoding="async"
+                    loading='lazy'
+                    decoding='async'
                 />
             </div>
-            <aside class="history__card-slot">
-                <div class="history__card">
-                    <div class="history__card-face">
-                        <h3 class="history__card-name">{cardName}</h3>
-                        <p class="history__card-text">{cardText}</p>
-                        <dl class="history__facts">
-                            {
-                                facts.map((fact) => (
-                                    <div class="history__fact">
-                                        <dt class="history__fact-label">
-                                            {fact.label}
-                                        </dt>
-                                        <dd class="history__fact-value">
-                                            {fact.value}
-                                        </dd>
-                                    </div>
-                                ))
-                            }
+            <aside class='history__card-slot'>
+                <div class='history__card'>
+                    <div class='history__card-face'>
+                        <h3 class='history__card-name'>{cardName}</h3>
+                        <p class='history__card-text'>{cardText}</p>
+                        <dl class='history__facts'>
+                            {facts.map((fact) => (
+                                <div class='history__fact'>
+                                    <dt class='history__fact-label'>
+                                        {fact.label}
+                                    </dt>
+                                    <dd class='history__fact-value'>
+                                        {fact.value}
+                                    </dd>
+                                </div>
+                            ))}
                         </dl>
                     </div>
                 </div>
             </aside>
-            <ul class="history__beans">
-                {
-                    beans.map((bean) => (
-                        <li
-                            class:list={[
-                                'history__bean',
-                                `history__bean--${bean.depth}`,
-                            ]}
-                        >
-                            <img
-                                class="history__bean-photo"
-                                src={bean.src.src}
-                                width={bean.src.width}
-                                height={bean.src.height}
-                                alt=""
-                                loading="lazy"
-                                decoding="async"
-                            />
-                        </li>
-                    ))
-                }
+            <ul class='history__beans'>
+                {beans.map((bean) => (
+                    <li
+                        class:list={[
+                            'history__bean',
+                            `history__bean--${bean.depth}`,
+                        ]}
+                    >
+                        <img
+                            class='history__bean-photo'
+                            src={bean.src.src}
+                            width={bean.src.width}
+                            height={bean.src.height}
+                            alt=''
+                            loading='lazy'
+                            decoding='async'
+                        />
+                    </li>
+                ))}
             </ul>
         </div>
     </div>
 </section>
 
-<style lang="scss">
+<style lang='scss'>
     @keyframes history-rise {
         from {
             opacity: 0;
@@ -228,10 +226,8 @@ const beans = [
             background: linear-gradient(
                 to bottom,
                 var(--color-background) 0%,
-                color-mix(in srgb, var(--color-background) 74%, transparent)
-                    30%,
-                color-mix(in srgb, var(--color-background) 74%, transparent)
-                    70%,
+                color-mix(in srgb, var(--color-background) 74%, transparent) 30%,
+                color-mix(in srgb, var(--color-background) 74%, transparent) 70%,
                 var(--color-background) 100%
             );
         }

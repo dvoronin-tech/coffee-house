@@ -3,76 +3,82 @@ import type { GrainData } from '#/types/grain';
 import type { DripsData } from '#/types/drips';
 
 interface Props {
-	grain: GrainData;
-	drips: DripsData;
+    grain: GrainData;
+    drips: DripsData;
 }
 
 const { title, lead, ctaLabel, ctaHref, lots } = Astro.props.grain;
 const {
-	title: dripsTitle,
-	composition,
-	count,
-	price,
-	note,
-	linkLabel,
-	linkHref,
+    title: dripsTitle,
+    composition,
+    count,
+    price,
+    note,
+    linkLabel,
+    linkHref,
 } = Astro.props.drips;
 ---
 
-<section id="grain" class="grain" aria-labelledby="grain-title">
-	<div class="grain__inner">
-		<div class="grain__intro">
-			<h2 id="grain-title" class="grain__title">{title}</h2>
-			<p class="grain__lead">{lead}</p>
-		</div>
+<section id='grain' class='grain' aria-labelledby='grain-title'>
+    <div class='grain__inner'>
+        <div class='grain__intro'>
+            <h2 id='grain-title' class='grain__title'>
+                {title}
+            </h2>
+            <p class='grain__lead'>{lead}</p>
+        </div>
 
-		<div class="grain__band">
-			<aside class="grain__drips" aria-label={dripsTitle}>
-				<div class="grain__drips-top">
-					<p class="grain__drips-kicker">{composition} · {count}</p>
-					<h3 class="grain__drips-title">{dripsTitle}</h3>
-					<p class="grain__drips-note">{note}</p>
-				</div>
-				<div class="grain__drips-bottom">
-					<p class="grain__drips-price">{price}</p>
-					<a class="grain__drips-link" href={linkHref}>{linkLabel}</a>
-				</div>
-			</aside>
+        <div class='grain__band'>
+            <aside class='grain__drips' aria-label={dripsTitle}>
+                <div class='grain__drips-top'>
+                    <p class='grain__drips-kicker'>
+                        {composition} · {count}
+                    </p>
+                    <h3 class='grain__drips-title'>{dripsTitle}</h3>
+                    <p class='grain__drips-note'>{note}</p>
+                </div>
+                <div class='grain__drips-bottom'>
+                    <p class='grain__drips-price'>{price}</p>
+                    <a class='grain__drips-link' href={linkHref}>
+                        {linkLabel}
+                    </a>
+                </div>
+            </aside>
 
-			<ol class="grain__lots">
-				{
-					lots.map((lot, index) => (
-						<li>
-							<a class="grain__lot" href={ctaHref}>
-								<span class="grain__index" aria-hidden="true">
-									{index + 1}
-								</span>
-								<div class="grain__about">
-									<h3 class="grain__name">
-										{lot.country}&nbsp;{lot.variety}
-									</h3>
-									<p class="grain__notes">
-										{lot.notes}
-										{lot.tag && <span>, {lot.tag}</span>}
-									</p>
-								</div>
-								<div class="grain__order">
-									<p class="grain__price">
-										{lot.price}
-										<span class="grain__unit">BYN / {lot.weight}</span>
-									</p>
-									<span class="grain__cta">{ctaLabel}</span>
-								</div>
-							</a>
-						</li>
-					))
-				}
-			</ol>
-		</div>
-	</div>
+            <ol class='grain__lots'>
+                {lots.map((lot, index) => (
+                    <li>
+                        <a class='grain__lot' href={ctaHref}>
+                            <span class='grain__index' aria-hidden='true'>
+                                {index + 1}
+                            </span>
+                            <div class='grain__about'>
+                                <h3 class='grain__name'>
+                                    {lot.country}&nbsp;{lot.variety}
+                                </h3>
+                                <p class='grain__notes'>
+                                    {lot.notes}
+                                    {lot.tag && <span>, {lot.tag}</span>}
+                                </p>
+                            </div>
+                            <div class='grain__order'>
+                                <p class='grain__price'>
+                                    {lot.price}
+                                    <span class='grain__unit'>
+                                        BYN / {lot.weight}
+                                    </span>
+                                </p>
+                                <span class='grain__cta'>{ctaLabel}</span>
+                            </div>
+                        </a>
+                    </li>
+                ))}
+            </ol>
+        </div>
+    </div>
 </section>
 
-<style lang="scss">
+<style lang='scss'>
     @keyframes rise {
         from {
             opacity: 0;

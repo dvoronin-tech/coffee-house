@@ -24,58 +24,60 @@ const {
 } = Astro.props.data;
 ---
 
-<footer class="footer">
-    <div class="footer__inner">
-        <div class="footer__top">
-            <div class="footer__brand">
-                <a class="footer__logo" href={logoHref} aria-label={logoLabel}>
+<footer class='footer'>
+    <div class='footer__inner'>
+        <div class='footer__top'>
+            <div class='footer__brand'>
+                <a class='footer__logo' href={logoHref} aria-label={logoLabel}>
                     <LogoMark label={logoLabel} />
                 </a>
-                <p class="footer__tagline">{tagline}</p>
+                <p class='footer__tagline'>{tagline}</p>
             </div>
-            <div class="footer__cta-wrap">
-                <a class="footer__cta" href={cta.href}>{cta.label}</a>
-                <p class="footer__cta-note">{ctaNote}</p>
+            <div class='footer__cta-wrap'>
+                <a class='footer__cta' href={cta.href}>
+                    {cta.label}
+                </a>
+                <p class='footer__cta-note'>{ctaNote}</p>
             </div>
         </div>
-        <div class="footer__grid">
-            <nav class="footer__nav" aria-label="Разделы">
-                <ul class="footer__links">
-                    {
-                        links.map((link) => (
-                            <li>
-                                <a class="footer__link" href={link.href}>
-                                    {link.label}
-                                </a>
-                            </li>
-                        ))
-                    }
+        <div class='footer__grid'>
+            <nav class='footer__nav' aria-label='Разделы'>
+                <ul class='footer__links'>
+                    {links.map((link) => (
+                        <li>
+                            <a class='footer__link' href={link.href}>
+                                {link.label}
+                            </a>
+                        </li>
+                    ))}
                 </ul>
             </nav>
-            <dl class="footer__facts">
-                <div class="footer__fact">
-                    <dt class="footer__fact-label">{addressLabel}</dt>
-                    <dd class="footer__fact-value">{address}</dd>
+            <dl class='footer__facts'>
+                <div class='footer__fact'>
+                    <dt class='footer__fact-label'>{addressLabel}</dt>
+                    <dd class='footer__fact-value'>{address}</dd>
                 </div>
-                <div class="footer__fact">
-                    <dt class="footer__fact-label">{phoneLabel}</dt>
-                    <dd class="footer__fact-value">
-                        <a class="footer__fact-link" href={phoneHref}>{phone}</a>
+                <div class='footer__fact'>
+                    <dt class='footer__fact-label'>{phoneLabel}</dt>
+                    <dd class='footer__fact-value'>
+                        <a class='footer__fact-link' href={phoneHref}>
+                            {phone}
+                        </a>
                     </dd>
                 </div>
             </dl>
-            <dl class="footer__facts">
-                <div class="footer__fact">
-                    <dt class="footer__fact-label">{hoursLabel}</dt>
-                    <dd class="footer__fact-value">{hours}</dd>
+            <dl class='footer__facts'>
+                <div class='footer__fact'>
+                    <dt class='footer__fact-label'>{hoursLabel}</dt>
+                    <dd class='footer__fact-value'>{hours}</dd>
                 </div>
             </dl>
         </div>
-        <p class="footer__note">{note}</p>
+        <p class='footer__note'>{note}</p>
     </div>
 </footer>
 
-<style lang="scss">
+<style lang='scss'>
     .footer {
         background-color: var(--color-surface);
         border-top: 0.1rem solid var(--color-border);

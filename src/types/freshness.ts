@@ -1,12 +1,12 @@
 export type FreshnessStep = {
-	index: string;
-	name: string;
-	when: string;
-	accent: boolean;
+    index: string;
+    name: string;
+    when: string;
+    accent: boolean;
 };
 
 export type FreshnessData = {
-	title: string;
-	lead: string;
-	steps: FreshnessStep[];
+    title: string;
+    lead: string;
+    steps: FreshnessStep[];
 };
