@@ -18,13 +18,12 @@ export const sendOrderHandlers = factory.createHandlers(
         const body = c.req.valid('json');
         const analytics = storedAnalytics(body.analytics);
         try {
-            const existing = await db.query.records.findFirst({
+            const existingAnalytics = await db.query.records.findFirst({
                 where: (record, { eq }) => eq(record.id, body.id),
                 columns: {
                     analytics: true,
                 },
             });
-            const alreadyStored = existing != null;
 
             const [data] = await db
                 .insert(records)
@@ -44,20 +43,20 @@ export const sendOrderHandlers = factory.createHandlers(
                         interest: body.interest,
                         note: body.note,
                         updatedAt: sql`now()`,
-                        ...(alreadyStored ? {} : { analytics }),
+                        ...(existingAnalytics == null ? { analytics } : {}),
                     },
                 })
                 .returning({
-                    id: records.id,
+                    inserted: sql<boolean>`${records.createdAt} = ${records.updatedAt}`,
                 });
 
             if (!data) return c.json({ code: ResponseCodes.error.internal });
 
-            if (alreadyStored) {
-                return c.json({ code: ResponseCodes.success.updated }, 200);
+            if (data.inserted) {
+                return c.json({ code: ResponseCodes.success.created }, 200);
             }
 
-            return c.json({ code: ResponseCodes.success.created }, 200);
+            return c.json({ code: ResponseCodes.success.updated }, 200);
         } catch (error) {
             console.error(error);
             return c.json({ code: ResponseCodes.error.internal }, 500);
