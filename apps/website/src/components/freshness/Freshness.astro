@@ -1,0 +1,310 @@
+---
+import type { FreshnessData } from '#/types/freshness';
+
+interface Props {
+    data: FreshnessData;
+}
+
+const { title, lead, steps } = Astro.props.data;
+---
+
+<section class='freshness' aria-labelledby='freshness-title'>
+    <div class='freshness__inner'>
+        <div class='freshness__intro'>
+            <h2 id='freshness-title' class='freshness__title'>
+                {title}
+            </h2>
+            <p class='freshness__lead'>{lead}</p>
+        </div>
+        <ol class='freshness__steps'>
+            {steps.map((step) => (
+                <li
+                    class:list={[
+                        'freshness__step',
+                        { 'freshness__step--accent': step.accent },
+                    ]}
+                >
+                    <span class='freshness__index' aria-hidden='true'>
+                        {step.index}
+                    </span>
+                    <p class='freshness__copy'>
+                        <span class='freshness__name'>{step.name}</span>
+                        <span class='freshness__when'>{step.when}</span>
+                    </p>
+                </li>
+            ))}
+        </ol>
+    </div>
+</section>
+
+<style lang='scss'>
+    @keyframes rise {
+        from {
+            opacity: 0;
+            transform: translateY(4.8rem);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @mixin rise($range) {
+        @media (prefers-reduced-motion: no-preference) {
+            @supports (animation-timeline: view()) {
+                animation-name: rise;
+                animation-duration: auto;
+                animation-timing-function: linear;
+                animation-fill-mode: both;
+                animation-timeline: view();
+                animation-range: #{$range};
+            }
+        }
+    }
+
+    .freshness {
+        background: var(--color-background, #fffaf5);
+        color: var(--color-text, #2b2118);
+        padding: 9.6rem var(--page-gutter, 4.8rem);
+
+        &__inner {
+            max-width: var(--page-width, 120rem);
+            margin: 0 auto;
+        }
+
+        &__intro {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            column-gap: 6.4rem;
+            align-items: start;
+        }
+
+        &__title {
+            margin: 0;
+            max-width: 48rem;
+            font-family: var(--font-display, 'Noto Serif', Georgia, serif);
+            font-size: 4.8rem;
+            font-weight: 400;
+            line-height: 1.08;
+            letter-spacing: -0.02em;
+            text-wrap: balance;
+
+            @include rise('cover 1% cover 20%');
+        }
+
+        &__lead {
+            margin: 0.6rem 0 0;
+            max-width: 46rem;
+            font-family: var(
+                --font-text,
+                'Noto Sans',
+                Helvetica,
+                Arial,
+                sans-serif
+            );
+            font-size: 1.8rem;
+            font-weight: 400;
+            line-height: 1.5;
+            letter-spacing: -0.02em;
+
+            @include rise('cover 8% cover 28%');
+        }
+
+        &__steps {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            overflow: clip;
+            margin: 7.2rem 0 0;
+            padding: 0;
+            list-style: none;
+            background: var(--color-surface, #fdf3ea);
+            border: 0.1rem solid var(--color-border, #eadfd5);
+            border-radius: 4.8rem 0 4.8rem 4.8rem;
+        }
+
+        &__step {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 4.8rem;
+            min-height: 22rem;
+            margin: 0;
+            padding: 4rem 3.6rem 3.6rem;
+
+            &:not(:last-child) {
+                border-right: 0.1rem solid var(--color-border, #eadfd5);
+            }
+
+            &:nth-child(1) {
+                @include rise('cover 8% cover 16%');
+            }
+
+            &:nth-child(2) {
+                @include rise('cover 15% cover 28%');
+            }
+
+            &:nth-child(3) {
+                @include rise('cover 20% cover 35%');
+            }
+        }
+
+        &__index {
+            display: block;
+            font-family: var(--font-display, 'Noto Serif', Georgia, serif);
+            font-size: 2rem;
+            font-weight: 400;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            color: var(--color-secondary-text, #7a6b5d);
+        }
+
+        &__copy {
+            margin: 0;
+        }
+
+        &__name,
+        &__when {
+            display: block;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+
+        &__name {
+            font-family: var(--font-display, 'Noto Serif', Georgia, serif);
+            font-size: 4rem;
+            line-height: 1;
+        }
+
+        &__when {
+            margin-top: 1.2rem;
+            max-width: 24rem;
+            font-family: var(
+                --font-text,
+                'Noto Sans',
+                Helvetica,
+                Arial,
+                sans-serif
+            );
+            font-size: 1.8rem;
+            line-height: 1.35;
+            color: var(--color-secondary-text, #7a6b5d);
+        }
+
+        &__step--accent {
+            .freshness__name,
+            .freshness__index {
+                color: var(--color-accent, #e89b6d);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            &__title,
+            &__lead,
+            &__step {
+                animation: none;
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            padding: 6.4rem var(--page-gutter, 4.8rem);
+
+            &__intro {
+                column-gap: 4rem;
+            }
+
+            &__title {
+                max-width: none;
+                font-size: 4rem;
+            }
+
+            &__lead {
+                max-width: none;
+            }
+
+            &__steps {
+                margin-top: 4.8rem;
+            }
+
+            &__step {
+                min-height: 20rem;
+                padding: 3.2rem 2.4rem 2.8rem;
+            }
+
+            &__name {
+                font-size: 3.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            padding: 4.8rem var(--page-gutter, 4.8rem);
+
+            &__intro {
+                grid-template-columns: minmax(0, 1fr);
+                row-gap: 1.6rem;
+            }
+
+            &__title {
+                font-size: 3.6rem;
+            }
+
+            &__lead {
+                margin-top: 0;
+            }
+
+            &__steps {
+                grid-template-columns: minmax(0, 1fr);
+                margin-top: 3.2rem;
+            }
+
+            &__step {
+                gap: 2rem;
+                min-height: 0;
+                padding: 2.8rem 2.4rem 2.4rem;
+
+                &:not(:last-child) {
+                    border-right: 0;
+                    border-bottom: 0.1rem solid var(--color-border, #eadfd5);
+                }
+            }
+
+            &__name {
+                font-size: 3.2rem;
+            }
+
+            &__title,
+            &__lead,
+            &__step:nth-child(1),
+            &__step:nth-child(2),
+            &__step:nth-child(3) {
+                animation: none;
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            padding: 4.8rem var(--page-gutter, 4.8rem);
+
+            &__title {
+                font-size: 3.2rem;
+                text-wrap: wrap;
+                text-wrap: pretty;
+            }
+
+            &__steps {
+                border-radius: 2.4rem 0 2.4rem 2.4rem;
+            }
+
+            &__step {
+                padding: 2.4rem 2rem 2rem;
+            }
+
+            &__name {
+                font-size: 2.8rem;
+            }
+        }
+    }
+</style>

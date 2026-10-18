@@ -1,0 +1,59 @@
+---
+interface Props {
+    label: string;
+}
+
+const { label } = Astro.props;
+const tail = label.startsWith('К') ? label.slice(1) : label;
+import bean from '#/assets/logo-bean.svg';
+---
+
+<span class='mark' aria-hidden='true'>
+    <span class='mark__letter'>
+        К
+        <img
+            class='mark__bean'
+            src={bean.src ?? bean}
+            alt=''
+            width='36'
+            height='52'
+        />
+    </span>
+    <span class='mark__tail'>{tail}</span>
+</span>
+
+<style lang='scss'>
+    .mark {
+        display: inline-flex;
+        align-items: baseline;
+        color: var(--color-text);
+        line-height: 1;
+    }
+
+    .mark__letter,
+    .mark__tail {
+        font-family: var(--font-display);
+        font-size: 2.8rem;
+        font-weight: 400;
+        letter-spacing: -0.03em;
+    }
+
+    .mark__letter {
+        position: relative;
+        display: inline-block;
+    }
+
+    .mark__bean {
+        position: absolute;
+        top: -0.45rem;
+        right: -0.15rem;
+        width: 1.15rem;
+        height: 1.55rem;
+        transform: rotate(-26deg);
+        pointer-events: none;
+    }
+
+    .mark__tail {
+        margin-left: -0.04em;
+    }
+</style>

@@ -1,0 +1,339 @@
+---
+import type { DeliveryData } from '#/types/delivery';
+
+interface Props {
+    data: DeliveryData;
+}
+
+const { shipping, pickup } = Astro.props.data;
+---
+
+<section id='delivery' class='delivery' aria-label='Доставка и самовывоз'>
+    <div class='delivery__inner'>
+        <article class='delivery__card'>
+            <p class='delivery__badge'>{shipping.eyebrow}</p>
+            <h2 class='delivery__title'>{shipping.title}</h2>
+            <dl class='delivery__lines'>
+                {shipping.facts.map((fact) => (
+                    <div class='delivery__line'>
+                        <dt class='delivery__term'>{fact.label}</dt>
+                        <dd class='delivery__value'>{fact.value}</dd>
+                    </div>
+                ))}
+            </dl>
+            <p class='delivery__note'>{shipping.subscriptionNote}</p>
+            <p class='delivery__note delivery__note--muted'>
+                {shipping.scopeNote}
+            </p>
+        </article>
+
+        <article class='delivery__plain'>
+            <p class='delivery__eyebrow'>{pickup.eyebrow}</p>
+            <h2 class='delivery__title delivery__title--plain'>
+                {pickup.title}
+            </h2>
+            <dl class='delivery__lines'>
+                {pickup.facts.map((fact) => (
+                    <div class='delivery__line'>
+                        <dt class='delivery__term'>{fact.label}</dt>
+                        <dd class='delivery__value'>{fact.value}</dd>
+                    </div>
+                ))}
+            </dl>
+            <p class='delivery__links'>
+                <a class='delivery__phone' href={pickup.phoneHref}>
+                    {pickup.phoneValue}
+                </a>
+                <a
+                    class='delivery__map'
+                    href={pickup.mapHref}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                >
+                    {pickup.mapLabel}
+                </a>
+            </p>
+        </article>
+    </div>
+</section>
+
+<style lang='scss'>
+    @keyframes delivery-rise {
+        from {
+            opacity: 0;
+            transform: translateY(4.8rem);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @mixin rise($range) {
+        @media (prefers-reduced-motion: no-preference) {
+            @supports (animation-timeline: view()) {
+                animation: delivery-rise auto linear both;
+                animation-timeline: view();
+                animation-range: #{$range};
+            }
+        }
+    }
+
+    .delivery {
+        background-color: var(--color-background);
+        color: var(--color-text);
+        padding: 9.6rem var(--page-gutter);
+    }
+
+    .delivery__inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+        gap: 4.8rem;
+        max-width: var(--page-width);
+        margin: 0 auto;
+    }
+
+    .delivery__card {
+        background-color: var(--color-surface);
+        border: 0.2rem solid var(--color-accent);
+        border-radius: 1.6rem;
+        padding: 4.8rem;
+
+        @include rise('cover 10% cover 30%');
+    }
+
+    .delivery__badge {
+        display: inline-block;
+        margin: 0;
+        padding: 0.6rem 1.6rem;
+        border-radius: 99rem;
+        background-color: var(--color-accent);
+        color: var(--color-text);
+        font-size: 1.3rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    .delivery__title {
+        display: block;
+        margin: 2.4rem 0 0;
+        font-family: var(--font-display);
+        font-size: 5.6rem;
+        font-weight: 400;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+
+        &--plain {
+            font-size: 4rem;
+        }
+    }
+
+    .delivery__lines {
+        margin: 3.2rem 0 0;
+    }
+
+    .delivery__line {
+        display: flex;
+        align-items: baseline;
+        gap: 1.6rem;
+        padding-block: 0.8rem;
+    }
+
+    .delivery__term {
+        margin: 0;
+        min-width: 14rem;
+        color: var(--color-secondary-text);
+        font-size: 1.6rem;
+        line-height: 1.4;
+    }
+
+    .delivery__value {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 2.4rem;
+        font-weight: 400;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+    }
+
+    .delivery__note {
+        margin: 2.4rem 0 0;
+        font-size: 1.6rem;
+        line-height: 1.5;
+
+        &--muted {
+            color: var(--color-secondary-text);
+        }
+    }
+
+    .delivery__plain {
+        padding: 4.8rem 0 4.8rem 4.8rem;
+        border-left: 0.1rem solid var(--color-border);
+
+        @include rise('cover 20% cover 48%');
+    }
+
+    .delivery__eyebrow {
+        margin: 0;
+        color: var(--color-secondary-text);
+        font-size: 1.4rem;
+        line-height: 1.2;
+    }
+
+    .delivery__links {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.2rem;
+        margin: 3.2rem 0 0;
+    }
+
+    .delivery__phone {
+        font-size: 1.8rem;
+        line-height: 1.3;
+        text-decoration: underline;
+        text-decoration-color: var(--color-border);
+        text-underline-offset: 0.4rem;
+        transition: text-decoration-color 0.2s ease;
+
+        &:hover {
+            text-decoration-color: var(--color-accent);
+        }
+    }
+
+    .delivery__map {
+        color: var(--color-accent);
+        font-size: 1.6rem;
+        line-height: 1.3;
+        text-decoration: none;
+
+        &::after {
+            content: ' ↗';
+        }
+
+        &:hover {
+            color: var(--color-text);
+        }
+    }
+
+    .delivery__phone:focus-visible,
+    .delivery__map:focus-visible {
+        outline: 0.2rem solid var(--color-text);
+        outline-offset: 0.4rem;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .delivery__card,
+        .delivery__plain {
+            animation: none;
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .delivery {
+            padding-block: 6.4rem;
+        }
+
+        .delivery__inner {
+            gap: 3.2rem;
+        }
+
+        .delivery__card {
+            padding: 3.2rem;
+        }
+
+        .delivery__plain {
+            padding: 3.2rem 0 3.2rem 3.2rem;
+        }
+
+        .delivery__line {
+            min-width: 0;
+        }
+
+        .delivery__value {
+            min-width: 0;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .delivery {
+            padding-block: 4.8rem;
+        }
+
+        .delivery__inner {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 3.2rem;
+        }
+
+        .delivery__card,
+        .delivery__plain {
+            animation: none;
+            opacity: 1;
+            transform: none;
+        }
+
+        .delivery__plain {
+            padding: 0;
+            border-left: 0;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .delivery {
+            padding-block: 4.8rem;
+        }
+
+        .delivery__inner {
+            gap: 2.4rem;
+        }
+
+        .delivery__card {
+            padding: 2rem;
+        }
+
+        .delivery__title {
+            margin-top: 1.6rem;
+            font-size: 4.8rem;
+
+            &--plain {
+                font-size: 3.6rem;
+            }
+        }
+
+        .delivery__lines {
+            margin-top: 2rem;
+        }
+
+        .delivery__line {
+            flex-wrap: wrap;
+            gap: 0.4rem 1.2rem;
+            padding-block: 0.8rem;
+        }
+
+        .delivery__term {
+            min-width: 0;
+        }
+
+        .delivery__note {
+            margin-top: 1.6rem;
+        }
+
+        .delivery__links {
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.8rem 1.6rem;
+            margin-top: 1.6rem;
+        }
+
+        .delivery__phone,
+        .delivery__map {
+            display: inline-flex;
+            align-items: center;
+            min-height: 4.4rem;
+        }
+    }
+</style>

@@ -1,0 +1,512 @@
+---
+import type { GrainData } from '#/types/grain';
+import type { DripsData } from '#/types/drips';
+
+interface Props {
+    grain: GrainData;
+    drips: DripsData;
+}
+
+const { title, lead, ctaLabel, ctaHref, lots } = Astro.props.grain;
+const {
+    title: dripsTitle,
+    composition,
+    count,
+    price,
+    note,
+    linkLabel,
+    linkHref,
+} = Astro.props.drips;
+---
+
+<section id='grain' class='grain' aria-labelledby='grain-title'>
+    <div class='grain__inner'>
+        <div class='grain__intro'>
+            <h2 id='grain-title' class='grain__title'>
+                {title}
+            </h2>
+            <p class='grain__lead'>{lead}</p>
+        </div>
+
+        <div class='grain__band'>
+            <aside class='grain__drips' aria-label={dripsTitle}>
+                <div class='grain__drips-top'>
+                    <p class='grain__drips-kicker'>
+                        {composition} · {count}
+                    </p>
+                    <h3 class='grain__drips-title'>{dripsTitle}</h3>
+                    <p class='grain__drips-note'>{note}</p>
+                </div>
+                <div class='grain__drips-bottom'>
+                    <p class='grain__drips-price'>{price}</p>
+                    <a class='grain__drips-link' href={linkHref}>
+                        {linkLabel}
+                    </a>
+                </div>
+            </aside>
+
+            <ol class='grain__lots'>
+                {lots.map((lot, index) => (
+                    <li>
+                        <a class='grain__lot' href={ctaHref}>
+                            <span class='grain__index' aria-hidden='true'>
+                                {index + 1}
+                            </span>
+                            <div class='grain__about'>
+                                <h3 class='grain__name'>
+                                    {lot.country}&nbsp;{lot.variety}
+                                </h3>
+                                <p class='grain__notes'>
+                                    {lot.notes}
+                                    {lot.tag && <span>, {lot.tag}</span>}
+                                </p>
+                            </div>
+                            <div class='grain__order'>
+                                <p class='grain__price'>
+                                    {lot.price}
+                                    <span class='grain__unit'>
+                                        BYN / {lot.weight}
+                                    </span>
+                                </p>
+                                <span class='grain__cta'>{ctaLabel}</span>
+                            </div>
+                        </a>
+                    </li>
+                ))}
+            </ol>
+        </div>
+    </div>
+</section>
+
+<style lang='scss'>
+    @keyframes rise {
+        from {
+            opacity: 0;
+            transform: translateY(4.8rem);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @mixin rise($range) {
+        @media (prefers-reduced-motion: no-preference) {
+            @supports (animation-timeline: view()) {
+                animation: rise auto linear both;
+                animation-timeline: view();
+                animation-range: #{$range};
+            }
+        }
+    }
+
+    .grain {
+        padding: 9.6rem var(--page-gutter);
+    }
+
+    .grain__inner {
+        max-width: var(--page-width);
+        margin: 0 auto;
+    }
+
+    .grain__intro {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        column-gap: 6.4rem;
+        align-items: start;
+    }
+
+    .grain__title {
+        margin: 0;
+        max-width: 48rem;
+        font-family: var(--font-display);
+        font-size: 4.8rem;
+        font-weight: 400;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        text-wrap: balance;
+
+        @include rise('cover 1% cover 20%');
+    }
+
+    .grain__lead {
+        margin: 0.6rem 0 0;
+        max-width: 46rem;
+        font-size: 1.8rem;
+        line-height: 1.5;
+        color: var(--color-secondary-text);
+        text-wrap: pretty;
+
+        @include rise('cover 8% cover 28%');
+    }
+
+    .grain__band {
+        display: grid;
+        grid-template-columns: minmax(0, 36rem) minmax(0, 1fr);
+        column-gap: 6.4rem;
+        align-items: stretch;
+        margin: 7.2rem 0 0;
+    }
+
+    .grain__drips {
+        display: flex;
+        flex-direction: column;
+        gap: 4rem;
+        padding: 3.6rem;
+        background-color: var(--color-accent);
+        border-radius: 4.8rem 0 4.8rem 4.8rem;
+
+        @include rise('cover 12% cover 30%');
+    }
+
+    .grain__drips-top {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .grain__drips-bottom {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2.4rem;
+        margin-top: auto;
+    }
+
+    .grain__drips-kicker {
+        margin: 0;
+        font-size: 1.4rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        opacity: 0.75;
+    }
+
+    .grain__drips-title {
+        margin: 1rem 0 0;
+        font-family: var(--font-display);
+        font-size: 3.2rem;
+        font-weight: 400;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+    }
+
+    .grain__drips-note {
+        margin: 1.2rem 0 0;
+        font-size: 1.6rem;
+        line-height: 1.45;
+    }
+
+    .grain__drips-price {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 6rem;
+        line-height: 1;
+        letter-spacing: -0.02em;
+    }
+
+    .grain__drips-link {
+        padding: 1.4rem 3.2rem;
+        background-color: var(--color-text);
+        border-radius: 999px;
+        color: var(--color-background);
+        font-size: 1.8rem;
+        line-height: 1.2;
+        text-decoration: none;
+        transition:
+            background-color 0.2s ease,
+            color 0.2s ease;
+
+        &:hover {
+            background-color: var(--color-background);
+            color: var(--color-text);
+        }
+
+        &:focus-visible {
+            outline: 0.2rem solid var(--color-text);
+            outline-offset: 0.4rem;
+        }
+    }
+
+    .grain__lots {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        > li:last-child .grain__lot {
+            border-bottom: 0.1rem solid var(--color-border);
+        }
+
+        > li:nth-child(1) .grain__lot {
+            @include rise('cover 10% cover 25%');
+        }
+
+        > li:nth-child(2) .grain__lot {
+            @include rise('cover 14% cover 30%');
+        }
+
+        > li:nth-child(3) .grain__lot {
+            @include rise('cover 18% cover 35%');
+        }
+    }
+
+    .grain__lot {
+        display: grid;
+        grid-template-columns: 4rem minmax(0, 1fr) auto;
+        column-gap: 2.4rem;
+        align-items: center;
+        padding: 3.2rem 0;
+        border-top: 0.1rem solid var(--color-border);
+        color: inherit;
+        text-decoration: none;
+
+        &:hover .grain__name,
+        &:hover .grain__cta {
+            color: var(--color-accent);
+        }
+
+        &:hover .grain__cta {
+            text-decoration-color: var(--color-accent);
+        }
+
+        &:focus-visible {
+            outline: 0.2rem solid var(--color-text);
+            outline-offset: 0.4rem;
+        }
+    }
+
+    .grain__index {
+        font-family: var(--font-display);
+        font-size: 1.6rem;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        color: var(--color-secondary-text);
+    }
+
+    .grain__about {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+
+    .grain__name {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 3.6rem;
+        font-weight: 400;
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        transition: color 0.2s ease;
+    }
+
+    .grain__notes {
+        margin: 0;
+        font-size: 1.6rem;
+        line-height: 1.45;
+        color: var(--color-secondary-text);
+    }
+
+    .grain__order {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 1rem;
+        text-align: right;
+    }
+
+    .grain__price {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 3.2rem;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        white-space: nowrap;
+    }
+
+    .grain__unit {
+        margin-left: 0.8rem;
+        font-family: var(--font-text);
+        font-size: 1.3rem;
+        letter-spacing: -0.02em;
+        color: var(--color-secondary-text);
+    }
+
+    .grain__cta {
+        font-size: 1.8rem;
+        line-height: 1.2;
+        color: var(--color-text);
+        text-decoration: underline;
+        text-underline-offset: 0.5rem;
+        text-decoration-thickness: 0.1rem;
+        text-decoration-color: var(--color-border);
+        transition:
+            color 0.2s ease,
+            text-decoration-color 0.2s ease;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .grain__title,
+        .grain__lead,
+        .grain__drips,
+        .grain__lot {
+            animation: none;
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .grain {
+            padding: 6.4rem var(--page-gutter);
+        }
+
+        .grain__intro {
+            column-gap: 3.2rem;
+        }
+
+        .grain__title {
+            font-size: 4rem;
+        }
+
+        .grain__band {
+            grid-template-columns: minmax(0, 28rem) minmax(0, 1fr);
+            column-gap: 2.4rem;
+            margin-top: 4.8rem;
+        }
+
+        .grain__drips,
+        .grain__lots,
+        .grain__about,
+        .grain__name {
+            min-width: 0;
+        }
+
+        .grain__drips {
+            gap: 2.4rem;
+            padding: 2.4rem;
+            border-radius: 3.2rem 0 3.2rem 3.2rem;
+        }
+
+        .grain__drips-title,
+        .grain__drips-note,
+        .grain__name,
+        .grain__notes {
+            overflow-wrap: break-word;
+        }
+
+        .grain__drips-price {
+            font-size: 4.8rem;
+        }
+
+        .grain__drips-link,
+        .grain__cta {
+            display: inline-flex;
+            align-items: center;
+            min-height: 4.4rem;
+        }
+
+        .grain__lot {
+            column-gap: 1.6rem;
+            padding: 2.4rem 0;
+        }
+
+        .grain__name {
+            font-size: 2.8rem;
+        }
+
+        .grain__price {
+            font-size: 2.8rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .grain {
+            padding: 4.8rem var(--page-gutter);
+        }
+
+        .grain__intro {
+            grid-template-columns: minmax(0, 1fr);
+            row-gap: 1.6rem;
+        }
+
+        .grain__title {
+            font-size: 3.6rem;
+        }
+
+        .grain__lead {
+            margin-top: 0;
+        }
+
+        .grain__band {
+            grid-template-columns: minmax(0, 1fr);
+            row-gap: 3.2rem;
+            margin-top: 3.2rem;
+        }
+
+        .grain__drips {
+            gap: 3.2rem;
+            padding: 2.8rem;
+        }
+
+        .grain__title,
+        .grain__lead,
+        .grain__drips,
+        .grain__lot:nth-child(n) {
+            animation: none;
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .grain {
+            padding: 4.8rem var(--page-gutter);
+        }
+
+        .grain__title {
+            font-size: 3.2rem;
+        }
+
+        .grain__lead {
+            font-size: 1.6rem;
+        }
+
+        .grain__drips {
+            gap: 2.4rem;
+            padding: 2.4rem;
+            border-radius: 2.4rem 0 2.4rem 2.4rem;
+        }
+
+        .grain__drips-title {
+            font-size: 2.8rem;
+        }
+
+        .grain__drips-price {
+            font-size: 4.4rem;
+        }
+
+        .grain__lot {
+            grid-template-columns: 4rem minmax(0, 1fr);
+            column-gap: 1.2rem;
+            row-gap: 1.2rem;
+            align-items: center;
+        }
+
+        .grain__name {
+            font-size: 2.8rem;
+        }
+
+        .grain__order {
+            grid-column: 2;
+            flex-flow: row wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.4rem 1.6rem;
+            min-width: 0;
+            text-align: left;
+        }
+
+        .grain__price {
+            font-size: 2.4rem;
+        }
+    }
+</style>

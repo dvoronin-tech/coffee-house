@@ -1,0 +1,640 @@
+---
+import { Image, Picture } from 'astro:assets';
+import pairPhoto from '#/assets/history-pair.png';
+import roasterPhoto from '#/assets/history-roaster.webp';
+import beanOne from '#/assets/history-bean-1.webp';
+import beanTwo from '#/assets/history-bean-2.webp';
+import beanThree from '#/assets/history-bean-3.webp';
+import type { HistoryData } from '#/types/history';
+
+interface Props {
+    data: HistoryData;
+}
+
+const { title, lead, cardName, cardText, facts, imageAlt, backgroundAlt } =
+    Astro.props.data;
+
+const beans = [
+    { src: beanTwo, depth: 'far' },
+    { src: beanOne, depth: 'mid' },
+    { src: beanThree, depth: 'near' },
+];
+
+const backWidths = [640, 960, 1280, 1600];
+const backSizes = `(min-width: 120rem) var(--page-width), calc(100vw - var(--page-gutter) * 2)`;
+const pairWidths = [320, 480, 720];
+const pairSizes = `(min-width: 76.8rem) 45rem, 86vw`;
+const beanWidths = [160, 320];
+const beanSizes = `(max-width: 76.8rem) 18vw, 15rem`;
+---
+
+<section id='workshop' class='history' aria-labelledby='history-title'>
+    <div class='history__inner'>
+        <div class='history__intro'>
+            <h2 id='history-title' class='history__title'>
+                {title}
+            </h2>
+            <p class='history__lead'>{lead}</p>
+        </div>
+        <div class='history__stage'>
+            <div class='history__back'>
+                <Picture
+                    class='history__back-media'
+                    src={roasterPhoto}
+                    formats={['avif', 'webp']}
+                    fallbackFormat='webp'
+                    widths={backWidths}
+                    sizes={backSizes}
+                    alt={backgroundAlt}
+                    loading='lazy'
+                    decoding='async'
+                />
+            </div>
+            <div class='history__pair'>
+                <Picture
+                    class='history__pair-glow'
+                    src={pairPhoto}
+                    formats={['avif', 'webp']}
+                    fallbackFormat='webp'
+                    widths={pairWidths}
+                    sizes={pairSizes}
+                    alt=''
+                    aria-hidden='true'
+                    loading='lazy'
+                    decoding='async'
+                />
+                <Picture
+                    class='history__pair-photo'
+                    src={pairPhoto}
+                    formats={['avif', 'webp']}
+                    fallbackFormat='webp'
+                    widths={pairWidths}
+                    sizes={pairSizes}
+                    alt={imageAlt}
+                    loading='lazy'
+                    decoding='async'
+                />
+            </div>
+            <aside class='history__card-slot'>
+                <div class='history__card'>
+                    <div class='history__card-face'>
+                        <div class='history__card-body'>
+                            <h3 class='history__card-name'>{cardName}</h3>
+                            <p class='history__card-text'>{cardText}</p>
+                            <dl class='history__facts'>
+                                {facts.map((fact) => (
+                                    <div class='history__fact'>
+                                        <dt class='history__fact-label'>
+                                            {fact.label}
+                                        </dt>
+                                        <dd class='history__fact-value'>
+                                            {fact.value}
+                                        </dd>
+                                    </div>
+                                ))}
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <ul class='history__beans'>
+                {beans.map((bean) => (
+                    <li
+                        class:list={[
+                            'history__bean',
+                            `history__bean--${bean.depth}`,
+                        ]}
+                    >
+                        <Image
+                            class='history__bean-photo'
+                            src={bean.src}
+                            widths={beanWidths}
+                            sizes={beanSizes}
+                            alt=''
+                            loading='lazy'
+                            decoding='async'
+                        />
+                    </li>
+                ))}
+            </ul>
+        </div>
+    </div>
+</section>
+
+<style lang='scss'>
+    @keyframes history-rise {
+        from {
+            opacity: 0;
+            transform: translateY(4.8rem);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes history-drift-back {
+        from {
+            transform: translateY(-3rem);
+        }
+
+        to {
+            transform: translateY(3rem);
+        }
+    }
+
+    @keyframes history-drift-card {
+        from {
+            transform: translateY(-4rem);
+        }
+
+        to {
+            transform: translateY(4rem);
+        }
+    }
+
+    @keyframes history-drift-bean {
+        from {
+            transform: translateY(-10rem);
+        }
+
+        to {
+            transform: translateY(10rem);
+        }
+    }
+
+    @mixin rise($range) {
+        @media (prefers-reduced-motion: no-preference) {
+            @supports (animation-timeline: view()) {
+                animation: history-rise auto linear both;
+                animation-timeline: view();
+                animation-range: #{$range};
+            }
+        }
+    }
+
+    .history {
+        background-color: var(--color-background);
+        color: var(--color-text);
+        padding: 9.6rem var(--page-gutter);
+    }
+
+    .history__inner {
+        max-width: var(--page-width);
+        margin: 0 auto;
+    }
+
+    .history__intro {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        column-gap: 6.4rem;
+        align-items: start;
+    }
+
+    .history__title {
+        margin: 0;
+        max-width: 48rem;
+        font-family: var(--font-display);
+        font-size: 4.8rem;
+        font-weight: 400;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        text-wrap: balance;
+
+        @include rise('cover 1% cover 20%');
+    }
+
+    .history__lead {
+        margin: 0.6rem 0 0;
+        max-width: 52rem;
+        font-size: 1.8rem;
+        line-height: 1.5;
+        text-wrap: pretty;
+
+        @include rise('cover 8% cover 28%');
+    }
+
+    .history__stage {
+        position: relative;
+        height: 60rem;
+        margin-top: 7.2rem;
+        overflow: clip;
+
+        @supports (animation-timeline: view()) {
+            view-timeline-name: --history-stage;
+            view-timeline-axis: block;
+        }
+    }
+
+    .history__back {
+        --history-back-mask: linear-gradient(
+            to bottom,
+            transparent 0%,
+            rgb(0 0 0 / 26%) 30%,
+            rgb(0 0 0 / 26%) 70%,
+            transparent 100%
+        );
+
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        border-radius: 4.8rem 0 4.8rem 4.8rem;
+        -webkit-mask-image: var(--history-back-mask);
+        mask-image: var(--history-back-mask);
+
+        picture {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        @include rise('cover 10% cover 30%');
+    }
+
+    .history__back-media {
+        position: absolute;
+        top: -8%;
+        left: 0;
+        width: 100%;
+        height: 116%;
+        max-width: none;
+        object-fit: cover;
+        object-position: 50% 62%;
+
+        @media (prefers-reduced-motion: no-preference) {
+            @supports (animation-timeline: view()) {
+                animation: history-drift-back auto linear both;
+                animation-timeline: --history-stage;
+                animation-range: cover 0% cover 100%;
+            }
+        }
+    }
+
+    .history__pair {
+        position: absolute;
+        bottom: 0;
+        left: 20%;
+        width: 45rem;
+
+        picture {
+            display: block;
+        }
+
+        @include rise('cover 12% cover 32%');
+    }
+
+    .history__pair-glow {
+        position: absolute;
+        top: -4%;
+        left: -8%;
+        width: 116%;
+        height: auto;
+        filter: blur(4.5rem);
+        opacity: 0.92;
+    }
+
+    .history__pair-photo {
+        position: relative;
+        width: 100%;
+        height: auto;
+        mask-image: radial-gradient(
+            ellipse 76% 62% at 50% 52%,
+            #000 55%,
+            transparent 85%
+        );
+    }
+
+    .history__card-slot {
+        position: absolute;
+        top: 13rem;
+        right: 5%;
+        width: 32rem;
+
+        @include rise('cover 18% cover 38%');
+    }
+
+    .history__card {
+        @media (prefers-reduced-motion: no-preference) {
+            @supports (animation-timeline: view()) {
+                animation: history-drift-card auto linear both;
+                animation-timeline: --history-stage;
+                animation-range: cover 0% cover 100%;
+            }
+        }
+    }
+
+    .history__card-face {
+        padding: 3.6rem 3.6rem 2.8rem;
+        background-color: var(--color-surface);
+        border: 0.1rem solid var(--color-border);
+        border-radius: 4.8rem 0 4.8rem 4.8rem;
+        box-shadow: 0 2.4rem 4.8rem
+            color-mix(in srgb, var(--color-text) 7%, transparent);
+        rotate: -2deg;
+    }
+
+    .history__card-name {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 3.2rem;
+        font-weight: 400;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+    }
+
+    .history__card-text {
+        margin: 1.2rem 0 0;
+        font-size: 1.6rem;
+        line-height: 1.5;
+        text-wrap: pretty;
+    }
+
+    .history__facts {
+        margin: 2rem 0 0;
+    }
+
+    .history__fact {
+        display: flex;
+        justify-content: space-between;
+        gap: 2.4rem;
+        padding-block: 1.2rem;
+
+        & + & {
+            border-top: 0.1rem solid var(--color-border);
+        }
+    }
+
+    .history__fact-label {
+        margin: 0;
+        color: var(--color-secondary-text);
+        font-size: 1.4rem;
+        line-height: 1.3;
+        white-space: nowrap;
+    }
+
+    .history__fact-value {
+        margin: 0;
+        font-size: 1.6rem;
+        line-height: 1.3;
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .history__beans {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        pointer-events: none;
+    }
+
+    .history__bean {
+        position: absolute;
+
+        @include rise('cover 15% cover 32%');
+
+        &--far {
+            top: 8%;
+            left: 4%;
+            width: 11rem;
+
+            @include rise('cover 20% cover 36%');
+        }
+
+        &--mid {
+            top: 1.5rem;
+            left: 63%;
+            width: 9rem;
+
+            @include rise('cover 24% cover 40%');
+        }
+
+        &--near {
+            bottom: 8%;
+            left: 7%;
+            width: 15rem;
+
+            @include rise('cover 28% cover 44%');
+        }
+    }
+
+    .history__bean-photo {
+        width: 100%;
+        height: auto;
+
+        @media (prefers-reduced-motion: no-preference) {
+            @supports (animation-timeline: view()) {
+                animation: history-drift-bean auto linear both;
+                animation-timeline: --history-stage;
+                animation-range: cover 0% cover 100%;
+            }
+        }
+    }
+
+    .history__bean--far .history__bean-photo {
+        filter: blur(0.1rem);
+    }
+
+    .history__bean--mid .history__bean-photo {
+        filter: blur(0.3rem);
+    }
+
+    .history__bean--near .history__bean-photo {
+        filter: blur(0.6rem);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .history__title,
+        .history__lead,
+        .history__back,
+        .history__pair,
+        .history__card-slot,
+        .history__bean,
+        .history__back-media,
+        .history__card,
+        .history__bean-photo {
+            animation: none;
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .history {
+            padding-block: 6.4rem;
+        }
+
+        .history__intro {
+            column-gap: 3.2rem;
+        }
+
+        .history__stage {
+            margin-top: 4.8rem;
+        }
+
+        .history__pair {
+            left: 10%;
+        }
+
+        .history__card-slot {
+            width: 36%;
+        }
+
+        .history__card-face {
+            padding-inline: 2.4rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .history {
+            padding-top: calc(var(--header-height) + 2.4rem);
+            padding-bottom: 4.8rem;
+            scroll-margin-top: var(--header-height);
+        }
+
+        .history__intro {
+            grid-template-columns: minmax(0, 1fr);
+            row-gap: 1.6rem;
+            column-gap: 0;
+        }
+
+        .history__title {
+            max-width: none;
+            font-size: 3.6rem;
+        }
+
+        .history__lead {
+            max-width: none;
+            margin-top: 0;
+            font-size: 1.6rem;
+        }
+
+        .history__stage {
+            height: 58rem;
+            margin-top: 3.2rem;
+        }
+
+        .history__back {
+            border-radius: 3.2rem 0 3.2rem 3.2rem;
+        }
+
+        .history__pair {
+            right: auto;
+            bottom: 6rem;
+            left: 0;
+            width: min(50rem, 100%);
+            margin-inline: 0;
+        }
+
+        .history__card-slot {
+            top: auto;
+            right: 0;
+            bottom: 0;
+            left: auto;
+            width: min(32rem, 74%);
+        }
+
+        .history__card-face {
+            padding: 2.4rem 2rem 2rem;
+            border-radius: 2.4rem 0 2.4rem 2.4rem;
+            rotate: 0deg;
+            box-shadow: none !important;
+        }
+
+        .history__card-name {
+            font-size: 2.8rem;
+        }
+
+        .history__bean--far {
+            top: 5%;
+            left: 3%;
+            width: 7.2rem;
+        }
+
+        .history__bean--mid {
+            top: 1.2rem;
+            right: 6%;
+            left: auto;
+            width: 6rem;
+        }
+
+        .history__bean--near {
+            top: auto;
+            bottom: 8%;
+            left: 0;
+            width: 11rem;
+        }
+
+        .history__title,
+        .history__lead,
+        .history__back,
+        .history__pair,
+        .history__card-slot,
+        .history__bean,
+        .history__back-media,
+        .history__card,
+        .history__bean-photo {
+            animation: none;
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .history {
+            padding-top: calc(var(--header-height) + 3.2rem);
+            padding-bottom: 4.8rem;
+        }
+
+        .history__title {
+            font-size: 3.2rem;
+        }
+
+        .history__intro {
+            row-gap: 2rem;
+        }
+
+        .history__stage {
+            height: 58rem;
+            margin-top: 4.8rem;
+        }
+
+        .history__pair {
+            right: auto;
+            bottom: 12rem;
+            left: 50%;
+            width: max(100%, 42rem);
+            margin-inline: 0;
+            translate: -50% 0;
+        }
+
+        .history__card-slot {
+            width: min(28rem, 76%);
+        }
+
+        .history__card-face,
+        .history__back {
+            border-radius: 1.6rem 0 1.6rem 1.6rem;
+        }
+
+        .history__card-face {
+            padding: 2rem 1.6rem 1.6rem;
+        }
+
+        .history__card-name {
+            font-size: 2.6rem;
+        }
+
+        .history__bean--near {
+            bottom: 12%;
+            width: 9rem;
+        }
+
+        .history__fact {
+            gap: 1.6rem;
+        }
+    }
+</style>
