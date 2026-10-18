@@ -25,6 +25,7 @@ html {
     font-size: 10px;
     background-color: var(--color-background);
     scroll-padding-top: var(--header-height);
+    scroll-behavior: smooth;
 }
 
 *,

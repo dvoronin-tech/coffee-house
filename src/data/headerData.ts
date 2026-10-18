@@ -2,7 +2,7 @@ import type { HeaderData } from '#/types/header';
 
 export const headerData: HeaderData = {
     logoLabel: 'Кварта',
-    logoHref: '#top',
+    logoHref: '#',
     links: [
         { label: 'Зерно', href: '#grain' },
         { label: 'Доставка', href: '#delivery' },
