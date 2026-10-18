@@ -1,5 +1,6 @@
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { z } from 'zod';
+import { interestValues } from '../../db/schema';
 
 function boundedString(
     field: 'id' | 'name',
@@ -34,6 +35,8 @@ const phone = z.string().transform((value, ctx) => {
     return parsed.number;
 });
 
+const interest = z.enum(interestValues);
+
 const note = z
     .string()
     .nullish()
@@ -55,6 +58,7 @@ export const sendOrderBody = z
         id,
         name,
         phone,
+        interest,
         note,
         analytics: z.unknown().optional(),
     })

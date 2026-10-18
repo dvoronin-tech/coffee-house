@@ -15,7 +15,7 @@ export const app = new Hono()
             },
         }),
     )
-    .route('/api', routes);
+    .route('/', routes);
 
 export type { AppType } from './app/routes';
 

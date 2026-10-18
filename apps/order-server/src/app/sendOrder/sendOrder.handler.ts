@@ -18,12 +18,13 @@ export const sendOrderHandlers = factory.createHandlers(
         const body = c.req.valid('json');
         const analytics = storedAnalytics(body.analytics);
         try {
-            const existingAnalytics = await db.query.records.findFirst({
+            const existing = await db.query.records.findFirst({
                 where: (record, { eq }) => eq(record.id, body.id),
                 columns: {
                     analytics: true,
                 },
             });
+            const alreadyStored = existing != null;
 
             const [data] = await db
                 .insert(records)
@@ -31,6 +32,7 @@ export const sendOrderHandlers = factory.createHandlers(
                     id: body.id,
                     name: body.name,
                     phone: body.phone,
+                    interest: body.interest,
                     note: body.note,
                     analytics,
                 })
@@ -39,27 +41,23 @@ export const sendOrderHandlers = factory.createHandlers(
                     set: {
                         name: body.name,
                         phone: body.phone,
+                        interest: body.interest,
                         note: body.note,
                         updatedAt: sql`now()`,
-                        ...(existingAnalytics == null ? { analytics } : {}),
+                        ...(alreadyStored ? {} : { analytics }),
                     },
                 })
                 .returning({
-                    createdAt: records.createdAt,
-                    updatedAt: records.updatedAt,
+                    id: records.id,
                 });
 
             if (!data) return c.json({ code: ResponseCodes.error.internal });
 
-            const action =
-                data.createdAt === data.updatedAt ? 'insert' : 'update';
+            if (alreadyStored) {
+                return c.json({ code: ResponseCodes.success.updated }, 200);
+            }
 
-            if (action === 'insert')
-                return c.json({ code: ResponseCodes.success.created, }, 200);
-            if (action === 'update')
-                return c.json({ code: ResponseCodes.success.updated, }, 200);
-
-            return c.json({ code: ResponseCodes.error.internal });
+            return c.json({ code: ResponseCodes.success.created }, 200);
         } catch (error) {
             console.error(error);
             return c.json({ code: ResponseCodes.error.internal }, 500);
