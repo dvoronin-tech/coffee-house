@@ -42,26 +42,28 @@ const {
 			<ol class="grain__lots">
 				{
 					lots.map((lot, index) => (
-						<li class="grain__lot">
-							<span class="grain__index" aria-hidden="true">
-								{`0${index + 1}`}
-							</span>
-							<div class="grain__about">
-								<h3 class="grain__name">
-									{lot.country}&nbsp;{lot.variety}
-								</h3>
-								<p class="grain__notes">
-									{lot.notes}
-									{lot.tag && <span>, {lot.tag}</span>}
-								</p>
-							</div>
-							<div class="grain__order">
-								<p class="grain__price">
-									{lot.price}
-									<span class="grain__unit">BYN / {lot.weight}</span>
-								</p>
-								<a class="grain__cta" href={ctaHref}>{ctaLabel}</a>
-							</div>
+						<li>
+							<a class="grain__lot" href={ctaHref}>
+								<span class="grain__index" aria-hidden="true">
+									{index + 1}
+								</span>
+								<div class="grain__about">
+									<h3 class="grain__name">
+										{lot.country}&nbsp;{lot.variety}
+									</h3>
+									<p class="grain__notes">
+										{lot.notes}
+										{lot.tag && <span>, {lot.tag}</span>}
+									</p>
+								</div>
+								<div class="grain__order">
+									<p class="grain__price">
+										{lot.price}
+										<span class="grain__unit">BYN / {lot.weight}</span>
+									</p>
+									<span class="grain__cta">{ctaLabel}</span>
+								</div>
+							</a>
 						</li>
 					))
 				}
@@ -223,6 +225,22 @@ const {
         margin: 0;
         padding: 0;
         list-style: none;
+
+        > li:last-child .grain__lot {
+            border-bottom: 0.1rem solid var(--color-border);
+        }
+
+        > li:nth-child(1) .grain__lot {
+            @include rise('cover 10% cover 25%');
+        }
+
+        > li:nth-child(2) .grain__lot {
+            @include rise('cover 14% cover 30%');
+        }
+
+        > li:nth-child(3) .grain__lot {
+            @include rise('cover 18% cover 35%');
+        }
     }
 
     .grain__lot {
@@ -232,21 +250,21 @@ const {
         align-items: center;
         padding: 3.2rem 0;
         border-top: 0.1rem solid var(--color-border);
+        color: inherit;
+        text-decoration: none;
 
-        &:last-child {
-            border-bottom: 0.1rem solid var(--color-border);
+        &:hover .grain__name,
+        &:hover .grain__cta {
+            color: var(--color-accent);
         }
 
-        &:nth-child(1) {
-            @include rise('cover 10% cover 25%');
+        &:hover .grain__cta {
+            text-decoration-color: var(--color-accent);
         }
 
-        &:nth-child(2) {
-            @include rise('cover 14% cover 30%');
-        }
-
-        &:nth-child(3) {
-            @include rise('cover 18% cover 35%');
+        &:focus-visible {
+            outline: 0.2rem solid var(--color-text);
+            outline-offset: 0.4rem;
         }
     }
 
@@ -272,10 +290,6 @@ const {
         line-height: 1.05;
         letter-spacing: -0.02em;
         transition: color 0.2s ease;
-    }
-
-    .grain__lot:hover .grain__name {
-        color: var(--color-accent);
     }
 
     .grain__notes {
@@ -321,16 +335,6 @@ const {
         transition:
             color 0.2s ease,
             text-decoration-color 0.2s ease;
-
-        &:hover {
-            color: var(--color-accent);
-            text-decoration-color: var(--color-accent);
-        }
-
-        &:focus-visible {
-            outline: 0.2rem solid var(--color-text);
-            outline-offset: 0.4rem;
-        }
     }
 
     @media (prefers-reduced-motion: reduce) {

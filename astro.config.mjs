@@ -6,6 +6,7 @@ import svgr from 'vite-plugin-svgr';
 // https://astro.build/config
 export default defineConfig({
     integrations: [react()],
+    devToolbar: { enabled: false },
     vite: {
         plugins: [svgr()],
     },
