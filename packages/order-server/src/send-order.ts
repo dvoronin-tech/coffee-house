@@ -63,7 +63,9 @@ export const sendOrderBody = z
 
 const analyticsMaxUtf8Bytes = 8192;
 
-export function storedAnalytics(value: unknown): Record<string, unknown> | null {
+export function storedAnalytics(
+    value: unknown,
+): Record<string, unknown> | null {
     if (!isNonEmptyObject(value)) return null;
 
     try {

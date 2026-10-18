@@ -27,7 +27,10 @@ export const app = new Hono()
         '/send-order',
         zValidator('json', sendOrderBody, (result, c) => {
             if (!result.success) {
-                return c.json({ code: sendOrderRejectionCode(result.error) }, 400);
+                return c.json(
+                    { code: sendOrderRejectionCode(result.error) },
+                    400,
+                );
             }
         }),
         async (c) => {
