@@ -1,5 +1,5 @@
 import { drizzle } from 'drizzle-orm/node-postgres';
-import { env } from '../utils/constants';
+import { env } from '../utils/env';
 import { createPool } from './pool';
 import * as schema from './schema';
 

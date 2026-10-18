@@ -1,14 +1,8 @@
-import { zValidator } from '@hono/zod-validator';
-import { sql } from 'drizzle-orm';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { HTTPException } from 'hono/http-exception';
-import { db } from './db';
-import { records } from './db/schema';
-import { sendOrderBody } from './schemas/send-order';
-import { env } from './utils/constants';
-import { sendOrderRejectionCode } from './utils/send-order-rejection';
-import { storedAnalytics } from './utils/stored-analytics';
+import routes from './app/routes';
+import { env } from './utils/env';
 
 export const app = new Hono()
     .use(
@@ -21,65 +15,9 @@ export const app = new Hono()
             },
         }),
     )
-    .post(
-        '/send-order',
-        zValidator('json', sendOrderBody, (result, c) => {
-            if (!result.success) {
-                return c.json(
-                    { code: sendOrderRejectionCode(result.error) },
-                    400,
-                );
-            }
-        }),
-        async (c) => {
-            const body = c.req.valid('json');
-            const analytics = storedAnalytics(body.analytics);
-            try {
-                const [saved] = await db
-                    .insert(records)
-                    .values({
-                        id: body.id,
-                        name: body.name,
-                        phone: body.phone,
-                        note: body.note,
-                        analytics,
-                    })
-                    .onConflictDoUpdate({
-                        target: records.id,
-                        set: {
-                            name: sql`excluded.name`,
-                            phone: sql`excluded.phone`,
-                            note: sql`excluded.note`,
-                            analytics: sql`case
-                                when records.analytics is null then excluded.analytics
-                                else records.analytics
-                            end`,
-                            updatedAt: sql`now()`,
-                        },
-                    })
-                    .returning({
-                        inserted: sql<boolean>`xmax = 0`.as('inserted'),
-                    });
+    .route('/api', routes);
 
-                if (!saved) {
-                    throw new Error('send-order wrote no row');
-                }
-
-                if (saved.inserted === true) {
-                    return c.json({ code: 'CREATED' as const }, 200);
-                }
-
-                if (saved.inserted === false) {
-                    return c.json({ code: 'UPDATED' as const }, 200);
-                }
-
-                throw new Error('send-order could not tell insert from update');
-            } catch (error) {
-                console.error(error);
-                return c.json({ code: 'INTERNAL_SERVER_ERROR' as const }, 500);
-            }
-        },
-    );
+export type { AppType } from './app/routes';
 
 app.onError((error, c) => {
     if (isMalformedJson(error)) {
@@ -100,5 +38,3 @@ function isMalformedJson(error: Error): boolean {
         error.message === 'Malformed JSON in request body'
     );
 }
-
-export type AppType = typeof app;

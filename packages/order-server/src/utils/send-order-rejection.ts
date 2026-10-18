@@ -1,22 +1,24 @@
-const rejectionCodeByField = {
-    id: 'INVALID_ID',
-    name: 'INVALID_NAME',
-    phone: 'INVALID_PHONE_NUMBER',
-    note: 'INVALID_NOTE',
-} as const;
+import { ResponseCodes } from '../app/send-order/send-order.constants';
 
-const rejectionFieldOrder: (keyof typeof rejectionCodeByField)[] = ['id', 'name', 'phone', 'note'];
+const errorCodes = ResponseCodes.error;
+
+const rejectionFieldOrder: (keyof typeof errorCodes)[] = [
+    'id',
+    'name',
+    'phone',
+    'note',
+];
 
 export type SendOrderRejectionCode =
-    (typeof rejectionCodeByField)[keyof typeof rejectionCodeByField];
+    (typeof errorCodes)[keyof typeof errorCodes];
 
 export function sendOrderRejectionCode(error: {
     issues: readonly { path?: readonly PropertyKey[] }[];
 }): SendOrderRejectionCode {
     for (const field of rejectionFieldOrder) {
         if (error.issues.some((issue) => issue.path?.[0] === field)) {
-            return rejectionCodeByField[field];
+            return errorCodes[field];
         }
     }
-    return rejectionCodeByField.id;
+    return errorCodes.id;
 }
