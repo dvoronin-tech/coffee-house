@@ -4,7 +4,7 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { HTTPException } from 'hono/http-exception';
 import { db } from './db';
-import { records } from './schema';
+import { records } from './db/schema';
 import { env } from './utils/constants';
 import {
     sendOrderBody,
