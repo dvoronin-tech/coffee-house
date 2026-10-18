@@ -1,4 +1,5 @@
 import { zValidator } from '@hono/zod-validator';
+import { sql } from 'drizzle-orm';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { db } from './db';
@@ -27,13 +28,40 @@ export const app = new Hono()
         async (c) => {
             const body = c.req.valid('json');
             try {
-                await db.insert(records).values({
-                    id: body.id,
-                    name: body.name,
-                    phone: body.phone,
-                    note: body.note,
-                });
-                return c.json({ code: 'CREATED' as const }, 200);
+                const [saved] = await db
+                    .insert(records)
+                    .values({
+                        id: body.id,
+                        name: body.name,
+                        phone: body.phone,
+                        note: body.note,
+                    })
+                    .onConflictDoUpdate({
+                        target: records.id,
+                        set: {
+                            name: sql`excluded.name`,
+                            phone: sql`excluded.phone`,
+                            note: sql`excluded.note`,
+                            updatedAt: sql`now()`,
+                        },
+                    })
+                    .returning({
+                        inserted: sql<boolean>`xmax = 0`.as('inserted'),
+                    });
+
+                if (!saved) {
+                    throw new Error('send-order wrote no row');
+                }
+
+                if (saved.inserted === true) {
+                    return c.json({ code: 'CREATED' as const }, 200);
+                }
+
+                if (saved.inserted === false) {
+                    return c.json({ code: 'UPDATED' as const }, 200);
+                }
+
+                throw new Error('send-order could not tell insert from update');
             } catch (error) {
                 console.error(error);
                 return c.json({ code: 'INTERNAL_SERVER_ERROR' as const }, 500);
