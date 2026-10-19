@@ -31,6 +31,8 @@ app.onError((error, c) => {
     return c.json({ code: 'INTERNAL_SERVER_ERROR' as const }, 500);
 });
 
+export default app;
+
 function isMalformedJson(error: Error): boolean {
     return (
         error instanceof HTTPException &&
