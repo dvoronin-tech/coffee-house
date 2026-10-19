@@ -1,19 +1,18 @@
 import { useLayoutEffect, useState } from 'react';
-import type { FormEvent } from 'react';
+import type { SubmitEvent } from 'react';
 import clsx from 'clsx';
 import toast, { Toaster } from 'react-hot-toast';
-import type {
-    ContactData,
-    ContactMessages,
-    LeadInterest,
-} from '#/types/contact';
-import { sendOrder } from '#/sendOrder';
+import type { ContactData, LeadInterest } from '#/types/contact';
+import { order } from '#/api/order';
 import {
     formatRemaining,
     loadLead,
     saveLead,
     type StoredLead,
-} from './leadRecord';
+} from '#/utils/leadRecord';
+import { orderServerUrl } from '#/utils/orderServerUrl';
+import { refusalMessage } from '#/utils/refusalMessage';
+import { responseCode } from '#/utils/responseCode';
 
 import styles from './LeadForm.module.scss';
 
@@ -35,48 +34,6 @@ const toastStyle = {
     padding: '1.2rem 1.6rem',
     maxWidth: '42rem',
 };
-
-function orderServerUrl(): string | null {
-    const base = import.meta.env.PUBLIC_ORDER_SERVER_URL;
-    if (typeof base !== 'string') return null;
-    const url = base.trim();
-    return url === '' ? null : url;
-}
-
-function refusalMessage(
-    code: string | null,
-    messages: ContactMessages,
-): string {
-    switch (code) {
-        case 'INVALID_INTEREST':
-            return messages.emptyInterest;
-        case 'INVALID_NAME':
-            return messages.invalidName;
-        case 'INVALID_PHONE_NUMBER':
-            return messages.invalidPhone;
-        case 'INVALID_NOTE':
-            return messages.invalidNote;
-        default:
-            return messages.failed;
-    }
-}
-
-async function responseCode(response: Response): Promise<string | null> {
-    try {
-        const body: unknown = await response.json();
-        if (
-            body !== null &&
-            typeof body === 'object' &&
-            'code' in body &&
-            typeof body.code === 'string'
-        ) {
-            return body.code;
-        }
-    } catch {
-        return null;
-    }
-    return null;
-}
 
 interface Props {
     data: ContactData;
@@ -136,7 +93,7 @@ export default function LeadForm({ data }: Props) {
         setFormError(null);
     };
 
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (pending) return;
         setFormError(null);
@@ -174,7 +131,7 @@ export default function LeadForm({ data }: Props) {
         const note = values.comment.trim();
         setPending(true);
         try {
-            const response = await sendOrder(base, {
+            const response = await order(base, {
                 id: lead.id,
                 name: values.name,
                 phone: values.phone,
