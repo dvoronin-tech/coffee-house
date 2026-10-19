@@ -2,6 +2,7 @@ import { zValidator } from '@hono/zod-validator';
 import { db } from '../../db';
 import { records } from '../../db/schema';
 import { factory } from '../factory';
+import { notifyOrder } from '../../telegram/notifyOrder';
 import { sendOrderRejectionCode } from '../../utils/sendOrderRejection';
 import { storedAnalytics } from '../../utils/storedAnalytics';
 import { sendOrderBody } from './sendOrder.schema';
@@ -53,6 +54,16 @@ export const sendOrderHandlers = factory.createHandlers(
             if (!data) return c.json({ code: ResponseCodes.error.internal });
 
             if (data.inserted) {
+                try {
+                    await notifyOrder({
+                        id: body.id,
+                        name: body.name,
+                        phone: body.phone,
+                        note: body.note,
+                    });
+                } catch (error) {
+                    console.error(error);
+                }
                 return c.json({ code: ResponseCodes.success.created }, 200);
             }
 
