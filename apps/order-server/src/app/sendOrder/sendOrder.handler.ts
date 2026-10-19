@@ -32,6 +32,7 @@ export const sendOrderHandlers = factory.createHandlers(
                     id: body.id,
                     name: body.name,
                     phone: body.phone,
+                    interest: body.interest,
                     note: body.note,
                     analytics,
                 })
@@ -40,22 +41,19 @@ export const sendOrderHandlers = factory.createHandlers(
                     set: {
                         name: body.name,
                         phone: body.phone,
+                        interest: body.interest,
                         note: body.note,
                         updatedAt: sql`now()`,
                         ...(existingAnalytics == null ? { analytics } : {}),
                     },
                 })
                 .returning({
-                    createdAt: records.createdAt,
-                    updatedAt: records.updatedAt,
+                    inserted: sql<boolean>`${records.createdAt} = ${records.updatedAt}`,
                 });
 
             if (!data) return c.json({ code: ResponseCodes.error.internal });
 
-            const action =
-                data.createdAt === data.updatedAt ? 'insert' : 'update';
-
-            if (action === 'insert') {
+            if (data.inserted) {
                 try {
                     await notifyOrder({
                         id: body.id,
@@ -68,10 +66,8 @@ export const sendOrderHandlers = factory.createHandlers(
                 }
                 return c.json({ code: ResponseCodes.success.created }, 200);
             }
-            if (action === 'update')
-                return c.json({ code: ResponseCodes.success.updated }, 200);
 
-            return c.json({ code: ResponseCodes.error.internal });
+            return c.json({ code: ResponseCodes.success.updated }, 200);
         } catch (error) {
             console.error(error);
             return c.json({ code: ResponseCodes.error.internal }, 500);

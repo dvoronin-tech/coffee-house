@@ -6,6 +6,7 @@ const rejectionFieldOrder: (keyof typeof errorCodes)[] = [
     'id',
     'name',
     'phone',
+    'interest',
     'note',
 ];
 

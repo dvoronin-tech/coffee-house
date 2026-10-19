@@ -13,8 +13,10 @@
         "@astrojs/react": "^7.0.1",
         "astro": "^7.3.8",
         "clsx": "^2.1.1",
-        "order-server": "workspace:*",
+        "hono": "^4.13.13",
+        "order-server": "workspace:@coffee-house/order-server@*",
         "react": "^19.3.1",
+        "react-hot-toast": "^2.6.1",
         "react-dom": "^19.3.1"
     },
     "devDependencies": {

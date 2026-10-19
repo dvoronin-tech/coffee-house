@@ -3,7 +3,7 @@ import sendOrder from './sendOrder/sendOrder.route';
 import telegram from './telegram/telegram.route';
 
 const routes = new Hono()
-    .route('/send-order', sendOrder)
+    .route('/api/send-order', sendOrder)
     .route('/telegram', telegram);
 
 export default routes;

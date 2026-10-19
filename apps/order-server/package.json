@@ -9,7 +9,8 @@
     "scripts": {
         "dev": "tsx src/serve.ts",
         "db:generate": "drizzle-kit generate",
-        "db:migrate": "tsx src/db/migrate.ts"
+        "db:migrate": "tsx src/db/migrate.ts",
+        "db:studio": "drizzle-kit studio"
     },
     "dependencies": {
         "@hono/node-server": "^2.1.5",

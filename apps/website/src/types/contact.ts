@@ -1,8 +1,26 @@
+export type LeadInterest = 'subscription' | 'one_time' | 'question';
+
 export type ContactFieldData = {
     label: string;
     placeholder: string;
-    hint?: string;
-    error?: string;
+};
+
+export type ContactInterestOption = {
+    value: LeadInterest;
+    label: string;
+};
+
+export type ContactMessages = {
+    emptyName: string;
+    emptyPhone: string;
+    emptyInterest: string;
+    invalidName: string;
+    invalidPhone: string;
+    invalidNote: string;
+    network: string;
+    failed: string;
+    created: string;
+    updated: string;
 };
 
 export type ContactData = {
@@ -19,14 +37,14 @@ export type ContactData = {
     fields: {
         name: ContactFieldData;
         phone: ContactFieldData;
-        email: ContactFieldData;
+        interest: ContactFieldData & {
+            options: ContactInterestOption[];
+        };
         comment: ContactFieldData;
     };
-    submitLabel: string;
+    createLabel: string;
+    updateLabel: string;
     submittingLabel: string;
-    successTitle: string;
-    successText: string;
-    errorTitle: string;
-    errorText: string;
-    duplicateText: string;
+    countdown: string;
+    messages: ContactMessages;
 };
