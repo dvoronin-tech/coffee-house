@@ -1,13 +1,13 @@
 import { zValidator } from '@hono/zod-validator';
-import { db } from '../../db';
-import { records } from '../../db/schema';
-import { factory } from '../factory';
-import { notifyOrder } from '../../telegram/notifyOrder';
-import { sendOrderRejectionCode } from '../../utils/sendOrderRejection';
-import { storedAnalytics } from '../../utils/storedAnalytics';
-import { sendOrderBody } from './sendOrder.schema';
+import { db } from '../../db/index.js';
+import { records } from '../../db/schema.js';
+import { factory } from '../factory.js';
+import { notifyOrder } from '../../telegram/notifyOrder.js';
+import { sendOrderRejectionCode } from '../../utils/sendOrderRejection.js';
+import { storedAnalytics } from '../../utils/storedAnalytics.js';
+import { sendOrderBody } from './sendOrder.schema.js';
 import { sql } from 'drizzle-orm';
-import { ResponseCodes } from './sendOrder.constants';
+import { ResponseCodes } from './sendOrder.constants.js';
 
 export const sendOrderHandlers = factory.createHandlers(
     zValidator('json', sendOrderBody, (result, c) => {

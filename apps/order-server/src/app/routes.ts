@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
-import sendOrder from './sendOrder/sendOrder.route';
-import telegram from './telegram/telegram.route';
+import sendOrder from './sendOrder/sendOrder.route.js';
+import telegram from './telegram/telegram.route.js';
 
 const routes = new Hono()
     .route('/api/send-order', sendOrder)

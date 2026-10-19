@@ -1,9 +1,5 @@
 # build output
 dist/
-apps/order-server/api/handler.js
-apps/order-server/api/handler.js.map
-apps/order-server/api/index.js
-apps/order-server/api/index.js.map
 
 # generated types
 .astro/

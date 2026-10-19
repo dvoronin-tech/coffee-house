@@ -1,6 +1,6 @@
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { z } from 'zod';
-import { interestValues } from '../../db/schema';
+import { interestValues } from '../../db/schema.js';
 
 function boundedString(
     field: 'id' | 'name',

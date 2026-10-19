@@ -1,4 +1,4 @@
-import { ResponseCodes } from '../app/sendOrder/sendOrder.constants';
+import { ResponseCodes } from '../app/sendOrder/sendOrder.constants.js';
 
 const errorCodes = ResponseCodes.error;
 

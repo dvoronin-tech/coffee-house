@@ -2,8 +2,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
-import { env } from '../utils/env';
-import { createPool } from './pool';
+import { env } from '../utils/env.js';
+import { createPool } from './pool.js';
 
 const pool = createPool(env.DATABASE_URL);
 const db = drizzle(pool);

@@ -1,6 +1,6 @@
-import { db } from '../db';
-import { telegramSubscribers } from '../db/schema';
-import { callTelegram } from './botApi';
+import { db } from '../db/index.js';
+import { telegramSubscribers } from '../db/schema.js';
+import { callTelegram } from './botApi.js';
 
 export type OrderNotification = {
     id: string;

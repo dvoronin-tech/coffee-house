@@ -1,13 +1,13 @@
 import { timingSafeEqual } from 'node:crypto';
 import { zValidator } from '@hono/zod-validator';
 import { eq } from 'drizzle-orm';
-import { db } from '../../db';
-import { telegramSubscribers } from '../../db/schema';
-import { callTelegram } from '../../telegram/botApi';
-import { env } from '../../utils/env';
-import { factory } from '../factory';
-import { CallbackAction, TelegramText } from './telegram.constants';
-import { telegramUpdateBody } from './telegram.schema';
+import { db } from '../../db/index.js';
+import { telegramSubscribers } from '../../db/schema.js';
+import { callTelegram } from '../../telegram/botApi.js';
+import { env } from '../../utils/env.js';
+import { factory } from '../factory.js';
+import { CallbackAction, TelegramText } from './telegram.constants.js';
+import { telegramUpdateBody } from './telegram.schema.js';
 
 function webhookSecretMatches(header: string | undefined): boolean {
     if (header == null) return false;

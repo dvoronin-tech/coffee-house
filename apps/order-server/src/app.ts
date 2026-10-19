@@ -1,8 +1,8 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { HTTPException } from 'hono/http-exception';
-import routes from './app/routes';
-import { env } from './utils/env';
+import routes from './app/routes.js';
+import { env } from './utils/env.js';
 
 export const app = new Hono()
     .use(
@@ -17,7 +17,7 @@ export const app = new Hono()
     )
     .route('/', routes);
 
-export type { AppType } from './app/routes';
+export type { AppType } from './app/routes.js';
 
 app.onError((error, c) => {
     if (isMalformedJson(error)) {
