@@ -4,10 +4,11 @@
     "type": "module",
     "version": "0.0.1",
     "exports": {
-        ".": "./src/app.ts"
+        ".": "./src/application.ts"
     },
     "scripts": {
         "dev": "tsx src/serve.ts",
+        "build": "node scripts/build-vercel.mjs",
         "db:generate": "drizzle-kit generate",
         "db:migrate": "tsx src/db/migrate.ts",
         "db:studio": "drizzle-kit studio"
@@ -26,6 +27,7 @@
         "@types/node": "^26.6.5",
         "@types/pg": "^8.23.1",
         "drizzle-kit": "^0.31.11",
+        "esbuild": "^0.27.7",
         "tsx": "^4.23.15"
     }
 }
