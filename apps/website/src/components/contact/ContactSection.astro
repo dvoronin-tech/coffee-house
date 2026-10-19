@@ -58,7 +58,10 @@ const { data } = Astro.props;
     @mixin rise($start, $end, $step: 0%) {
         @media (prefers-reduced-motion: no-preference) {
             @supports (animation-timeline: view()) {
-                animation: contact-rise auto linear both;
+                animation-name: contact-rise;
+                animation-duration: auto;
+                animation-timing-function: linear;
+                animation-fill-mode: both;
                 animation-timeline: view();
                 animation-range: cover calc(#{$start} + var(--i, 0) * #{$step})
                     cover calc(#{$end} + var(--i, 0) * #{$step});

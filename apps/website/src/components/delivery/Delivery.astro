@@ -73,7 +73,10 @@ const { shipping, pickup } = Astro.props.data;
     @mixin rise($range) {
         @media (prefers-reduced-motion: no-preference) {
             @supports (animation-timeline: view()) {
-                animation: delivery-rise auto linear both;
+                animation-name: delivery-rise;
+                animation-duration: auto;
+                animation-timing-function: linear;
+                animation-fill-mode: both;
                 animation-timeline: view();
                 animation-range: #{$range};
             }

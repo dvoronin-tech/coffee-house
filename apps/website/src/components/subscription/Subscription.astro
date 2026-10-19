@@ -88,7 +88,10 @@ const { title, price, facts, ctaLabel, ctaHref, note } = Astro.props.data;
 
         @media (prefers-reduced-motion: no-preference) {
             @supports (animation-timeline: view()) {
-                animation: subscription-card auto linear both;
+                animation-name: subscription-card;
+                animation-duration: auto;
+                animation-timing-function: linear;
+                animation-fill-mode: both;
                 animation-timeline: --subscription;
                 animation-range: cover 55% cover 80%;
             }
@@ -107,7 +110,10 @@ const { title, price, facts, ctaLabel, ctaHref, note } = Astro.props.data;
 
         @media (prefers-reduced-motion: no-preference) and (min-width: 1201px) {
             @supports (animation-timeline: view()) {
-                animation: subscription-inset auto linear both;
+                animation-name: subscription-inset;
+                animation-duration: auto;
+                animation-timing-function: linear;
+                animation-fill-mode: both;
                 animation-timeline: --subscription;
                 animation-range: cover 55% cover 80%;
             }
@@ -126,7 +132,10 @@ const { title, price, facts, ctaLabel, ctaHref, note } = Astro.props.data;
 
         @media (prefers-reduced-motion: no-preference) {
             @supports (animation-timeline: view()) {
-                animation: subscription-rise auto linear both;
+                animation-name: subscription-rise;
+                animation-duration: auto;
+                animation-timing-function: linear;
+                animation-fill-mode: both;
                 animation-timeline: --subscription;
                 animation-range: cover 2% cover 22%;
             }
@@ -141,7 +150,10 @@ const { title, price, facts, ctaLabel, ctaHref, note } = Astro.props.data;
 
         @media (prefers-reduced-motion: no-preference) {
             @supports (animation-timeline: view()) {
-                animation: subscription-rise auto linear both;
+                animation-name: subscription-rise;
+                animation-duration: auto;
+                animation-timing-function: linear;
+                animation-fill-mode: both;
                 animation-timeline: --subscription;
                 animation-range: cover 40% cover 60%;
             }

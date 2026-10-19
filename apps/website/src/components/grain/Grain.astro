@@ -94,7 +94,10 @@ const {
     @mixin rise($range) {
         @media (prefers-reduced-motion: no-preference) {
             @supports (animation-timeline: view()) {
-                animation: rise auto linear both;
+                animation-name: rise;
+                animation-duration: auto;
+                animation-timing-function: linear;
+                animation-fill-mode: both;
                 animation-timeline: view();
                 animation-range: #{$range};
             }

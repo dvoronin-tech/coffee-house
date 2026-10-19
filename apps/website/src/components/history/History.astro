@@ -167,7 +167,10 @@ const beanSizes = `(max-width: 76.8rem) 18vw, 15rem`;
     @mixin rise($range) {
         @media (prefers-reduced-motion: no-preference) {
             @supports (animation-timeline: view()) {
-                animation: history-rise auto linear both;
+                animation-name: history-rise;
+                animation-duration: auto;
+                animation-timing-function: linear;
+                animation-fill-mode: both;
                 animation-timeline: view();
                 animation-range: #{$range};
             }
@@ -264,7 +267,10 @@ const beanSizes = `(max-width: 76.8rem) 18vw, 15rem`;
 
         @media (prefers-reduced-motion: no-preference) {
             @supports (animation-timeline: view()) {
-                animation: history-drift-back auto linear both;
+                animation-name: history-drift-back;
+                animation-duration: auto;
+                animation-timing-function: linear;
+                animation-fill-mode: both;
                 animation-timeline: --history-stage;
                 animation-range: cover 0% cover 100%;
             }
@@ -317,7 +323,10 @@ const beanSizes = `(max-width: 76.8rem) 18vw, 15rem`;
     .history__card {
         @media (prefers-reduced-motion: no-preference) {
             @supports (animation-timeline: view()) {
-                animation: history-drift-card auto linear both;
+                animation-name: history-drift-card;
+                animation-duration: auto;
+                animation-timing-function: linear;
+                animation-fill-mode: both;
                 animation-timeline: --history-stage;
                 animation-range: cover 0% cover 100%;
             }
@@ -427,7 +436,10 @@ const beanSizes = `(max-width: 76.8rem) 18vw, 15rem`;
 
         @media (prefers-reduced-motion: no-preference) {
             @supports (animation-timeline: view()) {
-                animation: history-drift-bean auto linear both;
+                animation-name: history-drift-bean;
+                animation-duration: auto;
+                animation-timing-function: linear;
+                animation-fill-mode: both;
                 animation-timeline: --history-stage;
                 animation-range: cover 0% cover 100%;
             }

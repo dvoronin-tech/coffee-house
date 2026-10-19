@@ -60,7 +60,10 @@ const sizes = `(min-width: 120rem) calc((var(--page-width) - var(--row-gap) * 2)
     @mixin rise($range) {
         @media (prefers-reduced-motion: no-preference) {
             @supports (animation-timeline: view()) {
-                animation: frames-rise auto linear both;
+                animation-name: frames-rise;
+                animation-duration: auto;
+                animation-timing-function: linear;
+                animation-fill-mode: both;
                 animation-timeline: view();
                 animation-range: #{$range};
             }

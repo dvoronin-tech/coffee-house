@@ -129,7 +129,11 @@ const { logoLabel, logoHref, links, cta } = Astro.props.data;
     @supports (animation-timeline: scroll()) {
         @media (prefers-reduced-motion: no-preference) {
             .header__veil {
-                animation: header-veil linear both;
+                /* longhands: lightningcss inlines scroll() into `animation`, and the browser drops that declaration */
+                animation-name: header-veil;
+                animation-duration: auto;
+                animation-timing-function: linear;
+                animation-fill-mode: both;
                 animation-timeline: scroll(root block);
                 animation-range: 0rem 4.8rem;
             }
