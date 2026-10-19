@@ -7,5 +7,6 @@ export function createClient() {
     if (!base) {
         throw new Error('PUBLIC_ORDER_SERVER_URL is not set');
     }
+
     return hc<AppType>(base);
 }
