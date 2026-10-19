@@ -1,0 +1,13 @@
+.countdown {
+    margin: 0;
+    color: var(--color-secondary-text);
+    font-size: 1.4rem;
+    line-height: 1.4;
+}
+
+@media (max-width: 480px) {
+    .countdown {
+        width: 100%;
+        overflow-wrap: break-word;
+    }
+}

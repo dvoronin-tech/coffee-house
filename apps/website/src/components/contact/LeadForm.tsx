@@ -1,27 +1,13 @@
-import { useLayoutEffect, useState } from 'react';
-import type { SubmitEvent } from 'react';
 import clsx from 'clsx';
-import toast, { Toaster } from 'react-hot-toast';
-import type { ContactData, LeadInterest } from '#/types/contact';
-import { order } from '#/api/order';
+import { Toaster } from 'react-hot-toast';
+import type { ContactData } from '#/types/contact';
+import LeadCountdown from './LeadCountdown';
 import {
-    formatRemaining,
-    loadLead,
-    saveLead,
-    type StoredLead,
-} from '#/utils/leadRecord';
-import { orderServerUrl } from '#/utils/orderServerUrl';
-import { refusalMessage } from '#/utils/refusalMessage';
-import { responseCode } from '#/utils/responseCode';
+    useHandleSubmitLeadForm,
+    type LeadValues,
+} from './useHandleSubmitLeadForm';
 
 import styles from './LeadForm.module.scss';
-
-type LeadValues = {
-    name: string;
-    phone: string;
-    interest: '' | LeadInterest;
-    comment: string;
-};
 
 const toastStyle = {
     background: 'var(--color-surface)',
@@ -40,142 +26,25 @@ interface Props {
 }
 
 export default function LeadForm({ data }: Props) {
-    const [values, setValues] = useState<LeadValues>({
-        name: '',
-        phone: '',
-        interest: '',
-        comment: '',
+    const {
+        values,
+        record,
+        formError,
+        pending,
+        buttonLabel,
+        counting,
+        changeField,
+        expireLead,
+        onSubmit,
+    } = useHandleSubmitLeadForm({
+        messages: data.messages,
+        submittingLabel: data.submittingLabel,
+        updateLabel: data.updateLabel,
+        createLabel: data.createLabel,
     });
-    const [record, setRecord] = useState<StoredLead | null>(null);
-    const [clock, setClock] = useState<string | null>(null);
-    const [formError, setFormError] = useState<string | null>(null);
-    const [pending, setPending] = useState(false);
-
-    useLayoutEffect(() => {
-        setRecord(loadLead(Date.now()));
-    }, []);
-
-    useLayoutEffect(() => {
-        if (!record?.known || record.expired) {
-            setClock(null);
-            return;
-        }
-        const id = record.id;
-        const tick = () => {
-            const label = formatRemaining(id, Date.now());
-            if (!label) {
-                setClock(null);
-                setRecord((current) => {
-                    if (!current || current.id !== id || current.expired) {
-                        return current;
-                    }
-                    return saveLead({ ...current, expired: true });
-                });
-                return;
-            }
-            setClock(label);
-        };
-        tick();
-        const timer = window.setInterval(tick, 1000);
-        return () => window.clearInterval(timer);
-    }, [record?.id, record?.known, record?.expired]);
-
-    const report = (message: string) => {
-        setFormError(message);
-        toast(message);
-    };
-
-    const changeField = <Key extends keyof LeadValues>(
-        field: Key,
-        value: LeadValues[Key],
-    ) => {
-        setValues((current) => ({ ...current, [field]: value }));
-        setFormError(null);
-    };
-
-    const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if (pending) return;
-        setFormError(null);
-
-        if (values.name.trim() === '') {
-            report(data.messages.emptyName);
-            return;
-        }
-        if (values.phone.trim() === '') {
-            report(data.messages.emptyPhone);
-            return;
-        }
-        if (values.interest === '') {
-            report(data.messages.emptyInterest);
-            return;
-        }
-
-        const base = orderServerUrl();
-        if (!base) {
-            report(data.messages.failed);
-            return;
-        }
-
-        const current = record ?? loadLead(Date.now());
-        const lead = current.expired
-            ? saveLead({
-                  id: String(Date.now()),
-                  expired: false,
-                  known: false,
-              })
-            : current;
-        if (lead !== record) setRecord(lead);
-
-        const interest = values.interest;
-        const note = values.comment.trim();
-        setPending(true);
-        try {
-            const response = await order(base, {
-                id: lead.id,
-                name: values.name,
-                phone: values.phone,
-                interest,
-                ...(note ? { note } : {}),
-            });
-            const code = await responseCode(response);
-            if (response.ok && (code === 'CREATED' || code === 'UPDATED')) {
-                setRecord(saveLead({ ...lead, known: true }));
-                setFormError(null);
-                toast(
-                    code === 'CREATED'
-                        ? data.messages.created
-                        : data.messages.updated,
-                );
-                return;
-            }
-            report(refusalMessage(code, data.messages));
-        } catch {
-            report(data.messages.network);
-        } finally {
-            setPending(false);
-        }
-    };
-
-    const buttonLabel = pending
-        ? data.submittingLabel
-        : record?.known && !record.expired
-          ? data.updateLabel
-          : data.createLabel;
-    const countdown =
-        clock && record?.known && !record.expired
-            ? data.countdown.replace('{time}', clock)
-            : null;
-    const describedBy =
-        [
-            formError ? 'lead-form-error' : '',
-            countdown ? 'lead-form-countdown' : '',
-        ]
-            .filter(Boolean)
-            .join(' ') || undefined;
 
     return (
-        <form className={styles.form} noValidate onSubmit={handleSubmit}>
+        <form className={styles.form} noValidate onSubmit={onSubmit}>
             <Toaster
                 position='top-center'
                 containerStyle={{ top: '1.6rem' }}
@@ -278,23 +147,20 @@ export default function LeadForm({ data }: Props) {
                     className={styles.button}
                     type='submit'
                     disabled={pending}
-                    aria-describedby={describedBy}
                 >
                     {buttonLabel}
                 </button>
                 {formError && (
-                    <p
-                        className={styles.formError}
-                        id='lead-form-error'
-                        role='alert'
-                    >
+                    <p className={styles.formError} role='alert'>
                         {formError}
                     </p>
                 )}
-                {countdown && (
-                    <p className={styles.countdown} id='lead-form-countdown'>
-                        {countdown}
-                    </p>
+                {counting && record && (
+                    <LeadCountdown
+                        id={record.id}
+                        template={data.countdown}
+                        onExpire={expireLead}
+                    />
                 )}
             </div>
         </form>

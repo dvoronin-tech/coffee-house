@@ -9,6 +9,6 @@ export type OrderBody = {
     note?: string;
 };
 
-export function order(base: string, body: OrderBody) {
-    return createClient(base).api['send-order'].$post({ json: body });
+export function order(body: OrderBody) {
+    return createClient().api['send-order'].$post({ json: body });
 }
